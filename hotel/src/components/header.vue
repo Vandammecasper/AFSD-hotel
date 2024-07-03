@@ -9,7 +9,7 @@
                 <h2 class="my-6 text-xl text-secondary font-bell font-normal">MY RESERVATIONS</h2>
             </RouterLink>
             <div class="border-l-2 border-secondary py-6 pl-12">
-                <RouterLink to="/">
+                <RouterLink to="/auth/login">
                     <h2 class="text-xl text-secondary font-bell font-normal">LOGIN</h2>
                 </RouterLink>
             </div>

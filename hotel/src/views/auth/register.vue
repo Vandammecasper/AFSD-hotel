@@ -1,0 +1,82 @@
+<template>
+  <form class="w-screen h-screen grid">
+    <div class="grid bg-lightGreen p-4 place-self-center border-2 border-secondary rounded-xl">
+      <RouterLink to="/" class="justify-self-end">
+        <img src="/icons/No.svg" alt="" class="w-7">
+      </RouterLink>
+      <div class="py-1 sm:py-4 px-6 sm:px-16 grid">
+        <h1 class="text-3xl sm:text-4xl tracking-wider justify-self-center text-secondary font-bold font-bell">  REGISTER</h1>
+
+        <!-- <div v-if="error">
+          <p class="text-red-600 font-bell-bold">{{ error.message }}</p>
+        </div> -->
+
+        <div class="mt-4 sm:mt-6">
+          <label
+            for="nickname"
+            class="text-md block font-bold text-secondary font-bell"
+          >
+            Name
+          </label>
+          <input
+            type="text"
+            name="nickname"
+            id="nickname"
+            placeholder="Your name"
+            class="font-bell text-secondary rounded-2xl mt-1 block border-2 bg-lightGreen border-secondary p-2 "
+            />
+        </div>
+
+        <div class="mt-4 sm:mt-6">
+          <label
+            for="email"
+            class="text-md block font-bold tracking-wider  text-secondary font-bell"
+          >
+            E-mail
+          </label>
+          <input
+            type="email"
+            name="email"
+            id="email"
+            placeholder="youremail@example.com"
+            class="font-bell text-secondary rounded-2xl mt-1 block border-2 bg-lightGreen border-secondary p-2 "
+        
+          />
+        </div>
+
+        <div class="mt-4 sm:mt-6">
+          <label
+            for="password"
+            class="text-md block font-bold tracking-wider  text-secondary font-bell"
+          >
+            Password
+          </label>
+          <input
+            type="password"
+            name="password"
+            id="password"
+            placeholder="Your password"
+            class="font-bell text-secondary rounded-2xl mt-1 block border-2 bg-lightGreen border-secondary p-2 focus:outline-none focus-visible:ring-2 focus-visible:border-yellow-600 focus-visible:ring-yellow-600"
+         
+            />
+        </div>
+
+        <button
+          class="font-bell rounded-xl mt-6 w-full bg-accent py-2 px-4 font-bold  text-secondary"
+        >
+          Register
+        </button>
+        <div class="flex justify-center">
+          <RouterLink
+            class="font-bell mt-4 inline-block text-sm text-secondary"
+            to="/auth/login"
+          >
+           Already have an account? <span class="underline text-accent font-bell font-bold">Log in</span>
+          </RouterLink>
+        </div>
+      </div>
+      
+    </div>
+    
+  </form>
+</template>
