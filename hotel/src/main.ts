@@ -3,9 +3,14 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import router from './bootstrap/router'
 import './index.css'
+import useFirebase from './composables/useFirebase'
 
 const app = createApp(App)
+const { restoreUser } = useFirebase()
 
-app.use(router)
-
-app.mount('#app')
+;(async () => {
+    await restoreUser()
+  
+    app.use(router)
+    app.mount('#app')
+  })()

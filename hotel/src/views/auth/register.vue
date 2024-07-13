@@ -1,20 +1,20 @@
 <template>
   <form class="w-screen h-screen grid">
-    <div class="grid bg-lightGreen p-4 place-self-center border-2 border-secondary rounded-xl">
+    <div class="grid bg-secondary p-4 place-self-center rounded-xl drop-shadow-xl">
       <RouterLink to="/" class="justify-self-end">
         <img src="/icons/No.svg" alt="" class="w-7">
       </RouterLink>
       <div class="py-1 sm:py-4 px-6 sm:px-16 grid">
-        <h1 class="text-3xl sm:text-4xl tracking-wider justify-self-center text-secondary font-bold font-bell">  REGISTER</h1>
+        <h1 class="text-3xl sm:text-4xl tracking-wider justify-self-center text-darkGreen font-bold font-cambria">  REGISTER</h1>
 
-        <!-- <div v-if="error">
-          <p class="text-red-600 font-bell-bold">{{ error.message }}</p>
-        </div> -->
+        <div v-if="error">
+          <p class="text-red font-cambria font-bold">{{ error }}</p>
+        </div>
 
         <div class="mt-4 sm:mt-6">
           <label
             for="nickname"
-            class="text-md block font-bold text-secondary font-bell"
+            class="text-md block font-bold text-darkGreen font-cambria"
           >
             Name
           </label>
@@ -23,14 +23,14 @@
             name="nickname"
             id="nickname"
             placeholder="Your name"
-            class="font-bell text-secondary rounded-2xl mt-1 block border-2 bg-lightGreen border-secondary p-2 "
+            class="font-cambria text-darkGreen rounded-2xl mt-1 block border-2 bg-lightGreen border-darkGreen p-2 "
             />
         </div>
 
         <div class="mt-4 sm:mt-6">
           <label
             for="email"
-            class="text-md block font-bold tracking-wider  text-secondary font-bell"
+            class="text-md block font-bold tracking-wider  text-darkGreen font-cambria"
           >
             E-mail
           </label>
@@ -39,7 +39,7 @@
             name="email"
             id="email"
             placeholder="youremail@example.com"
-            class="font-bell text-secondary rounded-2xl mt-1 block border-2 bg-lightGreen border-secondary p-2 "
+            class="font-cambria text-darkGreen rounded-2xl mt-1 block border-2 bg-lightGreen border-darkGreen p-2 "
         
           />
         </div>
@@ -47,7 +47,7 @@
         <div class="mt-4 sm:mt-6">
           <label
             for="password"
-            class="text-md block font-bold tracking-wider  text-secondary font-bell"
+            class="text-md block font-bold tracking-wider  text-darkGreen font-cambria"
           >
             Password
           </label>
@@ -56,22 +56,22 @@
             name="password"
             id="password"
             placeholder="Your password"
-            class="font-bell text-secondary rounded-2xl mt-1 block border-2 bg-lightGreen border-secondary p-2 focus:outline-none focus-visible:ring-2 focus-visible:border-yellow-600 focus-visible:ring-yellow-600"
+            class="font-cambria text-darkGreen rounded-2xl mt-1 block border-2 bg-lightGreen border-darkGreen p-2 focus:outline-none focus-visible:ring-2 focus-visible:border-yellow-600 focus-visible:ring-yellow-600"
          
             />
         </div>
 
         <button
-          class="font-bell rounded-xl mt-6 w-full bg-accent py-2 px-4 font-bold  text-secondary"
+          class="font-cambria rounded-xl mt-6 w-full bg-accent py-2 px-4 font-bold  text-secondary"
         >
           Register
         </button>
         <div class="flex justify-center">
           <RouterLink
-            class="font-bell mt-4 inline-block text-sm text-secondary"
+            class="font-cambria mt-4 inline-block text-sm text-darkGreen"
             to="/auth/login"
           >
-           Already have an account? <span class="underline text-accent font-bell font-bold">Log in</span>
+           Already have an account? <span class="underline text-accent font-cambria font-bold">Log in</span>
           </RouterLink>
         </div>
       </div>
@@ -80,3 +80,46 @@
     
   </form>
 </template>
+
+<script lang="ts">
+
+import { ref } from 'vue'
+import { type AuthError } from 'firebase/auth'
+
+import useFirebase from '../../composables/useFirebase'
+import router from '@/bootstrap/router'
+
+export default {
+  setup() { 
+    const { register } = useFirebase()
+
+    const newUser = ref({
+      name: '',
+      password: '',
+      email: '',
+      locale: '',
+    })
+    const error = ref<AuthError | null>(null)
+
+
+    const handleRegister = () => {
+      console.log(newUser.value.name)
+      register(newUser.value.name, newUser.value.email, newUser.value.password)
+      .then(() => {
+        console.log('User registered')
+        router.push('/')
+      })
+      .catch((err) => {
+        console.error(err)
+        error.value = err
+      })
+    }
+
+    return {
+      newUser,
+      error,
+      handleRegister,
+    }
+  }
+}
+</script>

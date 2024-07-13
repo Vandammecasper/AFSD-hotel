@@ -11,6 +11,18 @@ const router = createRouter({
                 {
                     path: '',
                     component: () => import('../views/home.vue')
+                },
+                {
+                    path: 'reservations',
+                    component: () => import('../views/reservations.vue')
+                },
+                {
+                    path: 'overview',
+                    component: () => import('../views/admin/overview.vue')
+                },
+                {
+                    path: 'locks',
+                    component: () => import('../views/admin/locks.vue')
                 }
             ]
 
