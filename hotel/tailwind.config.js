@@ -6,6 +6,7 @@ export default {
       primary: '#F1F2EE',
       secondary: '#FEFFFB',
       accent: '#FF934F',
+      green: '#50563F',
       darkGreen: '#2F3325',
       black: '#000000',
       red: '#FF0000',

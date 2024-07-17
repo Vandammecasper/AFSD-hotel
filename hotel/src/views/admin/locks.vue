@@ -7,7 +7,7 @@
                 <div class="grid justify-items-start my-2 ml-6 w-96">
                     <h2 class="text-3xl font-bold font-cambria text-darkGreen">2 person bedroom deluxe</h2>
                     <p class="text-2xl text-darkGreen font-cambria -mt-10">Last lock change:</p>
-                    <p class="text-2xl text-darkGreen font-cambria -mt-10">DATETIME - Person</p>
+                    <p class="text-xl text-darkGreen font-cambria -mt-10">00/00/0000 : 00:00 - Person</p>
                 </div>
                 <img src="../../../public/icons/locked.svg" alt="" class="h-12 mt-4 ml-60">
             </div>
@@ -16,7 +16,7 @@
                 <div class="grid justify-items-start my-2 ml-6 w-96">
                     <h2 class="text-3xl font-bold font-cambria text-darkGreen">2 person bedroom</h2>
                     <p class="text-2xl text-darkGreen font-cambria -mt-10">Last lock change:</p>
-                    <p class="text-2xl text-darkGreen font-cambria -mt-10">DATETIME - Person</p>
+                    <p class="text-xl text-darkGreen font-cambria -mt-10">00/00/0000 : 00:00 - Person</p>
                 </div>
                 <img src="../../../public/icons/unlocked.svg" alt="" class="h-12 mt-4 ml-60">
             </div>
