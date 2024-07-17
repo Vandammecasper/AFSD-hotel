@@ -14,7 +14,6 @@ import {
 } from 'firebase/auth'
 import { ref } from 'vue'
 
-console.log(import.meta.env.VITE_apiKey)
 const app = initializeApp({
   apiKey: import.meta.env.VITE_apiKey,
   authDomain: import.meta.env.VITE_authDomain,

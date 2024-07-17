@@ -1,5 +1,5 @@
 <template>
-  <form class="w-screen h-screen grid">
+  <form @submit.prevent="handleRegister" class="w-screen h-screen grid">
     <div class="grid bg-secondary p-4 place-self-center rounded-xl drop-shadow-xl">
       <RouterLink to="/" class="justify-self-end">
         <img src="/icons/No.svg" alt="" class="w-7">
@@ -24,6 +24,7 @@
             id="nickname"
             placeholder="Your name"
             class="font-cambria text-darkGreen rounded-2xl mt-1 block border-2 bg-lightGreen border-darkGreen p-2 "
+            v-model="newUser.name"
             />
         </div>
 
@@ -40,7 +41,7 @@
             id="email"
             placeholder="youremail@example.com"
             class="font-cambria text-darkGreen rounded-2xl mt-1 block border-2 bg-lightGreen border-darkGreen p-2 "
-        
+            v-model="newUser.email"
           />
         </div>
 
@@ -57,7 +58,7 @@
             id="password"
             placeholder="Your password"
             class="font-cambria text-darkGreen rounded-2xl mt-1 block border-2 bg-lightGreen border-darkGreen p-2 focus:outline-none focus-visible:ring-2 focus-visible:border-yellow-600 focus-visible:ring-yellow-600"
-         
+            v-model="newUser.password"
             />
         </div>
 
@@ -97,7 +98,6 @@ export default {
       name: '',
       password: '',
       email: '',
-      locale: '',
     })
     const error = ref<AuthError | null>(null)
 

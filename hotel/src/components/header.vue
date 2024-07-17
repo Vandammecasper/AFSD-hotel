@@ -14,7 +14,10 @@
                 <h2 class="my-6 text-xl text-darkGreen font-cambria font-normal">MY RESERVATIONS</h2>
             </RouterLink>
             <div class="border-l-2 border-darkGreen py-6 pl-12">
-                <RouterLink to="/auth/login">
+                <RouterLink v-if="firebaseUser" to="/auth/login">
+                    <h2 class="text-xl text-darkGreen font-cambria font-normal">ACCOUNT</h2>
+                </RouterLink>
+                <RouterLink v-else to="/auth/login">
                     <h2 class="text-xl text-darkGreen font-cambria font-normal">LOGIN</h2>
                 </RouterLink>
             </div>
@@ -22,3 +25,16 @@
     </div>
     <RouterView/>
 </template>
+
+<script lang="ts">
+import useFirebase from '@/composables/useFirebase';
+
+export default{
+    setup(){
+        const {firebaseUser} = useFirebase()
+        return {
+            firebaseUser
+        }
+    }
+}
+</script>
