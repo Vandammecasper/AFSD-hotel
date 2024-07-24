@@ -3,7 +3,7 @@ import { ArrayNotEmpty, IsDate, IsNumber, IsString } from 'class-validator';
 
 @InputType()
 export class CreateReservationInput {
-  @IsNumber()
+  @IsString()
   @Field(() => ID, { description: 'The id of the room on the reservation' })
   roomId: string;
 

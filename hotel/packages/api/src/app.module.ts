@@ -6,6 +6,7 @@ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ReservationsModule } from './reservations/reservations.module';
 import { RoomsModule } from './rooms/rooms.module';
+import { LocksModule } from './locks/locks.module';
 
 @Module({
   imports: [
@@ -22,7 +23,8 @@ import { RoomsModule } from './rooms/rooms.module';
     autoSchemaFile: true,
   }),
   RoomsModule,
-  ReservationsModule
+  ReservationsModule,
+  LocksModule
   ],
   controllers: [AppController],
   providers: [AppService],
