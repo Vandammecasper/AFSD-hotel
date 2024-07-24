@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateReservationInput } from './dto/create-reservation.input';
 import { UpdateReservationInput } from './dto/update-reservation.input';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -32,8 +32,19 @@ export class ReservationsService {
     return `This action returns a #${id} reservation`;
   }
 
-  update(id: number, updateReservationInput: UpdateReservationInput) {
-    return `This action updates a #${id} reservation`;
+  async update(id: string, updateReservationInput: UpdateReservationInput):Promise<Reservation> {
+    const result = await this.reservationRepository.update(id, updateReservationInput);
+
+    if (result.affected === 0) {
+      throw new NotFoundException(`Reservation with ID "${id}" not found`);
+    }
+
+    const updatedReservation = this.reservationRepository.findOneBy({ id });
+    if (!updatedReservation) {
+      throw new NotFoundException(`Reservation with ID "${id}" not found`);
+    }
+
+    return updatedReservation;
   }
 
   remove(id: number) {
