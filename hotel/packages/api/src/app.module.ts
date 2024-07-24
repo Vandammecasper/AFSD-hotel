@@ -3,8 +3,9 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
-import { RoomsModule } from './rooms/rooms.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { ReservationsModule } from './reservations/reservations.module';
+import { RoomsModule } from './rooms/rooms.module';
 
 @Module({
   imports: [
@@ -20,7 +21,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
     driver: ApolloDriver,
     autoSchemaFile: true,
   }),
-  RoomsModule
+  RoomsModule,
+  ReservationsModule
   ],
   controllers: [AppController],
   providers: [AppService],
