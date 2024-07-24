@@ -8,8 +8,9 @@ import { UpdateRoomInput } from './dto/update-room.input';
 export class RoomsResolver {
   constructor(private readonly roomsService: RoomsService) {}
 
-  @Mutation(() => Room)
-  createRoom(@Args('createRoomInput') createRoomInput: CreateRoomInput) {
+  @Mutation(() => Room, {description: 'Create a new room using DTO'})
+  createRoom(@Args('createRoomInput') createRoomInput: CreateRoomInput,
+  ): Promise<Room> {
     return this.roomsService.create(createRoomInput);
   }
 
@@ -24,7 +25,7 @@ export class RoomsResolver {
   }
 
   @Mutation(() => Room)
-  updateRoom(@Args('updateRoomInput') updateRoomInput: UpdateRoomInput) {
+  updateRoom(@Args('updateRoomInput') updateRoomInput: UpdateRoomInput): Promise<Room> {
     return this.roomsService.update(updateRoomInput.id, updateRoomInput);
   }
 
