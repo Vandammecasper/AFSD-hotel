@@ -30,8 +30,8 @@ export class RoomsService {
     return this.roomRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} room`;
+  findOne(id: string) {
+    return this.roomRepository.findOneBy({ id });
   }
 
   async update(id: string, updateRoomInput: UpdateRoomInput): Promise<Room> {
@@ -52,7 +52,7 @@ export class RoomsService {
     return updatedRoom;
   }
 
-  remove(id: number) {
+  remove(id: string) {
     return `This action removes a #${id} room`;
   }
 }

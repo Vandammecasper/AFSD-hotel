@@ -22,8 +22,4 @@ export class CreateReservationInput {
   @IsDate()
   @Field(() => Date, { description: 'The check-out date of the reservation' })
   checkOutDate: Date;
-
-  @IsNumber()
-  @Field(() => Int, { description: 'The total price of the reservation' })
-  price: number;
 }

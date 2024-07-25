@@ -20,7 +20,7 @@ export class RoomsResolver {
   }
 
   @Query(() => Room, { name: 'room' })
-  findOne(@Args('id', { type: () => Int }) id: number) {
+  findOne(@Args('id', { type: () => Int }) id: string) {
     return this.roomsService.findOne(id);
   }
 
@@ -30,7 +30,7 @@ export class RoomsResolver {
   }
 
   @Mutation(() => Room)
-  removeRoom(@Args('id', { type: () => Int }) id: number) {
+  removeRoom(@Args('id', { type: () => Int }) id: string) {
     return this.roomsService.remove(id);
   }
 }

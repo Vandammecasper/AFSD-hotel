@@ -20,7 +20,4 @@ export class UpdateReservationInput extends PartialType(CreateReservationInput) 
 
   @Field(() => Date)
   checkOutDate: Date;
-
-  @Field(() => Int)
-  price: number;
 }

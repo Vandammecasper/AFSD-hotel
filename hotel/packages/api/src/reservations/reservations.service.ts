@@ -4,23 +4,30 @@ import { UpdateReservationInput } from './dto/update-reservation.input';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Reservation } from './entities/reservation.entity';
 import { Repository } from 'typeorm';
+import { Room } from 'src/rooms/entities/room.entity';
+import { RoomsService } from 'src/rooms/rooms.service';
 
 @Injectable()
 export class ReservationsService {
 
   constructor(
     @InjectRepository(Reservation)
-    private readonly reservationRepository: Repository<Reservation>
+    private readonly reservationRepository: Repository<Reservation>,
+    private readonly RoomsService: RoomsService
   ){}
 
-  create(createReservationInput: CreateReservationInput):Promise<Reservation> {
+  async create(createReservationInput: CreateReservationInput):Promise<Reservation> {
+    let room  = new Room();
+    room = await this.RoomsService.findOne(createReservationInput.roomId);
     const r = new Reservation();
     r.roomId = createReservationInput.roomId;
     r.reservationName = createReservationInput.reservationName;
     r.customerIds = createReservationInput.customerIds;
     r.checkInDate = createReservationInput.checkInDate;
     r.checkOutDate = createReservationInput.checkOutDate;
-    r.price = createReservationInput.price;
+
+    // the price is equal to the price of the room multiplied by the number of nights between the check-in and check-out dates
+    r.price =(r.checkOutDate.getDate() - r.checkInDate.getDate()) * room.price;
     return this.reservationRepository.save(r);
   }
 
