@@ -57,4 +57,8 @@ export class ReservationsService {
   remove(id: number) {
     return `This action removes a #${id} reservation`;
   }
+
+  deleteAll() {
+    return this.reservationRepository.clear();
+  }
 }

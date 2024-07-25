@@ -17,7 +17,7 @@ export class LocksService {
     const l = new Lock();
     l.roomId = createLockInput.roomId;
     l.isLocked = createLockInput.isLocked;
-    l.lockHistory = createLockInput.lockHistory;
+    l.lockHistory = [];
     
     return this.reservationRepository.save(l);
   }
@@ -53,5 +53,9 @@ export class LocksService {
 
   remove(id: number) {
     return `This action removes a #${id} lock`;
+  }
+
+  deleteAll() {
+    return this.reservationRepository.clear();
   }
 }

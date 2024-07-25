@@ -55,4 +55,8 @@ export class RoomsService {
   remove(id: string) {
     return `This action removes a #${id} room`;
   }
+
+  deleteAll() {
+    return this.roomRepository.clear();
+  }
 }

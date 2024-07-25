@@ -7,6 +7,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ReservationsModule } from './reservations/reservations.module';
 import { RoomsModule } from './rooms/rooms.module';
 import { LocksModule } from './locks/locks.module';
+import { SeedModule } from './seed/seed.module';
 
 @Module({
   imports: [
@@ -24,7 +25,8 @@ import { LocksModule } from './locks/locks.module';
   }),
   RoomsModule,
   ReservationsModule,
-  LocksModule
+  LocksModule,
+  SeedModule
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -1,0 +1,33 @@
+[
+    {
+        "roomName": "2 person bedroom deluxe",
+        "roomNumber": 1,
+        "price": 95,
+        "maxOccupation": 2,
+        "size": 30,
+        "facilities": [
+            "Flatscreen-tv",
+            "Balcony",
+            "Free wifi",
+            "Free parking",
+            "Smoke free"
+        ],
+        "description": "Indulge in the epitome of luxury at our bedroom deluxe, where opulent furnishings and refined décor create an unparalleled experience; from sumptuous bedding to spa-inspired amenities, every detail is meticulously designed for your comfort and relaxation, promising a stay beyond compare, where cherished memories are made at every turn, inviting you to immerse yourself in an atmosphere of tranquility and sophistication, ensuring that every moment of your stay is nothing short of extraordinary.",
+        "roomPicture": "picture here"
+    },
+    {
+        "roomName": "2 person bedroom",
+        "roomNumber": 2,
+        "price": 80,
+        "maxOccupation": 2,
+        "size": 25,
+        "facilities": [
+            "Flatscreen-tv",
+            "Free wifi",
+            "Free parking",
+            "Smoke free"
+        ],
+        "description": "Indulge in the epitome of luxury at our bedroom deluxe, where opulent furnishings and refined décor create an unparalleled experience; from sumptuous bedding to spa-inspired amenities, every detail is meticulously designed for your comfort and relaxation, promising a stay beyond compare, where cherished memories are made at every turn, inviting you to immerse yourself in an atmosphere of tranquility and sophistication, ensuring that every moment of your stay is nothing short of extraordinary.",
+        "roomPicture": "picture here"
+    }
+]

@@ -11,7 +11,4 @@ export class CreateLockInput {
   @IsBoolean()
   @Field(() => Boolean, { description: 'The status of the lock', nullable: false })
   isLocked: boolean;
-
-  @Field(() => [CreateLockChangeInput], { description: 'The history of the lock changes', nullable: true})
-  lockHistory: CreateLockChangeInput[];
 }
