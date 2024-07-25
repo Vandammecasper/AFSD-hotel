@@ -8,6 +8,8 @@ import { ReservationsModule } from './reservations/reservations.module';
 import { RoomsModule } from './rooms/rooms.module';
 import { LocksModule } from './locks/locks.module';
 import { SeedModule } from './seed/seed.module';
+import { UsersModule } from './users/users.module';
+import { AuthenticationModule } from './authentication/authentication.module';
 
 @Module({
   imports: [
@@ -26,7 +28,9 @@ import { SeedModule } from './seed/seed.module';
   RoomsModule,
   ReservationsModule,
   LocksModule,
-  SeedModule
+  SeedModule,
+  UsersModule,
+  AuthenticationModule
   ],
   controllers: [AppController],
   providers: [AppService],
