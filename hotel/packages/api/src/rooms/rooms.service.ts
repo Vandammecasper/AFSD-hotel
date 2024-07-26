@@ -1,7 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException, UseGuards } from '@nestjs/common';
 import { CreateRoomInput } from './dto/create-room.input';
 import { UpdateRoomInput } from './dto/update-room.input';
 import { Repository } from 'typeorm';
+import { ObjectId } from 'mongodb';
 import { Room } from './entities/room.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 
@@ -31,7 +32,8 @@ export class RoomsService {
   }
 
   findOne(id: string) {
-    return this.roomRepository.findOneBy({ id });
+    //@ts-ignore
+    return this.roomRepository.findOne({ _id: new ObjectId(id) });
   }
 
   async update(id: string, updateRoomInput: UpdateRoomInput): Promise<Room> {
@@ -53,7 +55,7 @@ export class RoomsService {
   }
 
   remove(id: string) {
-    return `This action removes a #${id} room`;
+    return this.roomRepository.delete(id);
   }
 
   deleteAll() {

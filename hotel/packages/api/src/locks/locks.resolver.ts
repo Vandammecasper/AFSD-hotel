@@ -3,6 +3,7 @@ import { LocksService } from './locks.service';
 import { Lock } from './entities/lock.entity';
 import { CreateLockInput } from './dto/create-lock.input';
 import { UpdateLockInput } from './dto/update-lock.input';
+import { string } from 'yargs';
 
 @Resolver(() => Lock)
 export class LocksResolver {
@@ -19,7 +20,7 @@ export class LocksResolver {
   }
 
   @Query(() => Lock, { name: 'lock' })
-  findOne(@Args('id', { type: () => Int }) id: number) {
+  findOne(@Args('id', { type: () => String }) id: string) {
     return this.locksService.findOne(id);
   }
 

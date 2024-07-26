@@ -10,28 +10,28 @@ export class LocksService {
 
   constructor(
     @InjectRepository(Lock)
-    private readonly reservationRepository: Repository<Lock>
+    private readonly locksRepository: Repository<Lock>
   ){}
 
   create(createLockInput: CreateLockInput):Promise<Lock> {
     const l = new Lock();
     l.roomId = createLockInput.roomId;
-    l.isLocked = createLockInput.isLocked;
+    l.isLocked = true;
     l.lockHistory = [];
     
-    return this.reservationRepository.save(l);
+    return this.locksRepository.save(l);
   }
 
   findAll() {
-    return `This action returns all locks`;
+    return this.locksRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} lock`;
+  findOne(id: string) {
+    return this.locksRepository.findOneBy({ id });
   }
 
   async lockChange(roomId: string, customerId: string) {
-    const lock = await this.reservationRepository.findOneBy({roomId});
+    const lock = await this.locksRepository.findOneBy({roomId});
     if (!lock) {
       throw new NotFoundException(`Lock with ID "${roomId}" not found`);
     }
@@ -48,7 +48,7 @@ export class LocksService {
     lock.lockHistory = [...lock.lockHistory, lockChange];
     lock.isLocked = lockChange.isLocked;
 
-    return this.reservationRepository.save(lock);
+    return this.locksRepository.save(lock);
   }
 
   remove(id: number) {
@@ -56,6 +56,6 @@ export class LocksService {
   }
 
   deleteAll() {
-    return this.reservationRepository.clear();
+    return this.locksRepository.clear();
   }
 }

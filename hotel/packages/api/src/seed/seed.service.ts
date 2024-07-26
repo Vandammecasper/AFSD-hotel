@@ -50,7 +50,6 @@ export class SeedService {
         for (let lock of locks){
             const l = new CreateLockInput();
             l.roomId = lock.roomId;
-            l.isLocked = lock.isLocked
             
             theLocks.push(l)
 

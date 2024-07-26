@@ -4,8 +4,10 @@ import { UpdateReservationInput } from './dto/update-reservation.input';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Reservation } from './entities/reservation.entity';
 import { Repository } from 'typeorm';
+import { ObjectId } from 'mongodb';
 import { Room } from 'src/rooms/entities/room.entity';
 import { RoomsService } from 'src/rooms/rooms.service';
+import { In } from 'typeorm';
 
 @Injectable()
 export class ReservationsService {
@@ -19,6 +21,9 @@ export class ReservationsService {
   async create(createReservationInput: CreateReservationInput):Promise<Reservation> {
     let room  = new Room();
     room = await this.RoomsService.findOne(createReservationInput.roomId);
+    if (!room) {
+      throw new NotFoundException(`Room with ID "${createReservationInput.roomId}" not found`);
+    }
     const r = new Reservation();
     r.roomId = createReservationInput.roomId;
     r.reservationName = createReservationInput.reservationName;
@@ -32,11 +37,24 @@ export class ReservationsService {
   }
 
   findAll() {
-    return `This action returns all reservations`;
+    return this.reservationRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} reservation`;
+  findOne(id: string) {
+    //@ts-ignore
+    return this.reservationRepository.findOne({ _id: new ObjectId(id) });
+  }
+
+  async findByCustomerId(customerId: string):Promise<Reservation[]> {
+    const reservations = await this.reservationRepository.find();
+
+    const reservationsByCustomer = [];
+    for (const reservation of reservations) {
+      if (reservation.customerIds.includes(customerId)) {
+        reservationsByCustomer.push(reservation);
+      }
+    }
+    return reservationsByCustomer;
   }
 
   async update(id: string, updateReservationInput: UpdateReservationInput):Promise<Reservation> {
@@ -54,7 +72,7 @@ export class ReservationsService {
     return updatedReservation;
   }
 
-  remove(id: number) {
+  remove(id: string) {
     return `This action removes a #${id} reservation`;
   }
 

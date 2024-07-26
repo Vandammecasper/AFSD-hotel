@@ -6,9 +6,7 @@ export const GET_ALL_USERS = gql`
         id,
         uid,
         userName,
-        email,
-        admin,
-        rooms
+        role
       }
     }
   `
@@ -19,9 +17,7 @@ query userByUid($uid: String!) {
     id,
     uid,
     userName,
-    email,
-    admin,
-    rooms
+    role
   }
 }
 `

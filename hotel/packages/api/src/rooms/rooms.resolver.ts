@@ -3,6 +3,8 @@ import { RoomsService } from './rooms.service';
 import { Room } from './entities/room.entity';
 import { CreateRoomInput } from './dto/create-room.input';
 import { UpdateRoomInput } from './dto/update-room.input';
+import { UseGuards } from '@nestjs/common';
+import { FirebaseGuard } from 'src/authentication/guards/firebase.guard';
 
 @Resolver(() => Room)
 export class RoomsResolver {
@@ -19,8 +21,9 @@ export class RoomsResolver {
     return this.roomsService.findAll();
   }
 
+  // @UseGuards(FirebaseGuard)
   @Query(() => Room, { name: 'room' })
-  findOne(@Args('id', { type: () => Int }) id: string) {
+  findOne(@Args('id', { type: () => String }) id: string) {
     return this.roomsService.findOne(id);
   }
 
@@ -30,7 +33,7 @@ export class RoomsResolver {
   }
 
   @Mutation(() => Room)
-  removeRoom(@Args('id', { type: () => Int }) id: string) {
+  removeRoom(@Args('id', { type: () => String }) id: string) {
     return this.roomsService.remove(id);
   }
 }

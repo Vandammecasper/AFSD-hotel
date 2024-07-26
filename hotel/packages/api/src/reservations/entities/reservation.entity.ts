@@ -18,7 +18,7 @@ export class Reservation {
   reservationName: string;
 
   @Column()
-  @Field(()=> [ID], { description: 'the id of the customers on the reservation', nullable: false })
+  @Field(()=> [String], { description: 'the id of the customers on the reservation', nullable: false })
   customerIds: string[];
 
   @Column()

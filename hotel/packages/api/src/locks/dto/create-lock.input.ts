@@ -8,7 +8,7 @@ export class CreateLockInput {
   @Field(() => ID, { description: 'The id of the room', nullable: false })
   roomId: string;
 
-  @IsBoolean()
-  @Field(() => Boolean, { description: 'The status of the lock', nullable: false })
-  isLocked: boolean;
+  // @IsBoolean()
+  // @Field(() => Boolean, { description: 'The status of the lock', nullable: false })
+  // isLocked: boolean;
 }

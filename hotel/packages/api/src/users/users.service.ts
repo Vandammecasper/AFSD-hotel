@@ -42,7 +42,7 @@ export class UsersService {
     return this.usersRepository.update(new ObjectId(id), {role});
   }
 
-  remove(id: number) {
+  remove(id: string) {
     return `This action removes a #${id} user`;
   }
 
