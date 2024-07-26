@@ -26,7 +26,6 @@ const app = initializeApp({
 const auth = getAuth(app)
 if (import.meta.env.VITE_EMULATION){
   connectAuthEmulator(auth, 'http://127.0.0.1:9099')
-  console.log('Connecting to auth emulator')
 }
 setPersistence(auth, browserLocalPersistence)
 

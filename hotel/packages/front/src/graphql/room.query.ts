@@ -4,6 +4,12 @@ export const GET_ALL_ROOMS = gql`
     query{
         rooms{
             id
+            isLocked
+            lockHistory {
+                isLocked
+                customerId
+                time
+            }
             roomName
             roomNumber
             price
@@ -19,6 +25,13 @@ export const GET_ALL_ROOMS = gql`
 export const GET_ROOM_BY_ID = gql`
     query($id: String!){
         room(id: $id){
+            id
+            isLocked
+            lockHistory {
+                isLocked
+                customerId
+                time
+            }
             roomName
             roomNumber
             price

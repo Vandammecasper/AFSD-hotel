@@ -28,6 +28,11 @@ export class ReservationsResolver {
     return this.reservationsService.findByCustomerId(customerId);
   }
 
+  @Query(() => [Reservation], { name: 'reservationsByRoomId' })
+  findByRoomId(@Args('roomId', { type: () => String }) roomId: string) {
+    return this.reservationsService.findByRoomId(roomId);
+  }
+
   @Mutation(() => Reservation)
   updateReservation(@Args('updateReservationInput') updateReservationInput: UpdateReservationInput) {
     return this.reservationsService.update(updateReservationInput.id, updateReservationInput);

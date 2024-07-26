@@ -103,10 +103,8 @@ export default {
 
 
     const handleRegister = () => {
-      console.log(newUser.value.name)
       register(newUser.value.name, newUser.value.email, newUser.value.password)
       .then(() => {
-        console.log('User registered')
         router.push('/')
       })
       .catch((err) => {

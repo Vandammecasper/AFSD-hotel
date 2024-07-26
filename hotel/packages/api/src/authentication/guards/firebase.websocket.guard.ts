@@ -27,10 +27,6 @@ export class FirebaseWebsocketGuard implements CanActivate {
       )
       try {
         const user = await this.firebase.getAuth().verifyIdToken(authToken)
-        console.log('authToken')
-        console.log(authToken)
-        console.log('user')
-        console.log(user)
         return user
       } catch (err) {
         throw new WsException(err.message)

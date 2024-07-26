@@ -19,7 +19,6 @@ const restoreCustomUser = async () => {
     })
     onResult(result => {
       if (result.data) {
-        console.log(result)
         customUser.value = result.data.userByUid
         resolve()
       }

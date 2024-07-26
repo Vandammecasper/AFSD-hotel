@@ -6,7 +6,6 @@ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ReservationsModule } from './reservations/reservations.module';
 import { RoomsModule } from './rooms/rooms.module';
-import { LocksModule } from './locks/locks.module';
 import { SeedModule } from './seed/seed.module';
 import { UsersModule } from './users/users.module';
 import { AuthenticationModule } from './authentication/authentication.module';
@@ -27,7 +26,6 @@ import { AuthenticationModule } from './authentication/authentication.module';
   }),
   RoomsModule,
   ReservationsModule,
-  LocksModule,
   SeedModule,
   UsersModule,
   AuthenticationModule

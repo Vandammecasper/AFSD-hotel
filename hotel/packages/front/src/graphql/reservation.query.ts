@@ -36,3 +36,17 @@ export const GET_RESERVATIONS_BY_CUSTOMER_ID = gql`
         }  
     }
 `
+
+export const GET_RESERVATIONS_BY_ROOM_ID = gql`
+    query($roomId: String!){
+        reservationsByRoomId(roomId: $roomId){
+            id
+            roomId
+            reservationName
+            customerIds
+            checkInDate
+            checkOutDate
+            price
+        }  
+    }
+`

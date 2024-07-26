@@ -57,6 +57,10 @@ export class ReservationsService {
     return reservationsByCustomer;
   }
 
+  async findByRoomId(roomId: string):Promise<Reservation[]> {
+    return this.reservationRepository.find({ where: { roomId } });
+  }
+
   async update(id: string, updateReservationInput: UpdateReservationInput):Promise<Reservation> {
     const result = await this.reservationRepository.update(id, updateReservationInput);
 

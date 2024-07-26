@@ -5,6 +5,7 @@ import { CreateRoomInput } from './dto/create-room.input';
 import { UpdateRoomInput } from './dto/update-room.input';
 import { UseGuards } from '@nestjs/common';
 import { FirebaseGuard } from 'src/authentication/guards/firebase.guard';
+import { ChangeLockInput } from './dto/change-lock.input';
 
 @Resolver(() => Room)
 export class RoomsResolver {
@@ -30,6 +31,11 @@ export class RoomsResolver {
   @Mutation(() => Room)
   updateRoom(@Args('updateRoomInput') updateRoomInput: UpdateRoomInput): Promise<Room> {
     return this.roomsService.update(updateRoomInput.id, updateRoomInput);
+  }
+
+  @Mutation(() => Room)
+  lockChange(@Args('changeLockInput') ChangeLockInput: ChangeLockInput) {
+    return this.roomsService.lockChange(ChangeLockInput.roomId, ChangeLockInput.customerId);
   }
 
   @Mutation(() => Room)

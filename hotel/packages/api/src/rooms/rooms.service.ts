@@ -3,8 +3,9 @@ import { CreateRoomInput } from './dto/create-room.input';
 import { UpdateRoomInput } from './dto/update-room.input';
 import { Repository } from 'typeorm';
 import { ObjectId } from 'mongodb';
-import { Room } from './entities/room.entity';
+import { LockChange, Room } from './entities/room.entity';
 import { InjectRepository } from '@nestjs/typeorm';
+import { ChangeLockInput } from './dto/change-lock.input';
 
 @Injectable()
 export class RoomsService {
@@ -16,6 +17,8 @@ export class RoomsService {
 
   create(createRoomInput: CreateRoomInput): Promise<Room> {
     const r = new Room();
+    r.isLocked = true;
+    r.lockHistory = [];
     r.roomName = createRoomInput.roomName;
     r.roomNumber = createRoomInput.roomNumber;
     r.price = createRoomInput.price;
@@ -52,6 +55,28 @@ export class RoomsService {
     }
 
     return updatedRoom;
+  }
+
+  async lockChange(roomId: string, customerId: string) {
+    //@ts-ignore
+    const room = await this.roomRepository.findOneBy({_id: new ObjectId(roomId)});
+    if (!room) {
+      throw new NotFoundException(`Room with ID "${roomId}" not found`);
+    }
+
+    room.isLocked = !room.isLocked;
+
+    const lockChange = new ChangeLockInput();
+    lockChange.customerId = customerId;
+    lockChange.isLocked = room.isLocked;
+    lockChange.time = new Date();
+
+    if (!room.lockHistory) {
+      room.lockHistory = [];
+    }
+
+    room.lockHistory.push(lockChange);
+    return this.roomRepository.save(room);
   }
 
   remove(id: string) {

@@ -3,6 +3,12 @@ import gql from 'graphql-tag'
 export const CREATE_ROOM = gql`
     mutation createRoom ($createRoomInput: CreateRoomInput!) {
         createRoom(createRoomInput: $createRoomInput) {
+            isLocked
+            lockHistory {
+                isLocked
+                customerId
+                time
+            }
             id
             roomName
             price
@@ -16,6 +22,12 @@ export const CREATE_ROOM = gql`
 export const UPDATE_ROOM = gql`
     mutation updateRoom ($updateRoomInput: UpdateRoomInput!) {
         updateRoom(updateRoomInput: $updateRoomInput) {
+            isLocked
+            lockHistory {
+                isLocked
+                customerId
+                time
+            }
             id
             roomName
             roomNumber

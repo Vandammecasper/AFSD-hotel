@@ -1,5 +1,6 @@
 [
     {
+        "isLocked": true,
         "roomName": "2 person bedroom deluxe",
         "roomNumber": 1,
         "price": 95,
@@ -16,6 +17,7 @@
         "roomPicture": "picture here"
     },
     {
+        "isLocked": true,
         "roomName": "2 person bedroom",
         "roomNumber": 2,
         "price": 80,

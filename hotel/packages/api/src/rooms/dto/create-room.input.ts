@@ -1,8 +1,18 @@
-import { InputType, Int, Field } from '@nestjs/graphql';
-import { ArrayNotEmpty, IsNumber, IsString } from 'class-validator';
+import { InputType, Int, Field, ID } from '@nestjs/graphql';
+import { ArrayNotEmpty, IsBoolean, IsNumber, IsString } from 'class-validator';
+import { boolean } from 'yargs';
+import { LockChange } from '../entities/room.entity';
+import { ChangeLockInput } from './change-lock.input';
 
 @InputType()
 export class CreateRoomInput {
+  @IsBoolean()
+  @Field(() => Boolean)
+  isLocked: boolean;
+  
+  @Field(() => [ChangeLockInput])
+  lockHistory: ChangeLockInput[];
+
   @IsString()
   @Field(() => String)
   roomName: string;

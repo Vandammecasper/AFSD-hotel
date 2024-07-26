@@ -1,6 +1,17 @@
 import { ObjectType, Field, Int, ID } from '@nestjs/graphql';
 import { Column, Entity, ObjectIdColumn } from 'typeorm';
-import { string } from 'yargs';
+
+@ObjectType()
+export class LockChange {
+  @Field(() => ID, { description: 'The id of the customer' })
+  customerId: string;
+
+  @Field(() => Boolean, { description: 'The status of the lock' })
+  isLocked: boolean;
+
+  @Field(() => Date, { description: 'The time of the lock change' })
+  time: Date;
+}
 
 @Entity()
 @ObjectType()
@@ -9,6 +20,14 @@ export class Room {
   @ObjectIdColumn()
   @Field(() => ID, {description: 'The id of the room', nullable: false})
   id: string;
+
+  @Column()
+  @Field(() => Boolean, {description: 'The status of the lock', nullable: false})
+  isLocked: boolean;
+
+  @Column("jsonb", {array: true, default: []})
+  @Field(() => [LockChange], {description: 'The history of lock changes', nullable: false})
+  lockHistory: LockChange[];
 
   @Column()
   @Field(() => String, {description: 'The name of the room', nullable: false})

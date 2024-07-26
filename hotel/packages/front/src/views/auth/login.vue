@@ -84,7 +84,6 @@ export default{
     const handleLogin = () => {
         login(loginCredentials.value.email, loginCredentials.value.password)
           .then(() => {
-            console.log('logged in')
             router.push('/')
           })
           .catch((err: AuthError) => {
