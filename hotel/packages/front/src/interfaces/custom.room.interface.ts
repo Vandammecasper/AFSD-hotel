@@ -1,10 +1,14 @@
+import type { CustomLockChanges } from "./custom.lockChanges.interface"
+
 export interface CustomRoom {
     id: string
-    name: string
-    number: number
-    price: number
-    maxOccupancy: number
-    size: number
+    isLocked?: boolean
+    lockHistory?: CustomLockChanges[]
+    roomName?: string
+    roomNumber?: number
+    price?: number
+    maxOccupancy?: number
+    size?: number
     facilities?: string[]
     image?: string
     description?: string

@@ -4,6 +4,7 @@ export const GET_ALL_RESERVATIONS = gql`
     query{
         reservations{
             id
+            roomId
             reservationName
             customerIds
             checkInDate

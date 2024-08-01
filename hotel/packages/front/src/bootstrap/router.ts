@@ -28,6 +28,11 @@ const router = createRouter({
                     component: () => import('../views/admin/locks.vue')
                 },
                 {
+                    path: 'locks/:id',
+                    name: 'lock',
+                    component: () => import('../views/admin/lock.vue')
+                },
+                {
                     path: 'overview',
                     component: () => import('../views/admin/overview.vue')
                 },
