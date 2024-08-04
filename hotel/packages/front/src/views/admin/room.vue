@@ -39,7 +39,7 @@
             </div>
             <div class="min-w-96">
                 <h2 class="text-darkGreen font-cambria font-normal text-4xl">{{getRoomByIdResult.room.roomName}}</h2>
-                <h3 class="text-darkGreen font-cambria font-normal text-2xl mt-6">Smart lock status:</h3>
+                <h3 class="text-darkGreen font-cambria font-normal text-2xl mt-6">Occupation:</h3>
                 <p v-if="getRoomByIdResult.room.isLocked" class="text-darkGreen font-cambria font-bold text-xl">LOCKED</p>
                 <P v-else class="text-darkGreen font-cambria font-bold text-xl">UNLOCKED</P>
                 <p class="text-darkGreen font-cambria font-normal text-2xl mt-12 ">Previous lock changes:</p>
@@ -63,11 +63,32 @@
 import { useQuery } from '@vue/apollo-composable';
 import { GET_ROOM_BY_ID } from '../../graphql/room.query'
 import { useRouter } from 'vue-router';
+import { GET_RESERVATIONS_BY_ROOM_ID } from '@/graphql/reservation.query';
+import type { CustomRoom } from '@/interfaces/custom.room.interface';
 
 const {currentRoute} = useRouter()
 
 const { result:getRoomByIdResult } = useQuery(GET_ROOM_BY_ID,{id: currentRoute.value.params.id})
+const { result:getReservationsByIdRoom } = useQuery(GET_RESERVATIONS_BY_ROOM_ID,{id: currentRoute.value.params.id})
 
+
+const isTodayBetweenDates = (room: CustomRoom) => {
+    if(getReservationsByIdRoom.value)
+    if(getReservationsByIdRoom.value.reservations.length !== 0) {
+        for(const reservation of getReservationsByIdRoom.value.reservations) {
+            if(reservation.roomId === room.id) {
+                const today = new Date()
+                const checkInDate = new Date(reservation.checkInDate)
+                const checkOutDate = new Date(reservation.checkOutDate)
+                if(today >= checkInDate && today <= checkOutDate) {
+                    return true
+                }
+            }
+        }
+    } else {
+        return false
+    }
+}
 
 const formatDate = (date:string) =>{
     const givenDate = new Date(date)
