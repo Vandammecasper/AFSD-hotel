@@ -46,7 +46,8 @@ const router = createRouter({
                     component: () => import('../views/admin/selection.vue')
                 },
                 {
-                    path: 'selection/:roomNumber',
+                    path: 'selection/:roomId/:checkInDate/:checkOutDate',
+                    name: 'detail',
                     component: () => import('../views/admin/detail.vue')
                 }
             ]

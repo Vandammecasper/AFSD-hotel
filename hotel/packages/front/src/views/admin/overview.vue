@@ -4,7 +4,7 @@
             <img src="../../../public/icons/add.svg" alt="" class="h-10">
         </div>
         <h1 class="text-5xl text-darkGreen text-center font-cambria font-normal mt-40">ROOM OVERVIEW</h1>
-        <div v-for="room of getAllRoomsResult.rooms" :key="room.id" class="w-full grid justify-items-center gap-6 mt-12">
+        <div v-if="getAllRoomsResult" v-for="room of getAllRoomsResult.rooms" :key="room.id" class="w-full grid justify-items-center gap-6 mt-12">
             <RouterLink :to="{name: 'room', params: {id:room.id}}" class="grid grid-cols-3 h-48 w-3/5 bg-secondary rounded-3xl gap-0 justify-between">
                     <img src="../../../public/images/hotelRoomDeluxe.jpg" alt="" class="rounded-s-2xl h-full">
                     <div class="grid justify-items-start my-2 ml-6 w-96">

@@ -1,5 +1,5 @@
 <template>
-    <div class="w-screen h-screen grid justify-items-center items-center">
+    <div v-if="getRoomByIdResult" class="w-screen h-screen grid justify-items-center items-center">
         <h1 v-if="getRoomByIdResult.room.roomNumber < 10" class="text-5xl text-darkGreen text-center font-cambria font-normal mt-16">ROOM NUMBER: 00{{ getRoomByIdResult.room.roomNumber }}</h1>
         <h1 v-if="getRoomByIdResult.room.roomNumber < 100 && getRoomByIdResult.room.roomNumber >= 10" class="text-5xl text-darkGreen text-center font-cambria font-normal mt-16">ROOM NUMBER: 0{{ getRoomByIdResult.room.roomNumber }}</h1>
         <h1 v-if="getRoomByIdResult.room.roomNumber >= 100" class="text-5xl text-darkGreen text-center font-cambria font-normal mt-16">ROOM NUMBER: {{ getRoomByIdResult.room.roomNumber }}</h1>
@@ -37,19 +37,18 @@
                     </div>
                 </div>
             </div>
-            <div class="min-w-96">
+            <div v-if="getReservationsByIdRoom" class="min-w-96">
                 <h2 class="text-darkGreen font-cambria font-normal text-4xl">{{getRoomByIdResult.room.roomName}}</h2>
                 <h3 class="text-darkGreen font-cambria font-normal text-2xl mt-6">Occupation:</h3>
-                <p v-if="getRoomByIdResult.room.isLocked" class="text-darkGreen font-cambria font-bold text-xl">LOCKED</p>
-                <P v-else class="text-darkGreen font-cambria font-bold text-xl">UNLOCKED</P>
-                <p class="text-darkGreen font-cambria font-normal text-2xl mt-12 ">Previous lock changes:</p>
-                <div class="max-h-48 overflow-auto">
-                    <div v-for="lockChange of getRoomByIdResult.room.lockHistory" class="flex justify-between border-t-2 border-darkGreen pt-2 mt-2 px-2">
-                        <p class="text-darkGreen font-cambria font-normal">{{lockChange.customerId}}</p>
+                <p v-if="isTodayBetweenDates() && reservationCheckOutDate" class="text-darkGreen font-cambria font-bold text-xl">Occupied until {{ reservationCheckOutDate }}</p>
+                <P v-else class="text-darkGreen font-cambria font-bold text-xl">Not occupied</P>
+                <p class="text-darkGreen font-cambria font-normal text-2xl mt-12 ">Next reservations:</p>
+                <p v-if="findNextReservations() === 'no next reservations'" class="text-darkGreen font-cambria font-normal text-xl mt-2">No next reservations</p>
+                <div v-else class="max-h-48 overflow-auto">
+                    <div v-for="reservation of findNextReservations()" class="flex justify-between border-t-2 border-darkGreen pt-2 mt-2 px-2">
+                        <p class="text-darkGreen font-cambria font-normal">{{reservation.reservationName}}</p>
                         <div class="flex gap-2">
-                            <p class="text-darkGreen font-cambria font-normal">{{formatDate(lockChange.time)}}</p>
-                            <img v-if="lockChange.isLocked" src="../../../public/icons/locked.svg" alt="" class="h-6">
-                            <img v-else src="../../../public/icons/unlocked.svg" alt="" class="h-6">
+                            <p class="text-darkGreen font-cambria font-normal">{{formatDate(new Date(reservation.checkInDate))}} - {{ formatDate(new Date(reservation.checkOutDate)) }}</p>
                         </div>
                     </div>
                 </div>
@@ -64,44 +63,65 @@ import { useQuery } from '@vue/apollo-composable';
 import { GET_ROOM_BY_ID } from '../../graphql/room.query'
 import { useRouter } from 'vue-router';
 import { GET_RESERVATIONS_BY_ROOM_ID } from '@/graphql/reservation.query';
-import type { CustomRoom } from '@/interfaces/custom.room.interface';
+import { ref } from 'vue';
+import type { CustomReservation } from '@/interfaces/custom.reservation.interface';
 
 const {currentRoute} = useRouter()
 
 const { result:getRoomByIdResult } = useQuery(GET_ROOM_BY_ID,{id: currentRoute.value.params.id})
-const { result:getReservationsByIdRoom } = useQuery(GET_RESERVATIONS_BY_ROOM_ID,{id: currentRoute.value.params.id})
+const { result:getReservationsByIdRoom } = useQuery(GET_RESERVATIONS_BY_ROOM_ID,{roomId: currentRoute.value.params.id})
 
 
-const isTodayBetweenDates = (room: CustomRoom) => {
+const reservationCheckOutDate = ref<string>()
+const nextReservations = ref<Array<CustomReservation>>()
+
+const isTodayBetweenDates = () => {
     if(getReservationsByIdRoom.value)
-    if(getReservationsByIdRoom.value.reservations.length !== 0) {
-        for(const reservation of getReservationsByIdRoom.value.reservations) {
-            if(reservation.roomId === room.id) {
-                const today = new Date()
-                const checkInDate = new Date(reservation.checkInDate)
-                const checkOutDate = new Date(reservation.checkOutDate)
-                if(today >= checkInDate && today <= checkOutDate) {
-                    return true
-                }
+    if(getReservationsByIdRoom.value.reservationsByRoomId.length !== 0) {
+        for(const reservation of getReservationsByIdRoom.value.reservationsByRoomId) {
+            const today = new Date()
+            const checkInDate = new Date(reservation.checkInDate)
+            const checkOutDate = new Date(reservation.checkOutDate)
+            if(today >= checkInDate && today <= checkOutDate) {
+                const formattedDate = formatDate(checkOutDate)
+                reservationCheckOutDate.value = formattedDate
+                return true
             }
         }
+        return false
     } else {
         return false
     }
 }
 
-const formatDate = (date:string) =>{
-    const givenDate = new Date(date)
-    const formattedDate = givenDate.toLocaleDateString('en-GB', {
-        day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit'
+const findNextReservations = () => {
+    let next: Array<CustomReservation> = []
+    if(getReservationsByIdRoom.value)
+    if(getReservationsByIdRoom.value.reservationsByRoomId.length !== 0) {
+        for(const reservation of getReservationsByIdRoom.value.reservationsByRoomId) {
+            const today = new Date()
+            const checkInDate = new Date(reservation.checkInDate)
+            if(today < checkInDate) {
+                next.push(reservation)
+            }
+        }
+        if(next.length === 0) {
+            return 'no next reservations'
+        }
+    }
+    nextReservations.value = next
+    return nextReservations.value
+}
+
+const formatDate = (date:Date) =>{
+    const formattedDate = date.toLocaleDateString('en-GB', {
+        day: 'numeric', month: 'short', year: 'numeric'
     })
     return formattedDate
 }
 
 const checkFacilities = (facility: string) => {
-    console.log(getRoomByIdResult.value.room.facilities)
     for(const roomFacility of getRoomByIdResult.value.room.facilities) {
-        console.log(roomFacility)
         if(roomFacility === facility) {
             return true
         }

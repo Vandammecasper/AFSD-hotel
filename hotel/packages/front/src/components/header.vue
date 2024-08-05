@@ -14,7 +14,7 @@
                 <h2 class="my-6 text-xl text-darkGreen font-cambria font-normal">MY RESERVATIONS</h2>
             </RouterLink>
             <div class="border-l-2 border-darkGreen py-6 pl-12">
-                <h2 v-if="firebaseUser" :onclick="logout()" class="text-xl text-darkGreen font-cambria font-normal">LOGOUT</h2>
+                <button v-if="firebaseUser" @click="logoutUser()" class="text-xl text-darkGreen font-cambria font-normal">LOGOUT</button>
                 <RouterLink v-else to="/auth/login">
                     <h2 class="text-xl text-darkGreen font-cambria font-normal">LOGIN</h2>
                 </RouterLink>
@@ -25,8 +25,16 @@
 </template>
 
 <script setup lang="ts">
+import router from '@/bootstrap/router';
 import useFirebase from '@/composables/useFirebase';
 
-        const {firebaseUser, logout} = useFirebase()
+const {firebaseUser, logout} = useFirebase()
+
+const logoutUser = () => {
+    logout().then(() => {
+        router.push('/')
+    })
+
+}
         
 </script>
