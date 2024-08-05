@@ -14,13 +14,13 @@ import { RolesGuard } from './guards/roles.guard';
 export class UsersResolver {
   constructor(private readonly usersService: UsersService) {}
 
-  @UseGuards(FirebaseGuard)
+  // @UseGuards(FirebaseGuard)
   @Mutation(() => User)
   createUser(
     @Args('createUserInput') createUserInput: CreateUserInput,
-    @FirebaseUser() user: UserRecord
+    // @FirebaseUser() user: UserRecord
     ) {
-    return this.usersService.create(user.uid, user.displayName, createUserInput);
+    return this.usersService.create(createUserInput);
   }
 
   @AllowedRoles(Role.ADMIN, Role.SUPER_ADMIN)
@@ -38,6 +38,11 @@ export class UsersResolver {
   @Query(() => User, { name: 'userByUid' })
   findOneByUid(@Args('uid', { type: () => String }) uid: string) {
     return this.usersService.findOneByUid(uid);
+  }
+
+  @Query(() => User, { name: 'userByEmail' })
+  findOneByEmail(@Args('email', { type: () => String }) email: string) {
+    return this.usersService.findOneByEmail(email);
   }
 
   @Mutation(() => User)

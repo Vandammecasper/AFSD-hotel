@@ -6,6 +6,7 @@ export const GET_ALL_USERS = gql`
         id,
         uid,
         userName,
+        email,
         role
       }
     }
@@ -17,6 +18,19 @@ query userByUid($uid: String!) {
     id,
     uid,
     userName,
+    email,
+    role
+  }
+}
+`
+
+export const GET_USER_BY_EMAIL = gql`
+query userByEmail($email: String!) {
+  userByEmail(email: $email) {
+    id,
+    uid,
+    userName,
+    email,
     role
   }
 }

@@ -6,7 +6,9 @@
                 <p class="font-cambria font-bold text-primary">GO BACK</p>
             </button>
         </RouterLink>
-        <h1 class="text-5xl text-darkGreen text-center font-cambria font-normal mt-24">ROOM NUMBER: 001</h1>
+        <h1 v-if="getRoomByIdResult.room.roomNumber < 10" class="text-5xl text-darkGreen text-center font-cambria font-normal mt-24">ROOM NUMBER: 00{{ getRoomByIdResult.room.roomNumber }}</h1>
+        <h1 v-if="getRoomByIdResult.room.roomNumber < 100 && getRoomByIdResult.room.roomNumber >= 10" class="text-5xl text-darkGreen text-center font-cambria font-normal mt-24">ROOM NUMBER: 0{{ getRoomByIdResult.room.roomNumber }}</h1>
+        <h1 v-if="getRoomByIdResult.room.roomNumber >= 100" class="text-5xl text-darkGreen text-center font-cambria font-normal mt-24">ROOM NUMBER: {{ getRoomByIdResult.room.roomNumber }}</h1>
         <div class="w-3/4 bg-secondary p-6 mt-8 rounded-3xl flex gap-16">
             <div>
                 <img src="../../../public/images/hotelRoomDeluxe.jpg" alt="" class="rounded-2xl h-64">
@@ -14,27 +16,27 @@
                     <div class="flex flex-col gap-4">
                         <div class="flex items-center gap-3">
                             <img src="../../../public/icons/surface.svg" alt="" class="h-8">
-                            <p class="text-xl font-cambria">30 m²</p>
+                            <p class="text-xl font-cambria">{{getRoomByIdResult.room.size}} m²</p>
                         </div>
-                        <div class="flex items-center gap-3 w-40">
+                        <div v-if="checkFacilities('Flatscreen-tv')" class="flex items-center gap-3 w-40">
                             <img src="../../../public/icons/tv.svg" alt="" class="h-8">
                             <p class="text-xl font-cambria">Flatscreen-tv</p>
                         </div>
-                        <div class="flex items-center gap-3">
+                        <div v-if="checkFacilities('Smoke free')" class="flex items-center gap-3">
                             <img src="../../../public/icons/smoking.svg" alt="" class="h-8">
                             <p class="text-xl font-cambria">Smoke free</p>
                         </div>
                     </div>
                     <div class="flex flex-col gap-4">
-                        <div class="flex items-center gap-3 -ml-2">
+                        <div v-if="checkFacilities('Free wifi')" class="flex items-center gap-3 -ml-2">
                             <img src="../../../public/icons/wifi.svg" alt="" class="h-8">
                             <p class="text-xl font-cambria">Free wifi</p>
                         </div>
-                        <div class="flex items-center gap-3 w-40">
+                        <div v-if="checkFacilities('Free parking')" class="flex items-center gap-3 w-40">
                             <img src="../../../public/icons/parking.svg" alt="" class="h-8">
                             <p class="text-xl font-cambria">Free parking</p>
                         </div>
-                        <div class="flex items-center gap-3">
+                        <div v-if="checkFacilities('Balcony')" class="flex items-center gap-3">
                             <img src="../../../public/icons/balcony.svg" alt="" class="h-9">
                             <p class="text-xl font-cambria">Balcony</p>
                         </div>
@@ -42,20 +44,111 @@
                 </div>
             </div>
             <div class="flex flex-col">
-                <h2 class="text-3xl font-bold font-cambria text-darkGreen">2 person bedroom deluxe</h2>
-                <p class="font-normal font-cambria text-darkGreen mr-12 mt-4">Indulge in the epitome of luxury at our bedroom deluxe, where opulent furnishings and refined décor create an unparalleled experience; from sumptuous bedding to spa-inspired amenities, every detail is meticulously designed for your comfort and relaxation, promising a stay beyond compare, where cherished memories are made at every turn, inviting you to immerse yourself in an atmosphere of tranquility and sophistication, ensuring that every moment of your stay is nothing short of extraordinary.</p>
-                <div class="flex mt-8 gap-16">
-                    <div class="flex flex-col gap-2">
-                        <input placeholder="Guest 1 email" type="email" class="font-cambria text-darkGreen rounded-2xl mt-1 block border-2 bg-secondary border-darkGreen p-2 ">
-                        <input placeholder="Guest 2 email" type="email" class="font-cambria text-darkGreen rounded-2xl mt-1 block border-2 bg-secondary border-darkGreen p-2">
+                <h2 class="text-3xl font-bold font-cambria text-darkGreen">{{getRoomByIdResult.room.roomName}}</h2>
+                <p class="font-normal font-cambria text-darkGreen mr-12 mt-4">{{getRoomByIdResult.room.description}}</p>
+                <div class="flex mt-8 gap-8">
+                    <div class="flex flex-col gap-3">
+                        <input placeholder="Reservation name" v-model="reservationNameInput" type="text" class="font-cambria text-darkGreen rounded-2xl mt-1 block border-2 bg-secondary border-darkGreen p-2 ">
+                        <input placeholder="Guest 1 email" v-model="guestInput1" type="email" class="font-cambria text-darkGreen rounded-2xl mt-1 block border-2 bg-secondary border-darkGreen p-2 ">
+                        <input placeholder="Guest 2 email" v-model="guestInput2" type="email" class="font-cambria text-darkGreen rounded-2xl mt-1 block border-2 bg-secondary border-darkGreen p-2">
                     </div>
                     <div>
-                        <p class="text-center text-2xl font-cambria font-normal">00/00 - 00/00</p>
-                        <h3 class="text-center text-7xl mt-2 font-cambria font-bold">€ 285</h3>
+                        <p class="text-center text-2xl font-cambria font-normal">{{formatDate(checkinDate)}} - {{formatDate(checkOutDate)}}</p>
+                        <h3 class="text-center text-7xl mt-2 font-cambria font-bold">€ {{calculateTotalPrice()}}</h3>
+                        <button @click="createReservation(reservationNameInput, guestInput1, guestInput2)" class="bg-accent rounded-3xl px-8 py-1.5 mt-3.5 ml-12 text-secondary font-cambria font-bold text-xl">Complete reservation</button>
                     </div>
                 </div>
-                <button class="bg-accent rounded-3xl px-8 py-1.5 w-96 mt-4 ml-12 text-secondary font-cambria font-bold text-xl">Complete reservation</button>
             </div>
         </div>
     </div>
 </template>
+
+<script setup lang="ts">
+import { useQuery } from '@vue/apollo-composable';
+import { GET_ROOM_BY_ID } from '../../graphql/room.query'
+import { useRouter } from 'vue-router';
+import { GET_USER_BY_EMAIL } from '../../graphql/user.query'
+import { CREATE_RESERVATION } from '../../graphql/reservation.mutation'
+import { useMutation } from '@vue/apollo-composable'
+import { CustomReservation } from '../../interfaces/custom.reservation.interface'
+import router from '@/bootstrap/router'
+
+const {currentRoute} = useRouter()
+
+const { result:getRoomByIdResult } = useQuery(GET_ROOM_BY_ID,{id: currentRoute.value.params.roomId})
+
+const { mutate: createReservationMutation } = useMutation<CustomReservation>(CREATE_RESERVATION)
+
+const checkinDate = currentRoute.value.params.checkInDate
+
+const checkOutDate = currentRoute.value.params.checkOutDate
+
+const formatDate = (date:string) =>{
+    const givenDate = new Date(date)
+    const formattedDate = givenDate.toLocaleDateString('en-GB', {
+        day: 'numeric', month: 'short'
+    })
+    return formattedDate
+}
+
+const checkFacilities = (facility: string) => {
+    for(const roomFacility of getRoomByIdResult.value.room.facilities) {
+        if(roomFacility === facility) {
+            return true
+        }
+    }
+}
+
+const calculateTotalPrice = () => {
+    const checkIn = new Date(checkinDate)
+    const checkOut = new Date(checkOutDate)
+    const differenceInDays = checkOut.getDate() - checkIn.getDate()
+    return differenceInDays * getRoomByIdResult.value.room.price
+}
+
+const createReservation = (reservationName:string, guestEmail1:string, guestEmail2:string) => {
+    const {result: guest1} = useQuery(GET_USER_BY_EMAIL, {email: guestEmail1})
+    const {result: guest2} = useQuery(GET_USER_BY_EMAIL, {email: guestEmail2})
+    if(guest1.value && guest2.value){
+        console.log(guest1.value.userByEmail.id)
+        createReservationMutation({
+            createReservationInput: {
+                roomId: currentRoute.value.params.roomId,
+                checkInDate: new Date(checkinDate),
+                checkOutDate: new Date(checkOutDate),
+                reservationName: reservationName,
+                customerIds: [guest1.value.userByEmail.id, guest2.value.userByEmail.id]
+            }
+        })
+        .then(() => {
+            router.push('/')
+        })
+        .catch((e) => {
+            console.error('ApolloError:', e);
+            console.error('GraphQL Errors:', e.graphQLErrors);
+            console.error('Network Error:', e.networkError);
+            console.error('Error Message:', e.message);
+        })
+    } else if (guest1.value && !guest2.value){
+        createReservationMutation({
+            createReservationInput: {
+                roomId: currentRoute.value.params.roomId,
+                checkInDate: new Date(checkinDate),
+                checkOutDate: new Date(checkOutDate),
+                reservationName: reservationName,
+                customerIds: [guest1.value.userByEmail.id]
+            }
+        })
+        .then(() => {
+            router.push('/')
+        })
+        .catch((e) => {
+            console.error('ApolloError:', e);
+            console.error('GraphQL Errors:', e.graphQLErrors);
+            console.error('Network Error:', e.networkError);
+            console.error('Error Message:', e.message);
+        })
+    }
+}
+
+</script>

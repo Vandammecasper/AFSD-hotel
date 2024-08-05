@@ -6,6 +6,7 @@ export const ADD_USER = gql`
       id,
       uid,
       userName,
+      email,
       role
     }
   }

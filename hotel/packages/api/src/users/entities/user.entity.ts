@@ -23,6 +23,10 @@ export class User {
   @Field(() => String)
   userName: string;
 
+  @Column()
+  @Field(() => String)
+  email: string;
+
   @Column({ default: Role.USER })
   @Field(() => String)
   role: Role;

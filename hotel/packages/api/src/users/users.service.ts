@@ -26,11 +26,16 @@ export class UsersService {
   findOneByUid(uid: string) {
     return this.usersRepository.findOneByOrFail({uid});
   }
+
+  findOneByEmail(email: string) {
+    return this.usersRepository.findOneByOrFail({email});
+  }
   
-  async create(uid: string, userName: string,  createUserInput: CreateUserInput) {
+  async create(createUserInput: CreateUserInput) {
     const user = new User();
-    user.userName = userName;
-    user.uid = uid;
+    user.userName = createUserInput.userName;
+    user.email = createUserInput.email;
+    user.uid = createUserInput.uid;
     user.role = Role.USER;
 
     const createdUser = await this.usersRepository.save(user);

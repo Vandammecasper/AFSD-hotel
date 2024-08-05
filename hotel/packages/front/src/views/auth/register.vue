@@ -89,10 +89,15 @@ import { type AuthError } from 'firebase/auth'
 
 import useFirebase from '../../composables/useFirebase'
 import router from '@/bootstrap/router'
+import { useMutation } from '@vue/apollo-composable'
+import { ADD_USER } from '@/graphql/user.mutation'
 
 export default {
   setup() { 
     const { register } = useFirebase()
+    const {
+      mutate: addUser,
+    } = useMutation<CustomUser>(ADD_USER)
 
     const newUser = ref({
       name: '',
@@ -104,10 +109,19 @@ export default {
 
     const handleRegister = () => {
       register(newUser.value.name, newUser.value.email, newUser.value.password)
+      .then(()=> {
+        addUser({
+          createUserInput:{
+            userName: newUser.value.name,
+            email: newUser.value.email,
+          }
+        })
+      })
       .then(() => {
         router.push('/')
       })
       .catch((err) => {
+        console.log('error')
         console.error(err)
         error.value = err
       })
