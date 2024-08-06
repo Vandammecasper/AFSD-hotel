@@ -117,7 +117,7 @@ const createReservation = (reservationName:string, guestEmail1:string, guestEmai
                 checkInDate: new Date(checkinDate),
                 checkOutDate: new Date(checkOutDate),
                 reservationName: reservationName,
-                customerIds: [guest1.value.userByEmail.id, guest2.value.userByEmail.id]
+                customerIds: [guest1.value.userByEmail.uid, guest2.value.userByEmail.uid]
             }
         })
         .then(() => {
@@ -136,7 +136,7 @@ const createReservation = (reservationName:string, guestEmail1:string, guestEmai
                 checkInDate: new Date(checkinDate),
                 checkOutDate: new Date(checkOutDate),
                 reservationName: reservationName,
-                customerIds: [guest1.value.userByEmail.id]
+                customerIds: [guest1.value.userByEmail.uid]
             }
         })
         .then(() => {

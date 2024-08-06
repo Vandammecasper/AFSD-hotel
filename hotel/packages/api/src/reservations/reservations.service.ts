@@ -45,13 +45,15 @@ export class ReservationsService {
     return this.reservationRepository.findOne({ _id: new ObjectId(id) });
   }
 
-  async findByCustomerId(customerId: string):Promise<Reservation[]> {
+  async findByCustomerId(uid: string):Promise<Reservation[]> {
     const reservations = await this.reservationRepository.find();
 
     const reservationsByCustomer = [];
     for (const reservation of reservations) {
-      if (reservation.customerIds.includes(customerId)) {
-        reservationsByCustomer.push(reservation);
+      for(const customerId of reservation.customerIds){
+        if (customerId === uid) {
+          reservationsByCustomer.push(reservation);
+        }
       }
     }
     return reservationsByCustomer;

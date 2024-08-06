@@ -3,6 +3,10 @@ import { ReservationsService } from './reservations.service';
 import { Reservation } from './entities/reservation.entity';
 import { CreateReservationInput } from './dto/create-reservation.input';
 import { UpdateReservationInput } from './dto/update-reservation.input';
+import { UserRecord } from 'firebase-admin/auth';
+import { FirebaseUser } from 'src/authentication/user.decorator';
+import { UseGuards } from '@nestjs/common';
+import { FirebaseGuard } from 'src/authentication/guards/firebase.guard';
 
 @Resolver(() => Reservation)
 export class ReservationsResolver {
@@ -23,9 +27,10 @@ export class ReservationsResolver {
     return this.reservationsService.findOne(id);
   }
 
+  // @UseGuards(FirebaseGuard)
   @Query(() => [Reservation], { name: 'reservationsByCustomerId' })
-  findByCustomerId(@Args('customerId', { type: () => String }) customerId: string) {
-    return this.reservationsService.findByCustomerId(customerId);
+  findByCustomerId(@Args('uid', { type: () => String }) uid: string) {
+    return this.reservationsService.findByCustomerId(uid);
   }
 
   @Query(() => [Reservation], { name: 'reservationsByRoomId' })
@@ -38,7 +43,7 @@ export class ReservationsResolver {
     return this.reservationsService.update(updateReservationInput.id, updateReservationInput);
   }
 
-  @Mutation(() => Reservation)
+  @Mutation(() => Reservation, { name: 'removeReservation' })
   removeReservation(@Args('id', { type: () => String }) id: string) {
     return this.reservationsService.remove(id);
   }

@@ -25,8 +25,8 @@ export const GET_RESERVATION_BY_ID = gql`
 `
 
 export const GET_RESERVATIONS_BY_CUSTOMER_ID = gql`
-    query($customerId: String!){
-        reservationsByCustomerId(customerId: $customerId){
+    query($uid: String!){
+        reservationsByCustomerId(uid: $uid){
             id
             roomId
             reservationName

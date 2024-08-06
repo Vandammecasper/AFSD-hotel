@@ -1,5 +1,11 @@
 <template>
     <div class="w-screen h-screen grid justify-items-center items-center">
+        <RouterLink to="/admin/locks" class="absolute left-72 top-32">
+            <button class="bg-green flex gap-2 p-2 px-4 rounded-full">
+                <img src="../../../public/icons/back.svg" alt="">
+                <p class="font-cambria font-bold text-primary">GO BACK</p>
+            </button>
+        </RouterLink>
         <h1 v-if="getRoomByIdResult.room.roomNumber < 10" class="text-5xl text-darkGreen text-center font-cambria font-normal mt-16">ROOM NUMBER: 00{{ getRoomByIdResult.room.roomNumber }}</h1>
         <h1 v-if="getRoomByIdResult.room.roomNumber < 100 && getRoomByIdResult.room.roomNumber >= 10" class="text-5xl text-darkGreen text-center font-cambria font-normal mt-16">ROOM NUMBER: 0{{ getRoomByIdResult.room.roomNumber }}</h1>
         <h1 v-if="getRoomByIdResult.room.roomNumber >= 100" class="text-5xl text-darkGreen text-center font-cambria font-normal mt-16">ROOM NUMBER: {{ getRoomByIdResult.room.roomNumber }}</h1>

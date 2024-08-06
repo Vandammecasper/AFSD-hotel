@@ -27,3 +27,15 @@ export const UPDATE_RESERVATION = gql`
         }
     }
 `
+
+export const REMOVE_RESERVATION = gql`
+    mutation removeReservation($id: String!){
+        removeReservation(id: $id){
+            id
+            reservationName
+            customerIds
+            checkInDate
+            checkOutDate
+        }
+    }
+`

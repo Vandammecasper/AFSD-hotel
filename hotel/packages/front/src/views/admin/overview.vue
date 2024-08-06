@@ -63,32 +63,28 @@ const findNextReservation = (room: CustomRoom) => {
     let nextReservation
     if(getAllReservationsResult.value)
     if(getAllReservationsResult.value.reservations.length !== 0) {
-        // console.log('length is not 0')
         for(const reservation of getAllReservationsResult.value.reservations) {
-            // console.log(reservation)
-            // console.log(room.id)
             if(reservation.roomId === room.id) {
-                // console.log(reservation)
                 const today = new Date()
                 const checkInDate = new Date(reservation.checkInDate)
                 if(today < checkInDate) {
                     if(nextReservation === undefined) {
                         nextReservation = new Date(reservation.checkInDate)
                         const formattedDate = nextReservation.toLocaleDateString('en-GB', {
-                            day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit'
+                            day: 'numeric', month: 'short', year: 'numeric'
                         })
                         return formattedDate
                     } else {
                         if(nextReservation && new Date(reservation.checkInDate) < new Date(nextReservation)) {
                             nextReservation = new Date(reservation.checkInDate)
                             const formattedDate = nextReservation.toLocaleDateString('en-GB', {
-                                day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit'
+                                day: 'numeric', month: 'short', year: 'numeric'
                             })
                             return formattedDate
                         } else if(nextReservation) {
                             nextReservation = new Date(nextReservation)
                             const formattedDate = nextReservation.toLocaleDateString('en-GB', {
-                                day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit'
+                                day: 'numeric', month: 'short', year: 'numeric'
                             })
                             return formattedDate
                         }
