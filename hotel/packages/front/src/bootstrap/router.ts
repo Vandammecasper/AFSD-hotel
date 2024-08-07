@@ -49,6 +49,10 @@ const router = createRouter({
                     path: 'selection/:roomId/:checkInDate/:checkOutDate',
                     name: 'detail',
                     component: () => import('../views/admin/detail.vue')
+                },
+                {
+                    path: 'today',
+                    component: () => import('../views/today.vue')
                 }
             ]
         },

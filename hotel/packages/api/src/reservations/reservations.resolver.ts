@@ -38,9 +38,19 @@ export class ReservationsResolver {
     return this.reservationsService.findByRoomId(roomId);
   }
 
+  @Query(() => [Reservation], { name: 'notCheckedInReservationsOfToday' })
+  findNotCheckedInReservationsOfToday() {
+    return this.reservationsService.findNotCheckedInReservationsOfToday();
+  }
+
   @Mutation(() => Reservation)
   updateReservation(@Args('updateReservationInput') updateReservationInput: UpdateReservationInput) {
     return this.reservationsService.update(updateReservationInput.id, updateReservationInput);
+  }
+
+  @Mutation(() => Reservation)
+  checkInReservation(@Args('id', { type: () => String }) id: string) {
+    return this.reservationsService.checkIn(id);
   }
 
   @Mutation(() => Reservation, { name: 'removeReservation' })

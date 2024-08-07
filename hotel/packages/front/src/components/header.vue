@@ -4,17 +4,17 @@
             <h2 class="text-darkGreen text-xl font-cambria font-bold my-6">THE CONTINENTAL</h2>
         </RouterLink>
         <div class="flex gap-12">
-            <RouterLink to="/admin/locks">
+            <RouterLink v-if="firebaseUser && getUserByUidResult.userByUid.role == 'ADMIN'" to="/admin/locks">
                 <h2 class="my-6 text-xl text-darkGreen font-cambria font-normal">SMART LOCKS</h2>
             </RouterLink>
-            <RouterLink to="/admin/overview">
+            <RouterLink v-if="firebaseUser && getUserByUidResult.userByUid.role == 'ADMIN'" to="/admin/overview">
                 <h2 class="my-6 text-xl text-darkGreen font-cambria font-normal">ROOM OVERVIEW</h2>
             </RouterLink>
             <RouterLink to="/user/reservations">
                 <h2 class="my-6 text-xl text-darkGreen font-cambria font-normal">MY RESERVATIONS</h2>
             </RouterLink>
             <div class="border-l-2 border-darkGreen py-6 pl-12">
-                <button v-if="firebaseUser" @click="logoutUser()" class="text-xl text-darkGreen font-cambria font-normal">LOGOUT</button>
+                <button v-if="firebaseUser" @click="logout()" class="text-xl text-darkGreen font-cambria font-normal">LOGOUT</button>
                 <RouterLink v-else to="/auth/login">
                     <h2 class="text-xl text-darkGreen font-cambria font-normal">LOGIN</h2>
                 </RouterLink>
@@ -25,16 +25,14 @@
 </template>
 
 <script setup lang="ts">
-import router from '@/bootstrap/router';
 import useFirebase from '@/composables/useFirebase';
+import { useQuery } from '@vue/apollo-composable';
+import { GET_USER_BY_UID } from '@/graphql/user.query';
 
 const {firebaseUser, logout} = useFirebase()
 
-const logoutUser = () => {
-    logout().then(() => {
-        router.push('/')
-    })
+const { result: getUserByUidResult } = useQuery(GET_USER_BY_UID, {
+    uid: firebaseUser.value.uid
+})
 
-}
-        
 </script>

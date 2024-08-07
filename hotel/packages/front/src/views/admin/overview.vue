@@ -10,8 +10,7 @@
                     <div class="grid justify-items-start my-2 ml-6 w-96">
                         <h2 class="text-3xl font-bold font-cambria text-darkGreen">{{room.roomName}}</h2>
                         <p class="text-2xl text-darkGreen font-cambria mt-6">Occupation:</p>
-                        <p v-if="isTodayBetweenDates(room)" class="text-xl text-darkGreen font-cambria -mt-4">Occupied</p>
-                        <p v-else class="text-xl text-darkGreen font-cambria -mt-4">Not occupied</p>
+                        <p class="text-xl text-darkGreen font-cambria -mt-4">{{isRoomOccupied(room)}}</p>
                     </div>
                     <div class="flex pt-3 ml-44 h-16 gap-4">
                         <div class="bg-green p-2 rounded-xl">
@@ -40,7 +39,7 @@ const { result:getAllRoomsResult } = useQuery(GET_ALL_ROOMS)
 const { result:getAllReservationsResult } = useQuery(GET_ALL_RESERVATIONS)
 // console.log(getAllReservationsResult.value.reservations)
 
-const isTodayBetweenDates = (room: CustomRoom) => {
+const isRoomOccupied = (room: CustomRoom) => {
     if(getAllReservationsResult.value)
     if(getAllReservationsResult.value.reservations.length !== 0) {
         for(const reservation of getAllReservationsResult.value.reservations) {
@@ -48,8 +47,12 @@ const isTodayBetweenDates = (room: CustomRoom) => {
                 const today = new Date()
                 const checkInDate = new Date(reservation.checkInDate)
                 const checkOutDate = new Date(reservation.checkOutDate)
-                if(today >= checkInDate && today <= checkOutDate) {
-                    return true
+                if(today >= checkInDate && today <= checkOutDate && reservation.checkedIn === true) {
+                    return 'Occupied'
+                } else if (today >= checkInDate && today <= checkOutDate && reservation.checkedIn === false) {
+                    return 'Check-in today'
+                } else {
+                    return 'Not occupied'
                 }
             }
         }

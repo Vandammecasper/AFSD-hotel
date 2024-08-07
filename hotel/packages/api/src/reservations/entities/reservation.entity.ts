@@ -32,4 +32,8 @@ export class Reservation {
   @Column()
   @Field(() => Int, { description: 'the total price of the reservation', nullable: false })
   price: number;
+
+  @Column()
+  @Field(() => Boolean, { description: 'if the person has checked in or not', nullable: false })
+  checkedIn: boolean;
 }

@@ -11,10 +11,10 @@
                         <p class="text-xl text-darkGreen font-cambria">Reservation:</p>
                         <p class="text-xl text-darkGreen font-cambria">{{formatDate(reservation.checkInDate)}} - {{formatDate(reservation.checkOutDate)}}</p>
                     </div>
-                    <p v-if="getLockStatus(reservation.roomId) && isTodayBetweenDates(reservation)" class="text-xl text-darkGreen font-cambria mt-4">Room status: LOCKED</p>
-                    <p v-else-if="isTodayBetweenDates(reservation)" class="text-xl text-darkGreen font-cambria mt-4">Room status: UNLOCKED</p>
+                    <p v-if="getLockStatus(reservation.roomId) && reservation.checkedIn" class="text-xl text-darkGreen font-cambria mt-4">Room status: LOCKED</p>
+                    <p v-else-if="reservation.checkedIn" class="text-xl text-darkGreen font-cambria mt-4">Room status: UNLOCKED</p>
                 </div>
-                <div v-if="isTodayBetweenDates(reservation)" class="self-center w-44 h-44 grid bg-primary p-8 rounded-3xl border-solid border-4 border-darkGreen ml-28">
+                <div v-if="reservation.checkedIn" class="self-center w-44 h-44 grid bg-primary p-8 rounded-3xl border-solid border-4 border-darkGreen ml-28">
                     <img src="../../public/icons/camera.svg" alt="" class="place-self-center">
                     <p v-if="getLockStatus(reservation.roomId)" class="text-center mt-1 font-cambria">Unlock your room</p>
                     <p v-else class="text-center mt-1 font-cambria">Lock your room</p>

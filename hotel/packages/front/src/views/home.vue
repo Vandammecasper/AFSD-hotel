@@ -4,10 +4,10 @@
             <h2 class="text-primary text-xl font-cambria font-bold my-6">THE CONTINENTAL</h2>
         </RouterLink>
         <div class="flex gap-12">
-            <RouterLink to="/admin/locks">
+            <RouterLink v-if="firebaseUser && getUserByUidResult.userByUid.role == 'ADMIN'" to="/admin/locks">
                 <h2 class="my-6 text-xl text-primary font-cambria font-normal">SMART LOCKS</h2>
             </RouterLink>
-            <RouterLink to="/admin/overview">
+            <RouterLink v-if="firebaseUser && getUserByUidResult.userByUid.role == 'ADMIN'" to="/admin/overview">
                 <h2 class="my-6 text-xl text-primary font-cambria font-normal">ROOM OVERVIEW</h2>
             </RouterLink>
             <RouterLink to="/user/reservations">
@@ -23,11 +23,18 @@
     </div>
     <div class="h-screen items-center flex flex-col">
         <h1 class="text-6xl text-secondary text-center z-20 font-cambria font-normal mt-72">THE CONTINENTAL HOTEL</h1>
-        <RouterLink to="/admin/selection" class="z-20">
-            <button class="border-2 border-primary rounded-full flex justify-center mt-10 p-3 px-4">
-                <h2 class="text-primary text-3xl font-cambria font-normal">Make a reservation</h2>
-            </button>
-        </RouterLink>
+        <div class="flex gap-28">
+            <RouterLink v-if="firebaseUser && getUserByUidResult.userByUid.role == 'ADMIN'" to="/admin/today" class="z-20">
+                <button class="border-2 border-primary rounded-full flex justify-center mt-10 p-3 px-4">
+                    <h2 class="text-primary text-3xl font-cambria font-normal">Today's reservations</h2>
+                </button>
+            </RouterLink>
+            <RouterLink to="/admin/selection" class="z-20">
+                <button class="border-2 border-primary rounded-full flex justify-center mt-10 p-3 px-4">
+                    <h2 class="text-primary text-3xl font-cambria font-normal">Make a reservation</h2>
+                </button>
+            </RouterLink>
+        </div>
         <div class="bg-black w-screen h-screen fixed z-10 opacity-60"></div>
         <img src="/images/hotelLobby.jpg" alt="hotel lobby picture" class="h-screen w-screen fixed">
     </div>
@@ -35,8 +42,13 @@
 
 <script setup lang="ts">
 import useFirebase from '@/composables/useFirebase';
+import { useQuery } from '@vue/apollo-composable';
+import { GET_USER_BY_UID } from '@/graphql/user.query';
 
 const {firebaseUser, logout} = useFirebase()
 
-        
+const { result: getUserByUidResult } = useQuery(GET_USER_BY_UID, {
+    uid: firebaseUser.value.uid
+})
+
 </script>

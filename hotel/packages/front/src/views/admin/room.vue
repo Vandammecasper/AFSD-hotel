@@ -51,7 +51,7 @@
                         <p v-if="isTodayBetweenDates() && reservationCheckOutDate" class="text-darkGreen font-cambria font-bold text-xl">Occupied until {{ reservationCheckOutDate }}</p>
                         <P v-else class="text-darkGreen font-cambria font-bold text-xl">Not occupied</P>
                     </div>
-                    <button v-if="isTodayBetweenDates()" @click="removeReservation(currenReservation.id)" class="mt-14 bg-green text-primary p-2 px-4 rounded-xl font-cambria font-bold">
+                    <button v-if="isTodayBetweenDates() && currenReservation.checkedIn" @click="removeReservation(currenReservation.id)" class="mt-14 bg-green text-primary p-2 px-4 rounded-xl font-cambria font-bold">
                         Remove access
                     </button>
                 </div>

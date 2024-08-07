@@ -30,6 +30,7 @@ export class ReservationsService {
     r.customerIds = createReservationInput.customerIds;
     r.checkInDate = createReservationInput.checkInDate;
     r.checkOutDate = createReservationInput.checkOutDate;
+    r.checkedIn = false;
 
     // the price is equal to the price of the room multiplied by the number of nights between the check-in and check-out dates
     r.price =(r.checkOutDate.getDate() - r.checkInDate.getDate()) * room.price;
@@ -63,6 +64,18 @@ export class ReservationsService {
     return this.reservationRepository.find({ where: { roomId } });
   }
 
+  async findNotCheckedInReservationsOfToday():Promise<Reservation[]> {
+    const allReservations = await this.reservationRepository.find();
+    let reservationsOfToday = [];
+
+    for (const reservation of allReservations) {
+      if (reservation.checkInDate.getDate() === new Date().getDate() && !reservation.checkedIn) {
+        reservationsOfToday.push(reservation);
+      }
+    }
+    return reservationsOfToday;
+  }
+
   async update(id: string, updateReservationInput: UpdateReservationInput):Promise<Reservation> {
     const result = await this.reservationRepository.update(id, updateReservationInput);
 
@@ -76,6 +89,17 @@ export class ReservationsService {
     }
 
     return updatedReservation;
+  }
+
+  async checkIn(id: string):Promise<Reservation> {
+    //@ts-ignore
+    const reservation = await this.reservationRepository.findOne({ _id: new ObjectId(id) });
+    if (!reservation) {
+      throw new NotFoundException(`Reservation with ID "${id}" not found`);
+    }
+    reservation.checkedIn = true;
+
+    return this.reservationRepository.save(reservation);
   }
 
   remove(id: string) {
