@@ -2,7 +2,7 @@
     <div class="w-screen h-screen grid justify-items-center items-center">
         <RouterLink to="/admin/overview" class="absolute left-72 top-32">
             <button class="bg-green flex gap-2 p-2 px-4 rounded-full">
-                <img src="../../../public/icons/back.svg" alt="">
+                <img src="/public/icons/back.svg" alt="">
                 <p class="font-cambria font-bold text-primary">GO BACK</p>
             </button>
         </RouterLink>
@@ -129,7 +129,7 @@
                 </div>
             </div>
             <div class="grid justify-items-center">
-                <img src="../../../public/images/hotelRoomDeluxe.jpg" alt="" class="rounded-xl h-56">
+                <img src="/public/images/hotelRoomDeluxe.jpg" alt="" class="rounded-xl h-56">
                 <button @click="handleRoomCreation(flatscreenTv, balcony, freeWifi, freeParking, smokeFree)" class="bg-accent rounded-3xl w-96 px-8 py-1.5 mt-16 text-secondary font-cambria font-bold text-2xl">Add room</button>
             </div>
         </div>
@@ -141,8 +141,21 @@
 import { useMutation } from '@vue/apollo-composable';
 import router from '@/bootstrap/router';
 import { CREATE_ROOM } from '../../graphql/room.mutation'
+import { ref } from 'vue';
 
 const { mutate: createRoom } = useMutation(CREATE_ROOM)
+
+const roomTitle = ref('')
+const pricePerNight = ref('')
+const size = ref('')
+const roomNumber = ref('')
+const maxOccupancy = ref('')
+const description = ref('')
+const flatscreenTv = ref(false)
+const balcony = ref(false)
+const freeWifi = ref(false)
+const freeParking = ref(false)
+const smokeFree = ref(false)
 
 const handleRoomCreation = (tv:boolean, balc:boolean, wifi:boolean, parking:boolean, smoke:boolean) =>{
     console.log('room title: ',roomTitle.value, 'price per night: ',pricePerNight.value, 'room size: ',size.value, 'room number: ',roomNumber.value, 'maximum occupation: ',maxOccupancy.value, 'tv: ',tv, 'balcony: ',balc, 'wifi: ',wifi, 'parking: ',parking, 'smoking: ',smoke, 'room description: ',description.value)
@@ -163,28 +176,28 @@ const handleRoomCreation = (tv:boolean, balc:boolean, wifi:boolean, parking:bool
         facilities.push('Smoke free')
     }
     console.log(facilities)
-    // createRoom({
-    //     createRoomInput:{
-    //         roomName: roomTitle.value,
-    //         price: parseInt(pricePerNight.value),
-    //         size: parseInt(size.value),
-    //         roomNumber: parseInt(roomNumber.value),
-    //         maxOccupation: parseInt(maxOccupancy.value),
-    //         facilities: facilities,
-    //         description: description.value,
-    //         roomPicture: 'picture here',
-    //         isLocked: true,
-    //         lockHistory: []
-    //     }
-    // })
-    // .then(() => {
-    //     router.push('/admin/overview')
-    // })
-    // .catch((e) => {
-    //     console.error(e)
-    //     console.error(e.message)
-    //     console.error(e.graphqlErrors)
-    // })
+    createRoom({
+        createRoomInput:{
+            roomName: roomTitle.value,
+            price: parseInt(pricePerNight.value),
+            size: parseInt(size.value),
+            roomNumber: parseInt(roomNumber.value),
+            maxOccupation: parseInt(maxOccupancy.value),
+            facilities: facilities,
+            description: description.value,
+            roomPicture: 'picture here',
+            isLocked: true,
+            lockHistory: []
+        }
+    })
+    .then(() => {
+        router.push('/admin/overview')
+    })
+    .catch((e) => {
+        console.error(e)
+        console.error(e.message)
+        console.error(e.graphqlErrors)
+    })
 }
 
 </script>

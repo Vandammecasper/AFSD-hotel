@@ -91,6 +91,7 @@ import useFirebase from '../../composables/useFirebase'
 import router from '@/bootstrap/router'
 import { useMutation } from '@vue/apollo-composable'
 import { ADD_USER } from '@/graphql/user.mutation'
+import type { CustomUser } from '@/interfaces/custom.user.interface'
 
 export default {
   setup() { 

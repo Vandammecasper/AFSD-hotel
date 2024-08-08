@@ -1,10 +1,12 @@
 export interface CustomReservation {
     id: string
+    reservationName: string
     roomId: string
-    userId: string
-    checkIn: string
-    checkOut: string
+    customerIds: [string]
+    checkInDate: string
+    checkOutDate: string
     guests: number
-    totalPrice: number
+    price: number
     createdAt: string
+    checkedIn: boolean
 }

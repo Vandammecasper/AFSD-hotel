@@ -1,13 +1,13 @@
 <template>
     <div class="w-screen h-screen grid justify-items-center">
         <RouterLink to="/admin/room/new" class="bg-green rounded-xl p-3 absolute mt-40 right-80">
-            <img src="../../../public/icons/add.svg" alt="" class="h-10">
+            <img src="/public/icons/add.svg" alt="" class="h-10">
         </RouterLink>
         <h1 class="text-5xl text-darkGreen text-center font-cambria font-normal mt-40">ROOM OVERVIEW</h1>
         <div v-if="getAllRoomsResult" v-for="room of getAllRoomsResult.rooms" :key="room.id" class="w-full grid justify-items-center gap-6 mt-12">
             <div class="flex h-48 w-3/5 bg-secondary rounded-3xl justify-between">
                 <RouterLink :to="{name: 'room', params: {id:room.id}}" class="flex gap-6">
-                    <img src="../../../public/images/hotelRoomDeluxe.jpg" alt="" class="rounded-s-2xl h-48">
+                    <img src="/public/images/hotelRoomDeluxe.jpg" alt="" class="rounded-s-2xl h-48">
                     <div class="grid justify-items-start my-2 w-96">
                         <h2 class="text-3xl font-bold font-cambria text-darkGreen">{{room.roomName}}</h2>
                         <p v-if="room.roomNumber < 10" class="text-xl text-darkGreen font-cambria">(Room number: 00{{room.roomNumber}})</p>
@@ -20,11 +20,11 @@
                 <div class="flex pt-3 h-16 gap-4 mr-4">
                     <RouterLink :to="{name: 'editRoom', params: {id:room.id}}">
                         <button class="bg-green p-2 rounded-xl">
-                            <img src="../../../public/icons/edit.svg" alt="">
+                            <img src="/public/icons/edit.svg" alt="">
                         </button>
                     </RouterLink>
                     <button @click="handleRemoveRoom(room.id)" class="bg-green p-2 rounded-xl">
-                        <img src="../../../public/icons/delete.svg" alt="">
+                        <img src="/public/icons/delete.svg" alt="">
                     </button>
                 </div>
                 <div class="absolute mt-36 grid w-3/5">
@@ -33,7 +33,7 @@
             </div>
         </div>
         <RouterLink to="/admin/room/new" class="bg-green rounded-xl p-4 mt-12">
-            <img src="../../../public/icons/add.svg" alt="">
+            <img src="/public/icons/add.svg" alt="">
         </RouterLink>
     </div>
 </template>

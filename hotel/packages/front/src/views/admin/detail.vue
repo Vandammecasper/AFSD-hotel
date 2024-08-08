@@ -2,7 +2,7 @@
     <div class="w-screen h-screen flex flex-col items-center justify-center">
         <RouterLink to="/admin/selection" class="absolute left-48 top-32">
             <button class="bg-green flex gap-2 p-2 px-4 rounded-full">
-                <img src="../../../public/icons/back.svg" alt="">
+                <img src="/public/icons/back.svg" alt="">
                 <p class="font-cambria font-bold text-primary">GO BACK</p>
             </button>
         </RouterLink>
@@ -11,33 +11,33 @@
         <h1 v-if="getRoomByIdResult.room.roomNumber >= 100" class="text-5xl text-darkGreen text-center font-cambria font-normal mt-24">ROOM NUMBER: {{ getRoomByIdResult.room.roomNumber }}</h1>
         <div class="w-3/4 bg-secondary p-6 mt-8 rounded-3xl flex gap-16">
             <div>
-                <img src="../../../public/images/hotelRoomDeluxe.jpg" alt="" class="rounded-2xl h-64">
+                <img src="/public/images/hotelRoomDeluxe.jpg" alt="" class="rounded-2xl h-64">
                 <div class="flex gap-32 mt-6">
                     <div class="flex flex-col gap-4">
                         <div class="flex items-center gap-3">
-                            <img src="../../../public/icons/surface.svg" alt="" class="h-8">
+                            <img src="/public/icons/surface.svg" alt="" class="h-8">
                             <p class="text-xl font-cambria">{{getRoomByIdResult.room.size}} m²</p>
                         </div>
                         <div v-if="checkFacilities('Flatscreen-tv')" class="flex items-center gap-3 w-40">
-                            <img src="../../../public/icons/tv.svg" alt="" class="h-8">
+                            <img src="/public/icons/tv.svg" alt="" class="h-8">
                             <p class="text-xl font-cambria">Flatscreen-tv</p>
                         </div>
                         <div v-if="checkFacilities('Smoke free')" class="flex items-center gap-3">
-                            <img src="../../../public/icons/smoking.svg" alt="" class="h-8">
+                            <img src="/public/icons/smoking.svg" alt="" class="h-8">
                             <p class="text-xl font-cambria">Smoke free</p>
                         </div>
                     </div>
                     <div class="flex flex-col gap-4">
                         <div v-if="checkFacilities('Free wifi')" class="flex items-center gap-3 -ml-2">
-                            <img src="../../../public/icons/wifi.svg" alt="" class="h-8">
+                            <img src="/public/icons/wifi.svg" alt="" class="h-8">
                             <p class="text-xl font-cambria">Free wifi</p>
                         </div>
                         <div v-if="checkFacilities('Free parking')" class="flex items-center gap-3 w-40">
-                            <img src="../../../public/icons/parking.svg" alt="" class="h-8">
+                            <img src="/public/icons/parking.svg" alt="" class="h-8">
                             <p class="text-xl font-cambria">Free parking</p>
                         </div>
                         <div v-if="checkFacilities('Balcony')" class="flex items-center gap-3">
-                            <img src="../../../public/icons/balcony.svg" alt="" class="h-9">
+                            <img src="/public/icons/balcony.svg" alt="" class="h-9">
                             <p class="text-xl font-cambria">Balcony</p>
                         </div>
                     </div>
@@ -70,8 +70,9 @@ import { useRouter } from 'vue-router';
 import { GET_USER_BY_EMAIL } from '../../graphql/user.query'
 import { CREATE_RESERVATION } from '../../graphql/reservation.mutation'
 import { useMutation } from '@vue/apollo-composable'
-import { CustomReservation } from '../../interfaces/custom.reservation.interface'
+import type { CustomReservation } from '../../interfaces/custom.reservation.interface'
 import router from '@/bootstrap/router'
+import { ref } from 'vue';
 
 const {currentRoute} = useRouter()
 
@@ -79,9 +80,24 @@ const { result:getRoomByIdResult } = useQuery(GET_ROOM_BY_ID,{id: currentRoute.v
 
 const { mutate: createReservationMutation } = useMutation<CustomReservation>(CREATE_RESERVATION)
 
-const checkinDate = currentRoute.value.params.checkInDate
+const checkinDate = ref<string>('')
+const checkOutDate = ref<string>('')
 
-const checkOutDate = currentRoute.value.params.checkOutDate
+if (Array.isArray(currentRoute.value.params.checkInDate)) {
+    checkinDate.value = currentRoute.value.params.checkInDate[0]
+} else{
+    checkinDate.value = currentRoute.value.params.checkInDate
+}
+
+if (Array.isArray(currentRoute.value.params.checkOutDate)) {
+    checkOutDate.value = currentRoute.value.params.checkOutDate[0]
+} else{
+    checkOutDate.value = currentRoute.value.params.checkOutDate
+}
+
+const reservationNameInput = ref('')
+const guestInput1 = ref('')
+const guestInput2 = ref('')
 
 const formatDate = (date:string) =>{
     const givenDate = new Date(date)
@@ -100,8 +116,8 @@ const checkFacilities = (facility: string) => {
 }
 
 const calculateTotalPrice = () => {
-    const checkIn = new Date(checkinDate)
-    const checkOut = new Date(checkOutDate)
+    const checkIn = new Date(checkinDate.value)
+    const checkOut = new Date(checkOutDate.value)
     const differenceInDays = checkOut.getDate() - checkIn.getDate()
     return differenceInDays * getRoomByIdResult.value.room.price
 }
@@ -114,8 +130,8 @@ const createReservation = (reservationName:string, guestEmail1:string, guestEmai
         createReservationMutation({
             createReservationInput: {
                 roomId: currentRoute.value.params.roomId,
-                checkInDate: new Date(checkinDate),
-                checkOutDate: new Date(checkOutDate),
+                checkInDate: new Date(checkinDate.value),
+                checkOutDate: new Date(checkOutDate.value),
                 reservationName: reservationName,
                 customerIds: [guest1.value.userByEmail.uid, guest2.value.userByEmail.uid]
             }
@@ -133,8 +149,8 @@ const createReservation = (reservationName:string, guestEmail1:string, guestEmai
         createReservationMutation({
             createReservationInput: {
                 roomId: currentRoute.value.params.roomId,
-                checkInDate: new Date(checkinDate),
-                checkOutDate: new Date(checkOutDate),
+                checkInDate: new Date(checkinDate.value),
+                checkOutDate: new Date(checkOutDate.value),
                 reservationName: reservationName,
                 customerIds: [guest1.value.userByEmail.uid]
             }

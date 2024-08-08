@@ -3,7 +3,7 @@
     <div v-if="notCheckedInReservationsOfToday.length > 0" v-for="reservation in notCheckedInReservationsOfToday" :key="reservation.id" class="w-full grid justify-items-center gap-6  mt-40">
       <div class=" w-4/6 grid justify-self-center">
         <div class="grid grid-cols-3 h-56 bg-secondary rounded-3xl gap-0 justify-between justify-self-center">
-          <img src="../../../public/images/hotelRoomDeluxe.jpg" alt="" class="rounded-s-2xl h-full" />
+          <img src="/public/images/hotelRoomDeluxe.jpg" alt="" class="rounded-s-2xl h-full" />
           <div class="grid justify-items-start my-2 ml-6 w-96">
             <h2 class="text-3xl font-bold font-cambria text-darkGreen">{{ findRoomName(reservation.roomId) }}</h2>
             <div class="flex gap-8">
@@ -41,12 +41,13 @@ import { GET_ROOM_BY_ID } from '@/graphql/room.query';
 import { CHECK_IN_RESERVATION } from '@/graphql/reservation.mutation';
 import router from '@/bootstrap/router'
 import { ref } from 'vue'
+import type { CustomReservation } from '@/interfaces/custom.reservation.interface';
 
 const { result: getNotCheckedInReservationsOfToday, onResult: checkReservations } = useQuery(GET_NOT_CHECKED_IN_RESERVATIONS_OF_TODAY);
 
 const { mutate: checkInReservation } = useMutation(CHECK_IN_RESERVATION);
 
-const notCheckedInReservationsOfToday = ref([])
+const notCheckedInReservationsOfToday = ref<CustomReservation[]>([])
 
 checkReservations(() => {
     if(getNotCheckedInReservationsOfToday.value){

@@ -2,12 +2,12 @@
     <div class="w-screen h-screen grid justify-items-center items-center">
         <RouterLink to="/admin/overview" class="absolute left-72 top-32">
             <button class="bg-green flex gap-2 p-2 px-4 rounded-full">
-                <img src="../../../public/icons/back.svg" alt="">
+                <img src="/public/icons/back.svg" alt="">
                 <p class="font-cambria font-bold text-primary">GO BACK</p>
             </button>
         </RouterLink>
         <h1 v-if="getRoomByIdResult.room.roomNumber < 10" class="text-5xl text-darkGreen text-center font-cambria font-normal mt-12">UPDATE ROOM 00{{getRoomByIdResult.room.roomNumber}}</h1>
-        <h1 v-if="getRoomByIdResult.room.roomNumber > 10 && room.roomNumber < 100" class="text-5xl text-darkGreen text-center font-cambria font-normal mt-12">UPDATE ROOM 0{{getRoomByIdResult.room.roomNumber}}</h1>
+        <h1 v-if="getRoomByIdResult.room.roomNumber > 10 && getRoomByIdResult.room.roomNumber < 100" class="text-5xl text-darkGreen text-center font-cambria font-normal mt-12">UPDATE ROOM 0{{getRoomByIdResult.room.roomNumber}}</h1>
         <h1 v-if="getRoomByIdResult.room.roomNumber > 10" class="text-5xl text-darkGreen text-center font-cambria font-normal mt-12">UPDATE ROOM {{getRoomByIdResult.room.roomNumber}}</h1>
         <div class="flex gap-12 border-4 rounded-3xl bg-secondary p-6 border-darkGreen -mt-24">
             <div>
@@ -148,7 +148,7 @@
                 </div>
             </div>
             <div class="grid justify-items-center">
-                <img src="../../../public/images/hotelRoomDeluxe.jpg" alt="" class="rounded-xl h-56">
+                <img src="/public/images/hotelRoomDeluxe.jpg" alt="" class="rounded-xl h-56">
                 <button @click="handleRoomUpdate(flatscreenTv, balcony, freeWifi, freeParking, smokeFree)" class="bg-accent rounded-3xl w-96 px-8 py-1.5 mt-16 text-secondary font-cambria font-bold text-2xl">Update room</button>
             </div>
         </div>
@@ -163,6 +163,7 @@ import { UPDATE_ROOM } from '../../graphql/room.mutation'
 import { useQuery } from '@vue/apollo-composable';
 import { GET_ROOM_BY_ID } from '@/graphql/room.query';
 import { useRouter } from 'vue-router';
+import { ref } from 'vue';
 
 const { currentRoute } = useRouter()
 
@@ -170,6 +171,18 @@ const { result: getRoomByIdResult } = useQuery(GET_ROOM_BY_ID, {id: currentRoute
 console.log(getRoomByIdResult)
 
 const { mutate: updateRoom } = useMutation(UPDATE_ROOM)
+
+const roomTitle = ref(getRoomByIdResult.value.room.roomName)
+const pricePerNight = ref(getRoomByIdResult.value.room.price)
+const size = ref(getRoomByIdResult.value.room.size)
+const roomNumber = ref(getRoomByIdResult.value.room.roomNumber)
+const maxOccupancy = ref(getRoomByIdResult.value.room.maxOccupation)
+const description = ref(getRoomByIdResult.value.room.description)
+const flatscreenTv = ref(false)
+const balcony = ref(false)
+const freeWifi = ref(false)
+const freeParking = ref(false)
+const smokeFree = ref(false)
 
 const checkFacilities = (facility: string) => {
     for(const roomFacility of getRoomByIdResult.value.room.facilities) {

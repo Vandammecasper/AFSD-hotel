@@ -32,7 +32,7 @@ import { GET_USER_BY_UID } from '@/graphql/user.query';
 const {firebaseUser, logout} = useFirebase()
 
 const { result: getUserByUidResult } = useQuery(GET_USER_BY_UID, {
-    uid: firebaseUser.value.uid
+    uid: firebaseUser.value?.uid
 })
 
 </script>

@@ -7,7 +7,7 @@ export interface CustomRoom {
     roomName?: string
     roomNumber?: number
     price?: number
-    maxOccupancy?: number
+    maxOccupation?: number
     size?: number
     facilities?: string[]
     image?: string

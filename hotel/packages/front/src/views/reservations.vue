@@ -3,7 +3,7 @@
         <h1 class="text-5xl text-darkGreen text-center font-cambria font-normal mt-40">YOUR RESERVARTIONS</h1>
         <div v-for="reservation of getReservationsByCustomerIdResult.reservationsByCustomerId" class="w-full grid justify-items-center gap-6 mt-8">
             <div class="grid grid-cols-3 h-48 w-3/5 bg-secondary rounded-3xl gap-0 justify-between">
-                <img src="../../../public/images/hotelRoomDeluxe.jpg" alt="" class="rounded-s-2xl h-full">
+                <img src="/public/images/hotelRoomDeluxe.jpg" alt="" class="rounded-s-2xl h-full">
                 <div class="grid justify-items-start my-2 ml-6 w-96">
                     <h2 class="text-3xl font-bold font-cambria text-darkGreen">{{getRoomName(reservation.roomId)}}</h2>
                     <p v-if="isTodayBetweenDates(reservation)" class="text-2xl text-darkGreen font-cambria -mt-4">Room access until {{formatDate(reservation.checkOutDate)}}</p>
@@ -15,7 +15,7 @@
                     <p v-else-if="reservation.checkedIn" class="text-xl text-darkGreen font-cambria mt-4">Room status: UNLOCKED</p>
                 </div>
                 <button @click="() => {detection = true; roomToCheck = reservation.roomId}" v-if="reservation.checkedIn" class="self-center w-44 h-44 grid bg-primary p-8 rounded-3xl border-solid border-4 border-darkGreen ml-28">
-                    <img src="../../public/icons/camera.svg" alt="" class="place-self-center">
+                    <img src="/public/icons/camera.svg" alt="" class="place-self-center">
                     <p v-if="getLockStatus(reservation.roomId)" class="text-center mt-1 text-darkGreen font-cambria">Unlock your room</p>
                     <p v-else class="text-center mt-1 text-darkGreen font-cambria">Lock your room</p>
                 </button>
@@ -27,12 +27,12 @@
                 <qrcode-stream @detect="onDetect"></qrcode-stream>
             </div>
             <div v-if="detected && success" class="w-2/5 h-2/3 fixed  rounded-3xl self-center left-1/4 ml-20 bg-secondary gap-8 grid content-center justify-items-center">
-                <img v-if="locked" src="../../public/icons/locked.svg" alt="" class="h-28">
-                <img v-else src="../../public/icons/unlocked.svg" alt="" class="h-28">
+                <img v-if="locked" src="/public/icons/locked.svg" alt="" class="h-28">
+                <img v-else src="/public/icons/unlocked.svg" alt="" class="h-28">
                 <p class="text-center text-4xl font-bold text-darkGreen font-cambria leading-normal">Your room has been succesfully {{locked ? 'locked' : 'unlocked'}}</p>
             </div>
             <div v-else-if="noAccess" class="w-2/5 h-2/3 fixed p-24  rounded-3xl self-center left-1/4 ml-20 bg-secondary gap-8 grid content-center justify-items-center">
-                <img src="../../public/icons/noAccess.svg" alt="" class="h-28">
+                <img src="/public/icons/noAccess.svg" alt="" class="h-28">
                 <p class="text-center text-4xl font-bold text-darkGreen font-cambria leading-normal">You do not have access to this room!</p>
             </div>
         </div>
@@ -68,29 +68,33 @@ const noAccess = ref(false)
 const roomToCheck = ref('')
 
 const { result: getReservationsByCustomerIdResult } = useQuery(GET_RESERVATIONS_BY_CUSTOMER_ID, {
-    uid: firebaseUser.value.uid
+    uid: firebaseUser.value?.uid
 })
 
 const { mutate: lockChange } = useMutation(LOCK_CHANGE)
 
 const { result: getAllRoomsResult } = useQuery(GET_ALL_ROOMS)
 
-console.log(firebaseUser.value.uid)
+console.log(firebaseUser.value?.uid)
 
 console.log(getReservationsByCustomerIdResult)
 
-const onDetect = (detectedCodes) => {
+interface DetectedCode {
+    rawValue: string
+}
+
+const onDetect = (detectedCodes:Array<DetectedCode>) => {
     detected.value = true
     console.log('QR code detected')
     console.log(detectedCodes[0].rawValue)
     if(detectedCodes[0].rawValue === roomToCheck.value) {
         console.log('changing lock status')
         console.log(roomToCheck.value)
-        console.log(firebaseUser.value.uid)
+        console.log(firebaseUser.value?.uid)
         lockChange({
             changeLockInput: {
                 roomId: roomToCheck.value,
-                customerId: firebaseUser.value.uid
+                customerId: firebaseUser.value?.uid
             }
         }).then(() => {
             console.log('lock status changed')
