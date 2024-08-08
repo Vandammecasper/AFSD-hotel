@@ -66,7 +66,7 @@ export class RoomsService {
 
     room.isLocked = !room.isLocked;
 
-    const lockChange = new ChangeLockInput();
+    const lockChange = new LockChange();
     lockChange.customerId = customerId;
     lockChange.isLocked = room.isLocked;
     lockChange.time = new Date();

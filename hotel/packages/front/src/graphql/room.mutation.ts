@@ -52,3 +52,23 @@ export const DELETE_ROOM = gql`
         }
     }
 `
+
+export const LOCK_CHANGE = gql`
+    mutation lockChange ($changeLockInput: ChangeLockInput!) {
+        lockChange(changeLockInput: $changeLockInput) {
+            isLocked
+            lockHistory {
+                isLocked
+                customerId
+                time
+            }
+            id
+            roomName
+            roomNumber
+            price
+            size
+            facilities
+            roomPicture
+        }
+    }
+`

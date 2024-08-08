@@ -13,7 +13,4 @@ export class ChangeLockInput {
     
     @Field(() => ID)
     customerId: string;
-
-    @Field(() => Date)
-    time: Date;
 }
