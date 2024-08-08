@@ -20,6 +20,7 @@
     "firebase": "^10.12.3",
     "graphql": "^16.9.0",
     "vue": "^3.4.29",
+    "vue-multiselect": "^3.0.0",
     "vue-router": "^4.3.3"
   },
   "devDependencies": {

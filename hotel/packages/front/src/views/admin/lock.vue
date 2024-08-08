@@ -83,7 +83,7 @@ const formatDate = (date:string) =>{
     return formattedDate
 }
 
-const checkFacilities = (facility: string) => {
+const  = (facility: string) => {
     console.log(getRoomByIdResult.value.room.facilities)
     for(const roomFacility of getRoomByIdResult.value.room.facilities) {
         console.log(roomFacility)

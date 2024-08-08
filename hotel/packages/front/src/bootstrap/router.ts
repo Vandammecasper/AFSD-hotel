@@ -53,6 +53,15 @@ const router = createRouter({
                 {
                     path: 'today',
                     component: () => import('../views/today.vue')
+                },
+                {
+                    path: 'room/new',
+                    component: () => import('../views/admin/newRoom.vue')
+                },
+                {
+                    path: 'room/edit/:id',
+                    name: 'editRoom',
+                    component: () => import('../views/admin/editRoom.vue')
                 }
             ]
         },

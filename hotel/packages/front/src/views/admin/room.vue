@@ -150,11 +150,15 @@ const checkFacilities = (facility: string) => {
 }
 
 const removeReservation = (reservationId: string) => {
+    console.log('remove reservation')
     deleteReservation({
-        reservationId: reservationId
+        id: reservationId
     })
     .then(() => {
-        router.push('/')
+        location.reload()
+    })
+    .catch(() => {
+        location.reload()
     })
 }
 

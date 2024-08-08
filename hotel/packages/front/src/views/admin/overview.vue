@@ -1,42 +1,55 @@
 <template>
     <div class="w-screen h-screen grid justify-items-center">
-        <div class="bg-green rounded-xl p-3 absolute mt-40 right-80">
+        <RouterLink to="/admin/room/new" class="bg-green rounded-xl p-3 absolute mt-40 right-80">
             <img src="../../../public/icons/add.svg" alt="" class="h-10">
-        </div>
+        </RouterLink>
         <h1 class="text-5xl text-darkGreen text-center font-cambria font-normal mt-40">ROOM OVERVIEW</h1>
         <div v-if="getAllRoomsResult" v-for="room of getAllRoomsResult.rooms" :key="room.id" class="w-full grid justify-items-center gap-6 mt-12">
-            <RouterLink :to="{name: 'room', params: {id:room.id}}" class="grid grid-cols-3 h-48 w-3/5 bg-secondary rounded-3xl gap-0 justify-between">
-                    <img src="../../../public/images/hotelRoomDeluxe.jpg" alt="" class="rounded-s-2xl h-full">
-                    <div class="grid justify-items-start my-2 ml-6 w-96">
+            <div class="flex h-48 w-3/5 bg-secondary rounded-3xl justify-between">
+                <RouterLink :to="{name: 'room', params: {id:room.id}}" class="flex gap-6">
+                    <img src="../../../public/images/hotelRoomDeluxe.jpg" alt="" class="rounded-s-2xl h-48">
+                    <div class="grid justify-items-start my-2 w-96">
                         <h2 class="text-3xl font-bold font-cambria text-darkGreen">{{room.roomName}}</h2>
+                        <p v-if="room.roomNumber < 10" class="text-xl text-darkGreen font-cambria">(Room number: 00{{room.roomNumber}})</p>
+                        <p v-if="room.roomNumber > 10 && room.roomNumber < 100" class="text-xl text-darkGreen font-cambria">(Room number: 0{{room.roomNumber}})</p>
+                        <p v-if="room.roomNumber > 10" class="text-xl text-darkGreen font-cambria">(Room number: {{room.roomNumber}})</p>
                         <p class="text-2xl text-darkGreen font-cambria mt-6">Occupation:</p>
                         <p class="text-xl text-darkGreen font-cambria -mt-4">{{isRoomOccupied(room)}}</p>
                     </div>
-                    <div class="flex pt-3 ml-44 h-16 gap-4">
-                        <div class="bg-green p-2 rounded-xl">
+                </RouterLink>
+                <div class="flex pt-3 h-16 gap-4 mr-4">
+                    <RouterLink :to="{name: 'editRoom', params: {id:room.id}}">
+                        <button class="bg-green p-2 rounded-xl">
                             <img src="../../../public/icons/edit.svg" alt="">
-                        </div>
-                        <div class="bg-green p-2 rounded-xl">
-                            <img src="../../../public/icons/delete.svg" alt="">
-                        </div>
-                    </div>
-                    <p v-if="findNextReservation(room) !== 'No reservations'" class="absolute justify-self-end mr-6 mt-36 font-cambria text-lg">Next reservation: {{findNextReservation(room)}}</p>
-            </RouterLink>
+                        </button>
+                    </RouterLink>
+                    <button @click="handleRemoveRoom(room.id)" class="bg-green p-2 rounded-xl">
+                        <img src="../../../public/icons/delete.svg" alt="">
+                    </button>
+                </div>
+                <div class="absolute mt-36 grid w-3/5">
+                    <p v-if="findNextReservation(room) !== 'No reservations'" class="justify-self-end font-cambria text-lg">Next reservation: {{findNextReservation(room)}}</p>
+                </div>
+            </div>
         </div>
-        <div class="bg-green rounded-xl p-4 mt-12">
+        <RouterLink to="/admin/room/new" class="bg-green rounded-xl p-4 mt-12">
             <img src="../../../public/icons/add.svg" alt="">
-        </div>
+        </RouterLink>
     </div>
 </template>
 
 <script setup lang="ts">
 import { useQuery } from '@vue/apollo-composable';
+import { useMutation } from '@vue/apollo-composable';
 import { GET_ALL_ROOMS } from '../../graphql/room.query'
 import { GET_ALL_RESERVATIONS } from '../../graphql/reservation.query'
 import type { CustomRoom } from '@/interfaces/custom.room.interface';
+import router from '@/bootstrap/router';
+import { DELETE_ROOM } from '../../graphql/room.mutation'
 
 const { result:getAllRoomsResult } = useQuery(GET_ALL_ROOMS)
 const { result:getAllReservationsResult } = useQuery(GET_ALL_RESERVATIONS)
+const { mutate: deleteRoom } = useMutation(DELETE_ROOM)
 // console.log(getAllReservationsResult.value.reservations)
 
 const isRoomOccupied = (room: CustomRoom) => {
@@ -56,8 +69,9 @@ const isRoomOccupied = (room: CustomRoom) => {
                 }
             }
         }
+        return 'Not occupied'
     } else {
-        return false
+        return 'Not occupied'
     }
 }
 
@@ -101,5 +115,11 @@ const findNextReservation = (room: CustomRoom) => {
     } else {
         return 'No reservations'
     }
+}
+
+const handleRemoveRoom = (roomId:string) => {
+    deleteRoom({id: roomId})
+    .then(() => {location.reload()})
+    .catch(() => location.reload())
 }
 </script>

@@ -103,7 +103,7 @@ export class ReservationsService {
   }
 
   remove(id: string) {
-    return `This action removes a #${id} reservation`;
+    return this.reservationRepository.delete(id);
   }
 
   deleteAll() {
