@@ -56,15 +56,15 @@
                     </button>
                 </div>
                 <p class="text-darkGreen font-cambria font-normal text-2xl mt-12 ">Next reservations:</p>
-                <p v-if="findNextReservations.length === 0" class="text-darkGreen font-cambria font-normal text-xl mt-2">No next reservations</p>
-                <div v-else class="max-h-48 overflow-auto">
-                    <div v-for="reservation of findNextReservations()" :key="reservation.id" class="flex justify-between border-t-2 border-darkGreen pt-2 mt-2 px-2">
+                <div v-if="getNextReservationsByRoomIdResult.nextReservationsOfRoom.length !== 0" class="max-h-48 overflow-auto">
+                    <div v-for="reservation of getNextReservationsByRoomIdResult.nextReservationsOfRoom" :key="reservation.id" class="flex justify-between border-t-2 border-darkGreen pt-2 mt-2 px-2">
                         <p class="text-darkGreen font-cambria font-normal">{{reservation.reservationName}}</p>
                         <div class="flex gap-2">
                             <p class="text-darkGreen font-cambria font-normal">{{formatDate(new Date(reservation.checkInDate))}} - {{ formatDate(new Date(reservation.checkOutDate)) }}</p>
                         </div>
                     </div>
                 </div>
+                <p v-else class="text-darkGreen font-cambria font-normal text-xl mt-2">No next reservations</p>
             </div>
         </div>
         
@@ -75,7 +75,7 @@
 import { useQuery } from '@vue/apollo-composable';
 import { GET_ROOM_BY_ID } from '../../graphql/room.query'
 import { useRouter } from 'vue-router';
-import { GET_RESERVATIONS_BY_ROOM_ID } from '@/graphql/reservation.query';
+import { GET_RESERVATIONS_BY_ROOM_ID, GET_NEXT_RESERVATIONS_OF_ROOM } from '@/graphql/reservation.query';
 import { ref } from 'vue';
 import type { CustomReservation } from '@/interfaces/custom.reservation.interface';
 import { useMutation } from '@vue/apollo-composable';
@@ -87,9 +87,13 @@ const { result:getRoomByIdResult } = useQuery(GET_ROOM_BY_ID,{id: currentRoute.v
 
 const { result:getReservationsByIdRoom } = useQuery(GET_RESERVATIONS_BY_ROOM_ID,{roomId: currentRoute.value.params.id})
 
+const { result:getNextReservationsByRoomIdResult } = useQuery(GET_NEXT_RESERVATIONS_OF_ROOM, {roomId: currentRoute.value.params.id})
+
 const { mutate:deleteReservation } = useMutation(REMOVE_RESERVATION)
 
 const reservationsByRoomId = ref<CustomReservation[]>([])
+const reservationCheckOutDate = ref<string>('')
+const currentReservation = ref<CustomReservation>()
 
 if(getReservationsByIdRoom.value) {
     for (const reservation of getReservationsByIdRoom.value.reservationsByRoomId) {
@@ -98,9 +102,6 @@ if(getReservationsByIdRoom.value) {
 }
 
 
-const reservationCheckOutDate = ref<string>('')
-const nextReservations = ref<Array<CustomReservation>>([])
-const currentReservation = ref<CustomReservation>()
 
 const isTodayBetweenDates = () => {
     if(getReservationsByIdRoom.value)
@@ -120,25 +121,6 @@ const isTodayBetweenDates = () => {
     } else {
         return false
     }
-}
-
-const findNextReservations = () => {
-    let next: Array<CustomReservation> = []
-    if(getReservationsByIdRoom.value)
-    if(reservationsByRoomId.value.length !== 0) {
-        for(const reservation of reservationsByRoomId.value) {
-            const today = new Date()
-            const checkInDate = new Date(reservation.checkInDate)
-            if(today < checkInDate) {
-                next.push(reservation)
-            }
-        }
-        if(next.length === 0) {
-            return []
-        }
-    }
-    nextReservations.value = next
-    return nextReservations.value
 }
 
 const formatDate = (date:Date) =>{

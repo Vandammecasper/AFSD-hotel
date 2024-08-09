@@ -76,6 +76,18 @@ export class ReservationsService {
     return reservationsOfToday;
   }
 
+  async findNextReservationsByRoomId(roomId: string):Promise<Reservation[]> {
+    const allReservations = await this.reservationRepository.find();
+    let nextReservations = [];
+
+    for (const reservation of allReservations) {
+      if (reservation.roomId === roomId && reservation.checkInDate.getDate() >= new Date().getDate()) {
+        nextReservations.push(reservation);
+      }
+    }
+    return nextReservations;
+  }
+
   async update(id: string, updateReservationInput: UpdateReservationInput):Promise<Reservation> {
     const result = await this.reservationRepository.update(id, updateReservationInput);
 

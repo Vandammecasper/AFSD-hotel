@@ -44,7 +44,6 @@ import { useMutation } from '@vue/apollo-composable';
 import { GET_ALL_ROOMS } from '../../graphql/room.query'
 import { GET_ALL_RESERVATIONS } from '../../graphql/reservation.query'
 import type { CustomRoom } from '@/interfaces/custom.room.interface';
-import router from '@/bootstrap/router';
 import { DELETE_ROOM } from '../../graphql/room.mutation'
 
 const { result:getAllRoomsResult } = useQuery(GET_ALL_ROOMS)

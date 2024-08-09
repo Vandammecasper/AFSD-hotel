@@ -74,3 +74,18 @@ export const GET_NOT_CHECKED_IN_RESERVATIONS_OF_TODAY = gql`
         }  
     }
 `
+
+export const GET_NEXT_RESERVATIONS_OF_ROOM = gql`
+    query($roomId: String!){
+        nextReservationsOfRoom(roomId: $roomId){
+            id
+            roomId
+            reservationName
+            customerIds
+            checkInDate
+            checkOutDate
+            checkedIn
+            price
+        }  
+    }
+`
