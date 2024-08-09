@@ -1,0 +1,19 @@
+{
+  "name": "hotel",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "dev:emulate": "npx lerna run --scope={pwa,api} dev:emulate --stream"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@playwright/test": "^1.46.0",
+    "@types/node": "^22.1.0"
+  },
+  "dependencies": {
+    "mongodb-memory-server": "^10.0.0"
+  }
+}

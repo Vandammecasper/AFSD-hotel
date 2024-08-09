@@ -11,7 +11,8 @@
     "build-only": "vite build",
     "type-check": "vue-tsc --build --force",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
-    "format": "prettier --write src/"
+    "format": "prettier --write src/",
+    "dev:emulate": "VITE_EMULATION=true npm run dev | npx firebase-tools emulators:start --only auth"
   },
   "dependencies": {
     "@apollo/client": "^3.11.1",

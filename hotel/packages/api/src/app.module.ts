@@ -8,6 +8,7 @@ import { ReservationsModule } from './reservations/reservations.module';
 import { RoomsModule } from './rooms/rooms.module';
 import { SeedModule } from './seed/seed.module';
 import { UsersModule } from './users/users.module';
+import { MongoMemoryServer } from 'mongodb-memory-server';
 import { AuthenticationModule } from './authentication/authentication.module';
 
 @Module({
@@ -24,6 +25,38 @@ import { AuthenticationModule } from './authentication/authentication.module';
     driver: ApolloDriver,
     autoSchemaFile: true,
   }),
+  TypeOrmModule.forRootAsync({
+      useFactory: async () => {
+        if (process.env.FIREBASE_AUTH_EMULATOR_HOST) {
+          const mongo = await MongoMemoryServer.create({
+            instance: {
+              dbName: process.env.DB_NAME,
+            },
+          })
+
+          const mongoUri = mongo.getUri()
+          console.log('🍃 mongoUri', mongoUri)
+
+          return {
+            type: 'mongodb',
+            url: `${mongoUri}${process.env.DB_NAME}`,
+            entities: [__dirname + '/**/*.entity.{js,ts}'],
+            synchronize: process.env.NODE_ENV == 'production' ? false : true, // Careful with this in production
+            useNewUrlParser: true,
+            useUnifiedTopology: true, // Disable deprecated warnings
+          }
+        } else {
+          return {
+            type: 'mongodb',
+            url: `mongodb://${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}`, // DOCKER
+            entities: [__dirname + '/**/*.entity.{js,ts}'],
+            synchronize: process.env.NODE_ENV == 'production' ? false : true, // Careful with this in production
+            useNewUrlParser: true,
+            useUnifiedTopology: true, // Disable deprecated warnings
+          }
+        }
+      },
+    }),
   RoomsModule,
   ReservationsModule,
   SeedModule,
