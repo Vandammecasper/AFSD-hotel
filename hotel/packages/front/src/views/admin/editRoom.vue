@@ -2,13 +2,13 @@
     <div class="w-screen h-screen grid justify-items-center items-center">
         <RouterLink to="/admin/overview" class="absolute left-72 top-32">
             <button class="bg-green flex gap-2 p-2 px-4 rounded-full">
-                <img src="/public/icons/back.svg" alt="">
+                <img src="/icons/back.svg" alt="">
                 <p class="font-cambria font-bold text-primary">GO BACK</p>
             </button>
         </RouterLink>
-        <h1 v-if="getRoomByIdResult.room.roomNumber < 10" class="text-5xl text-darkGreen text-center font-cambria font-normal mt-12">UPDATE ROOM 00{{getRoomByIdResult.room.roomNumber}}</h1>
-        <h1 v-if="getRoomByIdResult.room.roomNumber > 10 && getRoomByIdResult.room.roomNumber < 100" class="text-5xl text-darkGreen text-center font-cambria font-normal mt-12">UPDATE ROOM 0{{getRoomByIdResult.room.roomNumber}}</h1>
-        <h1 v-if="getRoomByIdResult.room.roomNumber > 10" class="text-5xl text-darkGreen text-center font-cambria font-normal mt-12">UPDATE ROOM {{getRoomByIdResult.room.roomNumber}}</h1>
+        <h1 v-if="getRoomByIdResult?.room.roomNumber < 10" class="text-5xl text-darkGreen text-center font-cambria font-normal mt-12">UPDATE ROOM 00{{getRoomByIdResult.room.roomNumber}}</h1>
+        <h1 v-if="getRoomByIdResult?.room.roomNumber > 10 && getRoomByIdResult.room.roomNumber < 100" class="text-5xl text-darkGreen text-center font-cambria font-normal mt-12">UPDATE ROOM 0{{getRoomByIdResult.room.roomNumber}}</h1>
+        <h1 v-if="getRoomByIdResult?.room.roomNumber > 10" class="text-5xl text-darkGreen text-center font-cambria font-normal mt-12">UPDATE ROOM {{getRoomByIdResult.room.roomNumber}}</h1>
         <div class="flex gap-12 border-4 rounded-3xl bg-secondary p-6 border-darkGreen -mt-24">
             <div>
                 <div class="flex gap-12">
@@ -26,7 +26,7 @@
                                 id="roomTitle"
                                 placeholder="New room title"
                                 class="font-cambria text-darkGreen rounded-2xl mt-1 block border-2 bg-secondary border-darkGreen p-2 "
-                                :value="getRoomByIdResult.room.roomName"
+                                :value="getRoomByIdResult?.room.roomName"
                             />
                         </div>
                         <div class="mt-4">
@@ -42,7 +42,7 @@
                                 id="pricePerNight"
                                 placeholder="00.00"
                                 class="font-cambria text-darkGreen rounded-2xl mt-1 block border-2 bg-secondary border-darkGreen p-2 "
-                                :value="getRoomByIdResult.room.price"
+                                :value="getRoomByIdResult?.room.price"
                             />
                         </div>
                         <div class="mt-4">
@@ -58,7 +58,7 @@
                                 id="size"
                                 placeholder="0"
                                 class="font-cambria text-darkGreen rounded-2xl mt-1 block border-2 bg-secondary border-darkGreen p-2 "
-                                :value="getRoomByIdResult.room.size"
+                                :value="getRoomByIdResult?.room.size"
                             />
                         </div>
                     </div>
@@ -76,7 +76,7 @@
                                 id="roomNumber"
                                 placeholder="0"
                                 class="font-cambria text-darkGreen rounded-2xl mt-1 block border-2 bg-secondary border-darkGreen p-2 "
-                                :value="getRoomByIdResult.room.roomNumber"
+                                :value="getRoomByIdResult?.room.roomNumber"
                             />
                         </div>
                         <div class="mt-4">
@@ -92,7 +92,7 @@
                                 id="maxOccupancy"
                                 placeholder="1"
                                 class="font-cambria text-darkGreen rounded-2xl mt-1 block border-2 bg-secondary border-darkGreen p-2 "
-                                :value="getRoomByIdResult.room.maxOccupation"
+                                :value="getRoomByIdResult?.room.maxOccupation"
                             />
                         </div>
                         <div class="mt-4">
@@ -111,21 +111,39 @@
                                     <label for="flatscreenTv">Flatscreen-tv</label>
                                 </div>
                                 <div class="flex gap-1" v-if="checkFacilities('Balcony')" >
-                                    <input checked value="false" class="ml-2" type="checkbox" name="balcony" id="balcony"/>
+                                    <input checked class="ml-2" type="checkbox" name="balcony" id="balcony"/>
                                     <label for="balcony">Balcony</label>
                                 </div>
                                 <div class="flex gap-1" v-else>
-                                    <input value="false" class="ml-2" type="checkbox" name="balcony" id="balcony"/>
+                                    <input class="ml-2" type="checkbox" name="balcony" id="balcony"/>
                                     <label for="balcony">Balcony</label>
                                 </div>
-                                <div>
-                                    <input v-if="checkFacilities('Free wifi')" checked value="false" class="ml-2" type="checkbox" name="freeWifi" id="freeWifi" v-model="freeWifi"/>
+                                <div class="flex gap-1" v-if="checkFacilities('Free wifi') === true">
+                                    <input checked class="ml-2" type="checkbox" name="freeWifi" id="freeWifi" v-model="freeWifi"/>
+                                    <label for="freeWifi">Free wifi</label>
+                                </div>
+                                <div class="flex gap-1" v-else>
+                                    <input checked class="ml-2" type="checkbox" name="freeWifi" id="freeWifi" v-model="freeWifi"/>
                                     <label for="freeWifi">Free wifi</label>
                                 </div>
                             </div>
                             <div class="flex gap-1">
-                                <input v-if="checkFacilities('Free parking')" checked value="false" type="checkbox" name="freeParking" id="freeParking" class="" v-model="freeParking">Free parking</input>
-                                <input v-if="checkFacilities('Smoke free')" checked value="false" type="checkbox" name="smokeFree" id="smokeFree" class="ml-2" v-model="smokeFree">Smoke free</input>
+                                <div class="flex gap-1" v-if="checkFacilities('Free parking')">
+                                    <input checked type="checkbox" name="freeParking" id="freeParking" class="" v-model="freeParking"/>
+                                    <label for="freeParking">Free parking</label>
+                                </div>
+                                <div class="flex gap-1" v-else>
+                                    <input type="checkbox" name="freeParking" id="freeParking" class="" v-model="freeParking"/>
+                                    <label for="freeParking">Free parking</label>
+                                </div>
+                                <div class="flex gap-1" v-if="checkFacilities('Smoke free')">
+                                    <input checked type="checkbox" name="smokeFree" id="smokeFree" class="ml-2" v-model="smokeFree"/>
+                                    <label for="smokeFree">Smoke free</label>
+                                </div>
+                                <div class="flex gap-1" v-else>
+                                    <input type="checkbox" name="smokeFree" id="smokeFree" class="ml-2" v-model="smokeFree"/>
+                                    <label for="smokeFree">Smoke free</label>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -143,12 +161,12 @@
                         id="description"
                         placeholder="information about the room"
                         class="font-cambria text-darkGreen rounded-2xl mt-1 border-2 bg-secondary border-darkGreen p-2 w-96 "
-                        :value="getRoomByIdResult.room.description"
+                        :value="getRoomByIdResult?.room.description"
                     />
                 </div>
             </div>
             <div class="grid justify-items-center">
-                <img src="/public/images/hotelRoomDeluxe.jpg" alt="" class="rounded-xl h-56">
+                <img src="/images/hotelRoomDeluxe.jpg" alt="" class="rounded-xl h-56">
                 <button @click="handleRoomUpdate(flatscreenTv, balcony, freeWifi, freeParking, smokeFree)" class="bg-accent rounded-3xl w-96 px-8 py-1.5 mt-16 text-secondary font-cambria font-bold text-2xl">Update room</button>
             </div>
         </div>
@@ -168,36 +186,47 @@ import { ref } from 'vue';
 const { currentRoute } = useRouter()
 
 const { result: getRoomByIdResult } = useQuery(GET_ROOM_BY_ID, {id: currentRoute.value.params.id})
-console.log(getRoomByIdResult)
 
 const { mutate: updateRoom } = useMutation(UPDATE_ROOM)
 
-const roomTitle = ref(getRoomByIdResult.value.room.roomName)
-const pricePerNight = ref(getRoomByIdResult.value.room.price)
-const size = ref(getRoomByIdResult.value.room.size)
-const roomNumber = ref(getRoomByIdResult.value.room.roomNumber)
-const maxOccupancy = ref(getRoomByIdResult.value.room.maxOccupation)
-const description = ref(getRoomByIdResult.value.room.description)
+const roomTitle = ref('')
+const pricePerNight = ref('')
+const size = ref('')
+const roomNumber = ref('')
+const maxOccupancy = ref('')
+const description = ref('')
 const flatscreenTv = ref(false)
 const balcony = ref(false)
 const freeWifi = ref(false)
 const freeParking = ref(false)
 const smokeFree = ref(false)
 
+if(getRoomByIdResult){
+    roomTitle.value = getRoomByIdResult.value?.room.roomName
+    pricePerNight.value = getRoomByIdResult.value?.room.price
+    size.value = getRoomByIdResult.value?.room.size
+    roomNumber.value = getRoomByIdResult.value?.room.roomNumber
+    maxOccupancy.value = getRoomByIdResult.value?.room.maxOccupation
+    description.value = getRoomByIdResult.value?.room.description
+}
+
 const checkFacilities = (facility: string) => {
-    for(const roomFacility of getRoomByIdResult.value.room.facilities) {
-        if(roomFacility === facility) {
-            return true
+    if(getRoomByIdResult.value){
+        for(const roomFacility of getRoomByIdResult.value.room.facilities) {
+            if(roomFacility === facility) {
+                return true
+            }
         }
+        return false
+    } else {
+        return false
     }
-    return false
 }
 
 const handleRoomUpdate = (tv:boolean, balc:boolean, wifi:boolean, parking:boolean, smoke:boolean) =>{
     console.log('room title: ',roomTitle.value, 'price per night: ',pricePerNight.value, 'room size: ',size.value, 'room number: ',roomNumber.value, 'maximum occupation: ',maxOccupancy.value, 'tv: ',tv, 'balcony: ',balc, 'wifi: ',wifi, 'parking: ',parking, 'smoking: ',smoke, 'room description: ',description.value)
     let facilities:Array<string> = []
     for(const roomFacility of getRoomByIdResult.value.room.facilities) {
-        console.log(roomFacility)
         facilities.push(roomFacility)
     }
     console.log(facilities)

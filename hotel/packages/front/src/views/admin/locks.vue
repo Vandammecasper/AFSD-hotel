@@ -20,6 +20,7 @@
 <script setup lang="ts">
 import { useQuery } from '@vue/apollo-composable';
 import { GET_ALL_ROOMS } from '../../graphql/room.query'
+import { GET_USER_BY_UID } from '@/graphql/user.query';
 
 const { result:getAllRoomsResult } = useQuery(GET_ALL_ROOMS)
 
@@ -47,7 +48,9 @@ const getLastLockChangePerson = (roomId: string) => {
         if (room.id === roomId) {
             const lockHistory = room.lockHistory
             if (lockHistory.length > 0) {
-                return lockHistory[lockHistory.length - 1].customerId
+                const { result:getUserByUidResult } = useQuery(GET_USER_BY_UID, {uid: lockHistory[lockHistory.length - 1].customerId})
+                const name = getUserByUidResult.value.userByUid.userName
+                return name
             } else {
                 return undefined
             }

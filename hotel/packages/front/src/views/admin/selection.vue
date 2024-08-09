@@ -10,35 +10,35 @@
     <div v-if="rooms.length > 0" v-for="room in rooms" :key="room.id" class="w-full grid justify-items-center gap-6 mt-8">
       <RouterLink :to="{name: 'detail', params: {roomId: room.id, checkInDate: date[0], checkOutDate: date[1]}}" class=" w-4/5 grid justify-self-center">
         <button class="grid grid-cols-3 h-56 bg-secondary rounded-3xl gap-0 justify-between justify-self-center">
-          <img src="/public/images/hotelRoomDeluxe.jpg" alt="" class="rounded-s-2xl h-full" />
+          <img src="/images/hotelRoomDeluxe.jpg" alt="" class="rounded-s-2xl h-full" />
           <div class="grid justify-items-start my-2 ml-6 w-96">
             <h2 class="text-3xl font-bold font-cambria text-darkGreen">{{ room.roomName }}</h2>
             <div class="flex gap-32 mt-5">
               <div class="flex flex-col gap-4">
                 <div class="flex items-center gap-3">
-                  <img src="/public/icons/surface.svg" alt="" class="h-8" />
+                  <img src="/icons/surface.svg" alt="" class="h-8" />
                   <p class="text-xl font-cambria text-darkGreen">{{ room.size }} m²</p>
                 </div>
                 <div v-if="checkFacilities('Flatscreen-tv', room.id)" class="flex items-center gap-3 w-40">
-                  <img src="/public/icons/tv.svg" alt="" class="h-8" />
+                  <img src="/icons/tv.svg" alt="" class="h-8" />
                   <p class="text-xl font-cambria text-darkGreen">Flatscreen-tv</p>
                 </div>
                 <div v-if="checkFacilities('Smoke free', room.id)" class="flex items-center gap-3">
-                  <img src="/public/icons/smoking.svg" alt="" class="h-8" />
+                  <img src="/icons/smoking.svg" alt="" class="h-8" />
                   <p class="text-xl font-cambria text-darkGreen">Smoke free</p>
                 </div>
               </div>
               <div class="flex flex-col gap-4">
                 <div v-if="checkFacilities('Free wifi', room.id)" class="flex items-center gap-3 -ml-2">
-                  <img src="/public/icons/wifi.svg" alt="" class="h-8" />
+                  <img src="/icons/wifi.svg" alt="" class="h-8" />
                   <p class="text-xl font-cambria text-darkGreen">Free wifi</p>
                 </div>
                 <div v-if="checkFacilities('Free parking', room.id)" class="flex items-center gap-3 w-40">
-                  <img src="/public/icons/parking.svg" alt="" class="h-8" />
+                  <img src="/icons/parking.svg" alt="" class="h-8" />
                   <p class="text-xl font-cambria text-darkGreen">Free parking</p>
                 </div>
                 <div v-if="checkFacilities('Balcony', room.id)" class="flex items-center gap-3">
-                  <img src="/public/icons/balcony.svg" alt="" class="h-9" />
+                  <img src="/icons/balcony.svg" alt="" class="h-9" />
                   <p class="text-xl font-cambria text-darkGreen">Balcony</p>
                 </div>
               </div>
@@ -81,7 +81,9 @@ const checkFacilities = (facility: string, roomId: string) => {
 };
 
 const findRoom = (startDate: Date, endDate: Date, amountOfPeople: number) => {
-  let availableRooms = getAllRoomsResult.value.rooms.filter((room:CustomRoom) => {if(room.maxOccupation) room.maxOccupation >= amountOfPeople});
+  let availableRooms = getAllRoomsResult.value.rooms.filter((room: CustomRoom) => {
+  return room.maxOccupation != null && room.maxOccupation != undefined && room.maxOccupation >= amountOfPeople;
+});
 
   for (const reservation of getAllReservationsResult.value.reservations) {
     availableRooms = availableRooms.filter((room:CustomRoom) => {
@@ -95,7 +97,7 @@ const findRoom = (startDate: Date, endDate: Date, amountOfPeople: number) => {
       return true;
     });
   }
-
+  
   rooms.value = availableRooms;
 };
 </script>

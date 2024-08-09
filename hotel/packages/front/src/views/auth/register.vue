@@ -16,13 +16,13 @@
             for="nickname"
             class="text-md block font-bold text-darkGreen font-cambria"
           >
-            Name
+            Last name
           </label>
           <input
             type="text"
             name="nickname"
             id="nickname"
-            placeholder="Your name"
+            placeholder="Your last name"
             class="font-cambria text-darkGreen rounded-2xl mt-1 block border-2 bg-lightGreen border-darkGreen p-2 "
             v-model="newUser.name"
             />

@@ -2,7 +2,7 @@
     <div class="w-screen h-screen flex flex-col items-center justify-center">
         <RouterLink to="/admin/selection" class="absolute left-48 top-32">
             <button class="bg-green flex gap-2 p-2 px-4 rounded-full">
-                <img src="/public/icons/back.svg" alt="">
+                <img src="/icons/back.svg" alt="">
                 <p class="font-cambria font-bold text-primary">GO BACK</p>
             </button>
         </RouterLink>
@@ -11,33 +11,33 @@
         <h1 v-if="getRoomByIdResult.room.roomNumber >= 100" class="text-5xl text-darkGreen text-center font-cambria font-normal mt-24">ROOM NUMBER: {{ getRoomByIdResult.room.roomNumber }}</h1>
         <div class="w-3/4 bg-secondary p-6 mt-8 rounded-3xl flex gap-16">
             <div>
-                <img src="/public/images/hotelRoomDeluxe.jpg" alt="" class="rounded-2xl h-64">
+                <img src="/images/hotelRoomDeluxe.jpg" alt="" class="rounded-2xl h-64">
                 <div class="flex gap-32 mt-6">
                     <div class="flex flex-col gap-4">
                         <div class="flex items-center gap-3">
-                            <img src="/public/icons/surface.svg" alt="" class="h-8">
+                            <img src="/icons/surface.svg" alt="" class="h-8">
                             <p class="text-xl font-cambria">{{getRoomByIdResult.room.size}} m²</p>
                         </div>
                         <div v-if="checkFacilities('Flatscreen-tv')" class="flex items-center gap-3 w-40">
-                            <img src="/public/icons/tv.svg" alt="" class="h-8">
+                            <img src="/icons/tv.svg" alt="" class="h-8">
                             <p class="text-xl font-cambria">Flatscreen-tv</p>
                         </div>
                         <div v-if="checkFacilities('Smoke free')" class="flex items-center gap-3">
-                            <img src="/public/icons/smoking.svg" alt="" class="h-8">
+                            <img src="/icons/smoking.svg" alt="" class="h-8">
                             <p class="text-xl font-cambria">Smoke free</p>
                         </div>
                     </div>
                     <div class="flex flex-col gap-4">
                         <div v-if="checkFacilities('Free wifi')" class="flex items-center gap-3 -ml-2">
-                            <img src="/public/icons/wifi.svg" alt="" class="h-8">
+                            <img src="/icons/wifi.svg" alt="" class="h-8">
                             <p class="text-xl font-cambria">Free wifi</p>
                         </div>
                         <div v-if="checkFacilities('Free parking')" class="flex items-center gap-3 w-40">
-                            <img src="/public/icons/parking.svg" alt="" class="h-8">
+                            <img src="/icons/parking.svg" alt="" class="h-8">
                             <p class="text-xl font-cambria">Free parking</p>
                         </div>
                         <div v-if="checkFacilities('Balcony')" class="flex items-center gap-3">
-                            <img src="/public/icons/balcony.svg" alt="" class="h-9">
+                            <img src="/icons/balcony.svg" alt="" class="h-9">
                             <p class="text-xl font-cambria">Balcony</p>
                         </div>
                     </div>

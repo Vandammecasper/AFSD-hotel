@@ -10,7 +10,7 @@
             <RouterLink v-if="firebaseUser && getUserByUidResult.userByUid.role == 'ADMIN'" to="/admin/overview">
                 <h2 class="my-6 text-xl text-darkGreen font-cambria font-normal">ROOM OVERVIEW</h2>
             </RouterLink>
-            <RouterLink to="/user/reservations">
+            <RouterLink v-if="firebaseUser" to="/user/reservations">
                 <h2 class="my-6 text-xl text-darkGreen font-cambria font-normal">MY RESERVATIONS</h2>
             </RouterLink>
             <div class="border-l-2 border-darkGreen py-6 pl-12">

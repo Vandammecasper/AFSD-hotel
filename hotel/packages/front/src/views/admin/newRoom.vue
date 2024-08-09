@@ -2,7 +2,7 @@
     <div class="w-screen h-screen grid justify-items-center items-center">
         <RouterLink to="/admin/overview" class="absolute left-72 top-32">
             <button class="bg-green flex gap-2 p-2 px-4 rounded-full">
-                <img src="/public/icons/back.svg" alt="">
+                <img src="/icons/back.svg" alt="">
                 <p class="font-cambria font-bold text-primary">GO BACK</p>
             </button>
         </RouterLink>
@@ -129,7 +129,7 @@
                 </div>
             </div>
             <div class="grid justify-items-center">
-                <img src="/public/images/hotelRoomDeluxe.jpg" alt="" class="rounded-xl h-56">
+                <img src="/images/hotelRoomDeluxe.jpg" alt="" class="rounded-xl h-56">
                 <button @click="handleRoomCreation(flatscreenTv, balcony, freeWifi, freeParking, smokeFree)" class="bg-accent rounded-3xl w-96 px-8 py-1.5 mt-16 text-secondary font-cambria font-bold text-2xl">Add room</button>
             </div>
         </div>
