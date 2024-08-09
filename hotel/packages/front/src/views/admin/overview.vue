@@ -1,9 +1,11 @@
 <template>
-    <div class="w-screen h-screen grid justify-items-center">
-        <RouterLink to="/admin/room/new" class="bg-green rounded-xl p-3 absolute mt-40 right-80">
-            <img src="/icons/add.svg" alt="" class="h-10">
-        </RouterLink>
-        <h1 class="text-5xl text-darkGreen text-center font-cambria font-normal mt-40">ROOM OVERVIEW</h1>
+    <div class="w-screen h-screen grid justify-items-center overflow-x-hidden">
+        <div class="w-screen flex justify-center mt-40 gap-40">
+            <h1 class="text-5xl text-darkGreen text-center font-cambria font-normal ml-64">ROOM OVERVIEW</h1>
+            <RouterLink to="/admin/room/new" class="bg-green rounded-xl p-3 -mt-2">
+                <img src="/icons/add.svg" alt="" class="h-10">
+            </RouterLink>
+        </div>
         <div v-if="getAllRoomsResult" v-for="room of getAllRoomsResult.rooms" :key="room.id" class="w-full grid justify-items-center gap-6 mt-12">
             <div class="flex h-48 w-3/5 bg-secondary rounded-3xl justify-between">
                 <RouterLink :to="{name: 'room', params: {id:room.id}}" class="flex gap-6">
@@ -17,18 +19,21 @@
                         <p class="text-xl text-darkGreen font-cambria -mt-4">{{isRoomOccupied(room)}}</p>
                     </div>
                 </RouterLink>
-                <div class="flex pt-3 h-16 gap-4 mr-4">
-                    <RouterLink :to="{name: 'editRoom', params: {id:room.id}}">
-                        <button class="bg-green p-2 rounded-xl">
-                            <img src="/icons/edit.svg" alt="">
+                <div class="flex flex-col mr-4">
+                    <div class="flex pt-3 h-16 gap-4 ml-4">
+                        <RouterLink :to="{name: 'editRoom', params: {id:room.id}}">
+                            <button class="bg-green p-2 rounded-xl">
+                                <img src="/icons/edit.svg" alt="">
+                            </button>
+                        </RouterLink>
+                        <button @click="handleRemoveRoom(room.id)" class="bg-green p-2 rounded-xl">
+                            <img src="/icons/delete.svg" alt="">
                         </button>
-                    </RouterLink>
-                    <button @click="handleRemoveRoom(room.id)" class="bg-green p-2 rounded-xl">
-                        <img src="/icons/delete.svg" alt="">
-                    </button>
-                </div>
-                <div class="absolute mt-36 grid w-3/5">
-                    <p v-if="findNextReservation(room) !== 'No reservations'" class="justify-self-end font-cambria text-lg">Next reservation: {{findNextReservation(room)}}</p>
+                    </div>
+                    <div class="mt-16">
+                        <p v-if="findNextReservation(room) !== 'No reservations'" class="justify-self-end font-cambria text-lg">Next reservation:</p>
+                        <p v-if="findNextReservation(room) !== 'No reservations'" class="justify-self-end font-cambria text-lg">{{findNextReservation(room)}}</p>
+                    </div>
                 </div>
             </div>
         </div>
