@@ -21,7 +21,7 @@
                 </button>
             </div>
         </div>
-        <div v-if="detection" class="fixed grid w-screen h-screen">
+        <div v-if="detection" class="fixed grid w-screen h-screen z-20">
             <button @click="detection = false" class="w-screen h-screen bg-black opacity-70"></button>
             <div v-if="detected == false" class="w-2/5 h-2/3 rounded-3xl fixed self-center left-1/4 ml-20">
                 <qrcode-stream @detect="onDetect"></qrcode-stream>
