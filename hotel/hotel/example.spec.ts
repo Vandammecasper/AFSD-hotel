@@ -1,18 +1,43 @@
 import { test, expect } from '@playwright/test';
 
-test('has title', async ({ page }) => {
-  await page.goto('https://playwright.dev/');
 
-  // Expect a title "to contain" a substring.
-  await expect(page).toHaveTitle(/Playwright/);
+test('login', async ({ page }) => {
+  await page.goto('http://localhost:5173/');
+  await page.getByRole('link', { name: 'LOGIN' }).click();
+  await page.getByPlaceholder('youremail@example.com').click();
+  await page.getByPlaceholder('youremail@example.com').fill('caspervandamme03@gmail.com');
+  await page.getByPlaceholder('youremail@example.com').press('Tab');
+  await page.getByPlaceholder('Your password').fill('Wachtwoord');
+  await page.getByPlaceholder('Your password').press('Enter');
+  await expect(page).toHaveURL('http://localhost:5173/');
 });
 
-test('get started link', async ({ page }) => {
-  await page.goto('https://playwright.dev/');
-
-  // Click the get started link.
-  await page.getByRole('link', { name: 'Get started' }).click();
-
-  // Expects page to have a heading with the name of Installation.
-  await expect(page.getByRole('heading', { name: 'Installation' })).toBeVisible();
+test('make a reservation', async ({ page }) => {
+  await page.goto('http://localhost:5173/');
+  await page.getByRole('link', { name: 'LOGIN' }).click();
+  await page.getByPlaceholder('youremail@example.com').click();
+  await page.getByPlaceholder('youremail@example.com').fill('caspervandamme03@gmail.com');
+  await page.getByPlaceholder('youremail@example.com').press('Tab');
+  await page.getByPlaceholder('Your password').fill('Wachtwoord');
+  await page.getByPlaceholder('Your password').press('Enter');
+  await page.getByRole('button', { name: 'Make a reservation' }).click();
+  await page.locator('[data-test="dp-input"]').click();
+  await page.getByText('19').click();
+  await page.getByText('25').click();
+  await page.locator('[data-test="select-button"]').click();
+  await page.getByPlaceholder('Number of people').click();
+  await page.getByPlaceholder('Number of people').fill('2');
+  await page.getByRole('button', { name: 'Find a room' }).click();
+  await page.getByRole('button', { name: '2 person bedroom deluxe 30 m' }).click();
+  await page.getByPlaceholder('Reservation name').click();
+  await page.getByPlaceholder('Reservation name').fill('Van Damme');
+  await page.getByPlaceholder('Reservation name').press('Tab');
+  await page.getByPlaceholder('Guest 1 email').fill('caspervandamme03@gmail.com');
+  await page.getByPlaceholder('Guest 1 email').press('Tab');
+  await page.getByPlaceholder('Guest 2 email').fill('olivia@gmail.com');
+  await page.getByRole('button', { name: 'Complete reservation' }).click();
+  await page.getByRole('button', { name: 'Complete reservation' }).click();
+  await page.getByRole('link', { name: 'MY RESERVATIONS' }).click();
+  await page.getByRole('heading', { name: 'person bedroom deluxe' }).nth(1).click();
+  await page.getByText('Aug 2024 - 25 Aug 2024').click();
 });

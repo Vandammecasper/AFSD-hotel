@@ -48,9 +48,9 @@ import { AuthenticationModule } from './authentication/authentication.module';
         } else {
           return {
             type: 'mongodb',
-            url: `mongodb://${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}`, // DOCKER
+            url: `mongodb://localhost:27027/api`, // DOCKER
             entities: [__dirname + '/**/*.entity.{js,ts}'],
-            synchronize: process.env.NODE_ENV == 'production' ? false : true, // Careful with this in production
+            synchronize: true, // Careful with this in production
             useNewUrlParser: true,
             useUnifiedTopology: true, // Disable deprecated warnings
           }

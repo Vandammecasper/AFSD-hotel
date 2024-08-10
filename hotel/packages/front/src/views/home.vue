@@ -4,10 +4,10 @@
             <h2 class="text-primary text-xl font-cambria font-bold my-6">THE CONTINENTAL</h2>
         </RouterLink>
         <div class="flex gap-12">
-            <RouterLink v-if="firebaseUser && getUserByUidResult.userByUid.role == 'ADMIN'" to="/admin/locks">
+            <RouterLink v-if="firebaseUser && getUserByUidResult?.userByUid.role == 'ADMIN'" to="/admin/locks">
                 <h2 class="my-6 text-xl text-primary font-cambria font-normal">SMART LOCKS</h2>
             </RouterLink>
-            <RouterLink v-if="firebaseUser && getUserByUidResult.userByUid.role == 'ADMIN'" to="/admin/overview">
+            <RouterLink v-if="firebaseUser && getUserByUidResult?.userByUid.role == 'ADMIN'" to="/admin/overview">
                 <h2 class="my-6 text-xl text-primary font-cambria font-normal">ROOM OVERVIEW</h2>
             </RouterLink>
             <RouterLink v-if="firebaseUser" to="/user/reservations">
@@ -24,7 +24,7 @@
     <div class="h-screen items-center flex flex-col">
         <h1 class="text-6xl text-secondary text-center z-20 font-cambria font-normal mt-72">THE CONTINENTAL HOTEL</h1>
         <div class="flex gap-28">
-            <RouterLink v-if="firebaseUser && getUserByUidResult.userByUid.role == 'ADMIN'" to="/admin/today" class="z-20">
+            <RouterLink v-if="firebaseUser && getUserByUidResult?.userByUid.role == 'ADMIN'" to="/admin/today" class="z-20">
                 <button class="border-2 border-primary rounded-full flex justify-center mt-10 p-3 px-4">
                     <h2 class="text-primary text-3xl font-cambria font-normal">Today's reservations</h2>
                 </button>
