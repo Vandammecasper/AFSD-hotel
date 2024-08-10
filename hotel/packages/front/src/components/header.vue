@@ -4,10 +4,10 @@
             <h2 class="text-darkGreen text-xl font-cambria font-bold my-6">THE CONTINENTAL</h2>
         </RouterLink>
         <div class="flex gap-12">
-            <RouterLink v-if="firebaseUser && getUserByUidResult.userByUid.role == 'ADMIN'" to="/admin/locks">
+            <RouterLink v-if="firebaseUser && getUserByUidResult?.userByUid.role == 'ADMIN'" to="/admin/locks">
                 <h2 class="my-6 text-xl text-darkGreen font-cambria font-normal">SMART LOCKS</h2>
             </RouterLink>
-            <RouterLink v-if="firebaseUser && getUserByUidResult.userByUid.role == 'ADMIN'" to="/admin/overview">
+            <RouterLink v-if="firebaseUser && getUserByUidResult?.userByUid.role == 'ADMIN'" to="/admin/overview">
                 <h2 class="my-6 text-xl text-darkGreen font-cambria font-normal">ROOM OVERVIEW</h2>
             </RouterLink>
             <RouterLink v-if="firebaseUser" to="/user/reservations">

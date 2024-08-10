@@ -30,7 +30,7 @@ export class RoomsResolver {
 
   @Mutation(() => Room)
   updateRoom(@Args('updateRoomInput') updateRoomInput: UpdateRoomInput): Promise<Room> {
-    return this.roomsService.update(updateRoomInput.id, updateRoomInput);
+    return this.roomsService.update(updateRoomInput);
   }
 
   @Mutation(() => Room)

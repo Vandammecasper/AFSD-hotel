@@ -103,19 +103,19 @@
                             </label>
                             <div class="flex gap-1">
                                 <div class="flex gap-1" v-if="checkFacilities('Flatscreen-tv')">
-                                    <input checked type="checkbox" name="flatscreenTv" id="flatscreenTv" class=""/>
+                                    <input checked type="checkbox" name="flatscreenTv" id="flatscreenTv" class="" v-model="flatscreenTv"/>
                                     <label for="flatscreenTv">Flatscreen-tv</label>
                                 </div>
                                 <div class="flex gap-1" v-else>
-                                    <input type="checkbox" name="flatscreenTv" id="flatscreenTv" class=""/>
+                                    <input type="checkbox" name="flatscreenTv" id="flatscreenTv" class="" v-model="flatscreenTv"/>
                                     <label for="flatscreenTv">Flatscreen-tv</label>
                                 </div>
                                 <div class="flex gap-1" v-if="checkFacilities('Balcony')" >
-                                    <input checked class="ml-2" type="checkbox" name="balcony" id="balcony"/>
+                                    <input checked class="ml-2" type="checkbox" name="balcony" id="balcony" v-model="balcony"/>
                                     <label for="balcony">Balcony</label>
                                 </div>
                                 <div class="flex gap-1" v-else>
-                                    <input class="ml-2" type="checkbox" name="balcony" id="balcony"/>
+                                    <input class="ml-2" type="checkbox" name="balcony" id="balcony" v-model="balcony"/>
                                     <label for="balcony">Balcony</label>
                                 </div>
                                 <div class="flex gap-1" v-if="checkFacilities('Free wifi') === true">
@@ -189,26 +189,27 @@ const { result: getRoomByIdResult } = useQuery(GET_ROOM_BY_ID, {id: currentRoute
 
 const { mutate: updateRoom } = useMutation(UPDATE_ROOM)
 
-const roomTitle = ref('')
-const pricePerNight = ref('')
-const size = ref('')
-const roomNumber = ref('')
-const maxOccupancy = ref('')
-const description = ref('')
+// const roomTitle = ref('')
+// const pricePerNight = ref('')
+// const size = ref('')
+// const roomNumber = ref('')
+// const maxOccupancy = ref('')
+// const description = ref('')
 const flatscreenTv = ref(false)
 const balcony = ref(false)
 const freeWifi = ref(false)
 const freeParking = ref(false)
 const smokeFree = ref(false)
 
-if(getRoomByIdResult){
-    roomTitle.value = getRoomByIdResult.value?.room.roomName
-    pricePerNight.value = getRoomByIdResult.value?.room.price
-    size.value = getRoomByIdResult.value?.room.size
-    roomNumber.value = getRoomByIdResult.value?.room.roomNumber
-    maxOccupancy.value = getRoomByIdResult.value?.room.maxOccupation
-    description.value = getRoomByIdResult.value?.room.description
-}
+// if(getRoomByIdResult.value){
+//     console.log(getRoomByIdResult.value)
+//     roomTitle.value = getRoomByIdResult.value?.room.roomName
+//     pricePerNight.value = getRoomByIdResult.value?.room.price
+//     size.value = getRoomByIdResult.value?.room.size
+//     roomNumber.value = getRoomByIdResult.value?.room.roomNumber
+//     maxOccupancy.value = getRoomByIdResult.value?.room.maxOccupation
+//     description.value = getRoomByIdResult.value?.room.description
+// }
 
 const checkFacilities = (facility: string) => {
     if(getRoomByIdResult.value){
@@ -224,48 +225,73 @@ const checkFacilities = (facility: string) => {
 }
 
 const handleRoomUpdate = (tv:boolean, balc:boolean, wifi:boolean, parking:boolean, smoke:boolean) =>{
-    console.log('room title: ',roomTitle.value, 'price per night: ',pricePerNight.value, 'room size: ',size.value, 'room number: ',roomNumber.value, 'maximum occupation: ',maxOccupancy.value, 'tv: ',tv, 'balcony: ',balc, 'wifi: ',wifi, 'parking: ',parking, 'smoking: ',smoke, 'room description: ',description.value)
     let facilities:Array<string> = []
-    for(const roomFacility of getRoomByIdResult.value.room.facilities) {
-        facilities.push(roomFacility)
-    }
-    console.log(facilities)
-    if(tv){
-        facilities.push('Flatscreen-tv')
-    }
-    else if(tv === false){
-        //remove the facility
+        for(const roomFacility of getRoomByIdResult.value.room.facilities) {
+            facilities.push(roomFacility)
+        }
+        if(tv){
+            //check if the facility is already in the array
+            if(facilities.includes('Flatscreen-tv')){
+                //do nothing
+            }
+            else{
+                facilities.push('Flatscreen-tv')
+            }
+        }
+        else if(tv === false){
+            //remove the facility
         facilities = facilities.filter(facility => facility !== 'Flatscreen-tv')
     }
     if(balc){
-        facilities.push('Balcony')
+        if(facilities.includes('Balcony')){
+            //do nothing
+        }
+        else{
+            facilities.push('Balcony')
+        }
     }
     else if(balc === false){
         //remove the facility
         facilities = facilities.filter(facility => facility !== 'Balcony')
     }
     if(wifi){
-        facilities.push('Free wifi')
+        if(facilities.includes('Free wifi')){
+            //do nothing
+        }
+        else{
+            facilities.push('Free wifi')
+        }
     }
     else if(wifi === false){
         //remove the facility
         facilities = facilities.filter(facility => facility !== 'Free wifi')
     }
     if(parking){
-        facilities.push('Free parking')
+        if(facilities.includes('Free parking')){
+            //do nothing
+        }
+        else{
+            facilities.push('Free parking')
+        }
     }
     else if(parking === false){
         //remove the facility
         facilities = facilities.filter(facility => facility !== 'Free parking')
     }
     if(smoke){
-        facilities.push('Smoke free')
+        if(facilities.includes('Smoke free')){
+            //do nothing
+        }
+        else{
+            facilities.push('Smoke free')
+        }
     }
     else if(smoke === false){
         //remove the facility
         facilities = facilities.filter(facility => facility !== 'Smoke free')
     }
     console.log(facilities)
+    console.log('room title: ',roomTitle.value, 'price per night: ',pricePerNight.value, 'room size: ',size.value, 'room number: ',roomNumber.value, 'maximum occupation: ',maxOccupancy.value, 'tv: ',tv, 'balcony: ',balc, 'wifi: ',wifi, 'parking: ',parking, 'smoking: ',smoke, 'room description: ',description.value)
     updateRoom({
         updateRoomInput:{
             id: getRoomByIdResult.value.room.id,
@@ -277,8 +303,6 @@ const handleRoomUpdate = (tv:boolean, balc:boolean, wifi:boolean, parking:boolea
             facilities: facilities,
             description: description.value,
             roomPicture: 'picture here',
-            isLocked: getRoomByIdResult.value.room.isLocked,
-            lockHistory: getRoomByIdResult.value.room.lockHistory
         }
     })
     .then(() => {
@@ -287,7 +311,6 @@ const handleRoomUpdate = (tv:boolean, balc:boolean, wifi:boolean, parking:boolea
     .catch((e) => {
         console.error(e)
         console.error(e.message)
-        console.error(e.graphqlErrors)
     })
 }
 

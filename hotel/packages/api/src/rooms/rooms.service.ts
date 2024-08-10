@@ -39,22 +39,23 @@ export class RoomsService {
     return this.roomRepository.findOne({ _id: new ObjectId(id) });
   }
 
-  async update(id: string, updateRoomInput: UpdateRoomInput): Promise<Room> {
-    // Perform the update operation
-    const result = await this.roomRepository.update(id, updateRoomInput);
-
-    // Check if the update was successful
-    if (result.affected === 0) {
-      throw new NotFoundException(`Room with ID "${id}" not found`);
+  async update(updateRoomInput: UpdateRoomInput): Promise<Room> {
+    //@ts-ignore
+    const room = await this.roomRepository.findOneBy({_id: new ObjectId(updateRoomInput.id)});
+    if (!room) {
+      throw new NotFoundException(`Room with ID "${updateRoomInput.id}" not found`);
     }
 
-    // Retrieve and return the updated entity
-    const updatedRoom = await this.roomRepository.findOneBy({ id });
-    if (!updatedRoom) {
-      throw new NotFoundException(`Room with ID "${id}" not found`);
-    }
+    room.roomName = updateRoomInput.roomName;
+    room.roomNumber = updateRoomInput.roomNumber;
+    room.price = updateRoomInput.price;
+    room.maxOccupation = updateRoomInput.maxOccupation;
+    room.size = updateRoomInput.size;
+    room.facilities = updateRoomInput.facilities;
+    room.description = updateRoomInput.description;
+    room.roomPicture = updateRoomInput.roomPicture;
 
-    return updatedRoom;
+    return this.roomRepository.save(room);
   }
 
   async lockChange(roomId: string, customerId: string) {
