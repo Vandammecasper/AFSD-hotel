@@ -1,22 +1,22 @@
 <template>
-    <div class="w-screen border-b-2 bg-primary border-darkGreen items-center px-12 h-24 absolute z-20 flex justify-between">
+    <div class="w-screen border-b-2 border-darkGreen items-center max-sm:px-8 px-4 lg:px-12 h-24 fixed z-20 flex justify-between">
         <RouterLink to="/">
-            <h2 class="text-darkGreen text-xl font-cambria font-bold my-6">THE CONTINENTAL</h2>
+            <h2 class="text-darkGreen max-sm:text-lg sm:text-sm md:text-lg lg:text-xl font-cambria font-bold my-6">THE CONTINENTAL</h2>
         </RouterLink>
-        <div class="flex gap-12">
+        <div class="flex gap-4 lg:gap-12">
             <RouterLink v-if="firebaseUser && getUserByUidResult?.userByUid.role == 'ADMIN'" to="/admin/locks">
-                <h2 class="my-6 text-xl text-darkGreen font-cambria font-normal">SMART LOCKS</h2>
+                <h2 class="max-sm:hidden my-6 sm:text-sm md:text-lg lg:text-xl text-darkGreen font-cambria font-normal">SMART LOCKS</h2>
             </RouterLink>
             <RouterLink v-if="firebaseUser && getUserByUidResult?.userByUid.role == 'ADMIN'" to="/admin/overview">
-                <h2 class="my-6 text-xl text-darkGreen font-cambria font-normal">ROOM OVERVIEW</h2>
+                <h2 class="max-sm:hidden my-6 sm:text-sm md:text-lg lg:text-xl text-darkGreen font-cambria font-normal">ROOM OVERVIEW</h2>
             </RouterLink>
             <RouterLink v-if="firebaseUser" to="/user/reservations">
-                <h2 class="my-6 text-xl text-darkGreen font-cambria font-normal">MY RESERVATIONS</h2>
+                <h2 class="max-sm:hidden my-6 sm:text-sm md:text-lg lg:text-xl text-darkGreen font-cambria font-normal">MY RESERVATIONS</h2>
             </RouterLink>
-            <div class="border-l-2 border-darkGreen py-6 pl-12">
-                <button v-if="firebaseUser" @click="logout()" class="text-xl text-darkGreen font-cambria font-normal">LOGOUT</button>
+            <div class="border-l-2 border-darkGreen py-6 pl-4 lg:pl-12 max-sm:pl-8">
+                <button v-if="firebaseUser" @click="logout()" class="max-sm:text-lg sm:text-sm md:text-lg lg:text-xl text-darkGreen font-cambria font-normal">LOGOUT</button>
                 <RouterLink v-else to="/auth/login">
-                    <h2 class="text-xl text-darkGreen font-cambria font-normal">LOGIN</h2>
+                    <h2 class="max-sm:text-lg sm:text-sm md:text-lg lg:text-xl text-darkGreen font-cambria font-normal">LOGIN</h2>
                 </RouterLink>
             </div>
         </div>
