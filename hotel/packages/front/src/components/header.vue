@@ -1,5 +1,5 @@
 <template>
-    <div class="w-screen border-b-2 border-darkGreen items-center max-sm:px-8 px-4 lg:px-12 h-24 fixed z-20 flex justify-between">
+    <div class="w-screen border-b-2 bg-primary border-darkGreen items-center max-sm:px-8 px-4 lg:px-12 h-24 fixed z-20 flex justify-between">
         <RouterLink to="/">
             <h2 class="text-darkGreen max-sm:text-lg sm:text-sm md:text-lg lg:text-xl font-cambria font-bold my-6">THE CONTINENTAL</h2>
         </RouterLink>
