@@ -1,24 +1,29 @@
 <template>
     <div v-if="getReservationsByCustomerIdResult" class="w-screen h-screen grid justify-items-center">
-        <h1 class="text-5xl text-darkGreen text-center font-cambria font-normal mt-40">YOUR RESERVARTIONS</h1>
-        <div v-for="reservation of getReservationsByCustomerIdResult.reservationsByCustomerId" :key="reservation.id" class="w-full grid justify-items-center gap-6 mt-8">
-            <div class="grid grid-cols-3 h-48 w-3/5 bg-secondary rounded-3xl gap-0 justify-between">
+        <h1 class="text-4xl md:text-5xl text-darkGreen text-center font-cambria font-normal mt-40">YOUR RESERVARTIONS</h1>
+        <div v-for="reservation of getReservationsByCustomerIdResult.reservationsByCustomerId" :key="reservation.id" class="w-full grid justify-items-center gap-6 md:-mt-40 -mt-48">
+            <div class="grid grid-cols-3 h-28 sm:h-32 md:h-40 lg:h-48 w-5/6 lg:w-4/5 xl:w-3/5 bg-secondary rounded-3xl gap-0 justify-between">
                 <img src="/images/hotelRoomDeluxe.jpg" alt="" class="rounded-s-2xl h-full">
-                <div class="grid justify-items-start my-2 ml-6 w-96">
-                    <h2 class="text-3xl font-bold font-cambria text-darkGreen">{{getRoomName(reservation.roomId)}}</h2>
-                    <p v-if="isTodayBetweenDates(reservation)" class="text-2xl text-darkGreen font-cambria -mt-4">Room access until {{formatDate(reservation.checkOutDate)}}</p>
-                    <div v-else>
-                        <p class="text-xl text-darkGreen font-cambria">Reservation:</p>
-                        <p class="text-xl text-darkGreen font-cambria">{{formatDate(reservation.checkInDate)}} - {{formatDate(reservation.checkOutDate)}}</p>
+                <div class="flex justify-between col-span-2">
+                    <div class="grid justify-items-start my-2 ml-6 w-96">
+                        <h2 class="max-sm:hidden max-sm:text-sm md:text-xl lg:text-2xl xl:text-3xl font-bold font-cambria text-darkGreen">{{getRoomName(reservation.roomId)}}</h2>
+                        <h2 class="sm:hidden max-sm:text-sm md:text-xl lg:text-2xl xl:text-3xl font-bold font-cambria text-darkGreen">{{shortenText(getRoomName(reservation.roomId))}}</h2>
+                        <p v-if="isTodayBetweenDates(reservation)" class="max-sm:text-sm md:text-lg lg:text-xl xl:text-2xl text-darkGreen font-cambria -mt-4">Room access until {{formatDate(reservation.checkOutDate)}}</p>
+                        <div v-else>
+                            <p class="max-sm:text-xs md:text-lg lg:text-xl text-darkGreen font-cambria">Reservation:</p>
+                            <p class="max-sm:hidden max-sm:text-xs md:text-lg lg:text-xl text-darkGreen font-cambria">{{formatDate(reservation.checkInDate)}} - {{formatDate(reservation.checkOutDate)}}</p>
+                            <p class="sm:hidden max-sm:text-xs md:text-lg lg:text-xl text-darkGreen font-cambria">{{formatDate(reservation.checkInDate)}}</p>
+                            <p class="sm:hidden max-sm:text-xs md:text-lg lg:text-xl text-darkGreen font-cambria">{{formatDate(reservation.checkOutDate)}}</p>
+                        </div>
+                        <p v-if="getLockStatus(reservation.roomId) && reservation.checkedIn" class="max-sm:text-xs md:text-lg lg:text-xl text-darkGreen font-cambria mt-1 sm:mt-4">Room status: LOCKED</p>
+                        <p v-else-if="reservation.checkedIn" class="max-sm:text-xs md:text-lg lg:text-xl text-darkGreen font-cambria mt-1 sm:mt-4">Room status: UNLOCKED</p>
                     </div>
-                    <p v-if="getLockStatus(reservation.roomId) && reservation.checkedIn" class="text-xl text-darkGreen font-cambria mt-4">Room status: LOCKED</p>
-                    <p v-else-if="reservation.checkedIn" class="text-xl text-darkGreen font-cambria mt-4">Room status: UNLOCKED</p>
+                    <button @click="() => {detection = true; roomToCheck = reservation.roomId}" v-if="reservation.checkedIn" class="self-center lg:w-44 lg:h-44 md:w-32 md:h-32 w-28 h-28 max-sm:h-24 grid bg-primary max-sm:p-1 max-sm:px-3 p-4 lg:p-8 rounded-xl sm:rounded-3xl border-solid border-4 border-darkGreen mr-2 md:mr-4 lg:mr-2">
+                        <img src="/icons/camera.svg" alt="" class="place-self-center h-8 md:h-16 lg:h-20 max-sm:h-6">
+                        <p v-if="getLockStatus(reservation.roomId)" class="text-center max-lg:text-xs mt-1 text-darkGreen font-cambria">Unlock your room</p>
+                        <p v-else class="text-center max-lg:text-xs mt-1 text-darkGreen font-cambria">Lock your room</p>
+                    </button>
                 </div>
-                <button @click="() => {detection = true; roomToCheck = reservation.roomId}" v-if="reservation.checkedIn" class="self-center w-44 h-44 grid bg-primary p-8 rounded-3xl border-solid border-4 border-darkGreen ml-28">
-                    <img src="/icons/camera.svg" alt="" class="place-self-center">
-                    <p v-if="getLockStatus(reservation.roomId)" class="text-center mt-1 text-darkGreen font-cambria">Unlock your room</p>
-                    <p v-else class="text-center mt-1 text-darkGreen font-cambria">Lock your room</p>
-                </button>
             </div>
         </div>
         <div v-if="detection" class="fixed grid w-screen h-screen z-20">
@@ -162,5 +167,11 @@ const isTodayBetweenDates = (reservation: CustomReservation) => {
     }
 }
 
+const shortenText = (text: string): string => {
+  if (text.length <= 13) {
+    return text;
+  }
+  return text.slice(0, 13) + '...';
+};
 
 </script>

@@ -40,15 +40,15 @@
     <div v-if="firebaseUser" class="w-screen border-t-2 border-primary justify-center px-2 py-6 gap-8 h-24 fixed z-20 flex bottom-0">
         <RouterLink v-if="getUserByUidResult?.userByUid.role == 'ADMIN'" to="/admin/locks" class="grid justify-items-center gap-2">
             <img src="/icons/locksWhite.svg" alt="" class="h-6">
-            <p class="text-primary text-center text-xs font-cambria font-normal" >SMART LOCKS</p>
+            <p class="text-primary text-center text-xs font-cambria font-bold" >SMART LOCKS</p>
         </RouterLink>
         <RouterLink v-if="getUserByUidResult?.userByUid.role == 'ADMIN'" to="/admin/overview" class="grid justify-items-center gap-2">
             <img src="/icons/overviewWhite.svg" alt="" class="h-6">
-            <p class="text-primary text-center text-xs font-cambria font-normal">ROOM OVERVIEW</p>
+            <p class="text-primary text-center text-xs font-cambria font-bold">ROOM OVERVIEW</p>
         </RouterLink>
         <RouterLink to="/user/reservations" class="grid justify-items-center gap-2">
             <img src="/icons/reservationWhite.svg" alt="" class="h-6">
-            <p class="text-primary text-center text-xs font-cambria font-normal">MY RESERVATIONS</p>
+            <p class="text-primary text-center text-xs font-cambria font-bold">MY RESERVATIONS</p>
         </RouterLink>
     </div>
 </template>
