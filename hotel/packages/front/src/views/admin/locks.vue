@@ -1,17 +1,22 @@
 <template>
     <div class="w-screen h-screen grid justify-items-center">
         <h1 class="text-5xl text-darkGreen text-center font-cambria font-normal mt-40">SMART LOCKS</h1>
-        <div v-for="room of getAllRoomsResult.rooms" class="w-full grid justify-items-center gap-6 mt-8">
-            <RouterLink :to="{name: 'lock', params: {id: room.id}}" class="grid grid-cols-3 h-48 w-3/5 bg-secondary rounded-3xl gap-0 justify-between">
+        <div v-for="room of getAllRoomsResult.rooms" :key="room.id" class="w-full grid justify-items-center lg:gap-6 lg:mt-8 max-sm:-mt-36 max-md:-mt-12">
+            <RouterLink :to="{name: 'lock', params: {id: room.id}}" class="grid grid-cols-3 h-28 sm:h-36 md:h-40 lg:h-48 w-5/6 md:w-4/5 xl:w-3/5 bg-secondary rounded-3xl gap-0 justify-between">
                     <img src="/public/images/hotelRoomDeluxe.jpg" alt="" class="rounded-s-2xl h-full">
-                    <div class="grid justify-items-start my-2 ml-6 w-96">
-                        <h2 class="text-3xl font-bold font-cambria text-darkGreen">{{room.roomName}}</h2>
-                        <p class="text-2xl text-darkGreen font-cambria -mt-10">Last lock change:</p>
-                        <p v-if="getLastLockChageTime(room.id) !== undefined || getLastLockChangePerson(room.id)" class="text-xl text-darkGreen font-cambria -mt-10">{{getLastLockChageTime(room.id)}} - {{getLastLockChangePerson(room.id)}}</p>
-                        <p v-else class="text-xl text-darkGreen font-cambria -mt-10">No lock changes yet</p>
+                    <div class="flex col-span-2 justify-between">
+                        <div class="grid justify-items-start my-2 ml-6">
+                            <h2 class="max-sm:hidden sm:text-xl md:text-2xl lg:text-3xl font-bold font-cambria text-darkGreen">{{room.roomName}}</h2>
+                            <h2 class="sm:hidden text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold font-cambria text-darkGreen">{{shortenText(room.roomName)}}</h2>
+                            <p class="sm:text-xl md:text-2xl text-darkGreen font-cambria -mt-2 lg:-mt-10">Last lock change:</p>
+                            <p v-if="getLastLockChageTime(room.id) !== undefined || getLastLockChangePerson(room.id)" class="max-sm:hidden sm:text-xl text-darkGreen font-cambria -mt-4 lg:-mt-10">{{getLastLockChageTime(room.id)}} - {{getLastLockChangePerson(room.id)}}</p>
+                            <p v-if="getLastLockChageTime(room.id) !== undefined || getLastLockChangePerson(room.id)" class="sm:hidden sm:text-xl text-darkGreen font-cambria -mt-2 lg:-mt-10">{{getLastLockChageTime(room.id)}}</p>
+                            <p v-if="getLastLockChageTime(room.id) !== undefined || getLastLockChangePerson(room.id)" class="sm:hidden sm:text-xl text-darkGreen font-cambria -mt-3 lg:-mt-10">{{getLastLockChangePerson(room.id)}}</p>
+                            <p v-else class="sm:text-xl text-darkGreen font-cambria -mt-4 lg:-mt-10">No lock changes yet</p>
+                        </div>
+                        <img v-if="checkLockStatus(room.id)" src="/public/icons/locked.svg" alt="" class="h-8 sm:h-12 mt-4 mr-4">
+                        <img v-else src="/public/icons/unlocked.svg" alt="" class="h-12 mt-4 mr-4">
                     </div>
-                    <img v-if="checkLockStatus(room.id)" src="/public/icons/locked.svg" alt="" class="h-12 mt-4 ml-60">
-                    <img v-else src="/public/icons/unlocked.svg" alt="" class="h-12 mt-4 ml-60">
             </RouterLink>
         </div>
     </div>
@@ -66,5 +71,12 @@ const checkLockStatus = (roomId: string) => {
         }
     }
 }
+
+const shortenText = (text: string): string => {
+  if (text.length <= 13) {
+    return text;
+  }
+  return text.slice(0, 15) + '...';
+};
 
 </script>

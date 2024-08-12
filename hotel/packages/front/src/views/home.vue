@@ -37,7 +37,7 @@
         </div>
         <div class="h-screen w-screen fixed bg-green"></div>
     </div>
-    <div v-if="firebaseUser" class="w-screen border-t-2 border-primary justify-center px-2 py-6 gap-8 h-24 fixed z-20 flex bottom-0">
+    <div v-if="firebaseUser" class="sm:hidden w-screen border-t-2 bg-green border-primary max-sm:px-10 px-2 py-6 gap-8 h-24 fixed justify-between z-20 flex bottom-0">
         <RouterLink v-if="getUserByUidResult?.userByUid.role == 'ADMIN'" to="/admin/locks" class="grid justify-items-center gap-2">
             <img src="/icons/locksWhite.svg" alt="" class="h-6">
             <p class="text-primary text-center text-xs font-cambria font-bold" >SMART LOCKS</p>
