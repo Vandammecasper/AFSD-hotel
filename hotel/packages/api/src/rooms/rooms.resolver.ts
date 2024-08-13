@@ -6,10 +6,16 @@ import { UpdateRoomInput } from './dto/update-room.input';
 import { UseGuards } from '@nestjs/common';
 import { FirebaseGuard } from 'src/authentication/guards/firebase.guard';
 import { ChangeLockInput } from './dto/change-lock.input';
+import { NotificationsGateway } from 'src/notifications/notifications.gateway';
+import { FirebaseUser } from 'src/authentication/user.decorator';
+import { UserRecord } from 'firebase-admin/auth';
 
 @Resolver(() => Room)
 export class RoomsResolver {
-  constructor(private readonly roomsService: RoomsService) {}
+  constructor(
+    private readonly roomsService: RoomsService,
+    private readonly gateway: NotificationsGateway,
+  ) {}
 
   @Mutation(() => Room, {description: 'Create a new room using DTO'})
   createRoom(@Args('createRoomInput') createRoomInput: CreateRoomInput,
@@ -34,8 +40,13 @@ export class RoomsResolver {
   }
 
   @Mutation(() => Room)
-  lockChange(@Args('changeLockInput') ChangeLockInput: ChangeLockInput) {
-    return this.roomsService.lockChange(ChangeLockInput.roomId, ChangeLockInput.customerId);
+  async lockChange(@Args('changeLockInput') ChangeLockInput: ChangeLockInput,
+  ): Promise<Room> {
+    const lockChange = await this.roomsService.lockChange(ChangeLockInput.roomId, ChangeLockInput.customerId);
+
+    this.gateway.sendNewLockChange(lockChange);
+
+    return lockChange;
   }
 
   @Mutation(() => Room)

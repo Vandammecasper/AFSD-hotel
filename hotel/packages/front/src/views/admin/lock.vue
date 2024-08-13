@@ -46,10 +46,10 @@
             <div class="min-w-96">
                 <h2 class="text-darkGreen font-cambria font-normal text-4xl">{{getRoomByIdResult?.room.roomName}}</h2>
                 <h3 class="text-darkGreen font-cambria font-normal text-2xl mt-6">Smart lock status:</h3>
-                <p v-if="getRoomByIdResult.room.isLocked" class="text-darkGreen font-cambria font-bold text-xl">LOCKED</p>
+                <p v-if="getRoomByIdResult?.room.isLocked" class="text-darkGreen font-cambria font-bold text-xl">LOCKED</p>
                 <P v-else class="text-darkGreen font-cambria font-bold text-xl">UNLOCKED</P>
                 <p class="text-darkGreen font-cambria font-normal text-2xl mt-12 ">Previous lock changes:</p>
-                <div v-if="getRoomByIdResult.room.lockHistory.length > 0" class="max-h-48 overflow-auto">
+                <div v-if="getRoomByIdResult?.room.lockHistory.length > 0" class="max-h-48 overflow-auto">
                     <div v-for="lockChange of getRoomByIdResult.room.lockHistory" :key="lockChange.id" class="flex justify-between border-t-2 border-darkGreen pt-2 mt-2 px-2">
                         <p class="text-darkGreen font-cambria font-normal">{{findCustomerName(lockChange.customerId)}}</p>
                         <div class="flex gap-2">
@@ -92,11 +92,12 @@ const formatDate = (date:string) =>{
 }
 
 const checkFacilities = (facility: string) => {
-    console.log(getRoomByIdResult.value.room.facilities)
-    for(const roomFacility of getRoomByIdResult.value.room.facilities) {
-        console.log(roomFacility)
-        if(roomFacility === facility) {
-            return true
+    if(getRoomByIdResult.value){
+        for(const roomFacility of getRoomByIdResult.value?.room.facilities) {
+            console.log(roomFacility)
+            if(roomFacility === facility) {
+                return true
+            }
         }
     }
 }

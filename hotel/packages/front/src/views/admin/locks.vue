@@ -54,7 +54,7 @@ const getLastLockChangePerson = (roomId: string) => {
             const lockHistory = room.lockHistory
             if (lockHistory.length > 0) {
                 const { result:getUserByUidResult } = useQuery(GET_USER_BY_UID, {uid: lockHistory[lockHistory.length - 1].customerId})
-                const name = getUserByUidResult.value.userByUid.userName
+                const name = getUserByUidResult.value?.userByUid.userName
                 return name
             } else {
                 return undefined

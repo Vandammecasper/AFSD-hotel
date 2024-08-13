@@ -80,9 +80,6 @@ const { mutate: lockChange } = useMutation(LOCK_CHANGE)
 
 const { result: getAllRoomsResult } = useQuery(GET_ALL_ROOMS)
 
-console.log(firebaseUser.value?.uid)
-
-console.log(getReservationsByCustomerIdResult)
 
 interface DetectedCode {
     rawValue: string
@@ -90,19 +87,13 @@ interface DetectedCode {
 
 const onDetect = (detectedCodes:Array<DetectedCode>) => {
     detected.value = true
-    console.log('QR code detected')
-    console.log(detectedCodes[0].rawValue)
     if(detectedCodes[0].rawValue === roomToCheck.value) {
-        console.log('changing lock status')
-        console.log(roomToCheck.value)
-        console.log(firebaseUser.value?.uid)
         lockChange({
             changeLockInput: {
                 roomId: roomToCheck.value,
                 customerId: firebaseUser.value?.uid
             }
         }).then(() => {
-            console.log('lock status changed')
             success.value = true
             if(getLockStatus(roomToCheck.value)) {
                 locked.value = true
@@ -117,7 +108,6 @@ const onDetect = (detectedCodes:Array<DetectedCode>) => {
                 success.value = false
                 locked.value = false
                 unLocked.value = false
-                location.reload()
             }, 3000)
         })
         .catch((error) => {

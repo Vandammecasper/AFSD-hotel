@@ -10,6 +10,7 @@ import { SeedModule } from './seed/seed.module';
 import { UsersModule } from './users/users.module';
 import { MongoMemoryServer } from 'mongodb-memory-server';
 import { AuthenticationModule } from './authentication/authentication.module';
+import { NotificationsModule } from './notifications/notifications.module';
 
 @Module({
   imports: [
@@ -61,7 +62,8 @@ import { AuthenticationModule } from './authentication/authentication.module';
   ReservationsModule,
   SeedModule,
   UsersModule,
-  AuthenticationModule
+  AuthenticationModule,
+  NotificationsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
