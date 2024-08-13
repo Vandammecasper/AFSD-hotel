@@ -51,9 +51,11 @@ export class ReservationsService {
 
     const reservationsByCustomer = [];
     for (const reservation of reservations) {
-      for(const customerId of reservation.customerIds){
-        if (customerId === uid) {
-          reservationsByCustomer.push(reservation);
+      if(reservation.checkOutDate.getDate() >= new Date().getDate()){
+        for(const customerId of reservation.customerIds){
+          if (customerId === uid) {
+            reservationsByCustomer.push(reservation);
+          }
         }
       }
     }
