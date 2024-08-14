@@ -33,7 +33,6 @@ export class NotificationsGateway
 
   // Send notification to hairdressers if a new lockChange is made
   async sendNewLockChange(lockChange: Room):Promise<Room>{
-    console.log('Sending LockChange:', lockChange);
     this.server.emit('newLockChange', lockChange);
     return lockChange;
   }

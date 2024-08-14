@@ -16,15 +16,17 @@
                                 for="roomTitle"
                                 class="text-md block font-bold tracking-wider text-darkGreen font-cambria"
                             >
-                                Room title
+                                Room title*
                             </label>
                             <input
                                 type="text"
                                 name="roomTitle"
                                 id="roomTitle"
                                 placeholder="New room title"
-                                class="font-cambria text-darkGreen rounded-2xl mt-1 block border-2 bg-secondary border-darkGreen p-2 "
+                                class="font-cambria text-darkGreen rounded-2xl mt-1 block border-2 bg-secondary p-2"
+                                :class="titleError ? 'border-red' : 'border-darkGreen'"
                                 v-model="roomTitle"
+                                onfocus="titleError = false"
                             />
                         </div>
                         <div class="mt-4">
@@ -32,7 +34,7 @@
                                 for="pricePerNight"
                                 class="text-md block font-bold tracking-wider text-darkGreen font-cambria"
                             >
-                                Price per night (€)
+                                Price per night (€)*
                             </label>
                             <input
                                 type="number"
@@ -40,6 +42,7 @@
                                 id="pricePerNight"
                                 placeholder="00.00"
                                 class="font-cambria text-darkGreen rounded-2xl mt-1 block border-2 bg-secondary border-darkGreen p-2 "
+                                :class="priceError ? 'border-red' : 'border-darkGreen'"
                                 v-model="pricePerNight"
                             />
                         </div>
@@ -48,7 +51,7 @@
                                 for="size"
                                 class="text-md block font-bold tracking-wider text-darkGreen font-cambria"
                             >
-                                Size (m²)
+                                Size (m²)*
                             </label>
                             <input
                                 type="number"
@@ -56,6 +59,7 @@
                                 id="size"
                                 placeholder="0"
                                 class="font-cambria text-darkGreen rounded-2xl mt-1 block border-2 bg-secondary border-darkGreen p-2 "
+                                :class="sizeError ? 'border-red' : 'border-darkGreen'"
                                 v-model="size"
                             />
                         </div>
@@ -66,7 +70,7 @@
                                 for="roomNumber"
                                 class="text-md block font-bold tracking-wider text-darkGreen font-cambria"
                             >
-                                Room number
+                                Room number*
                             </label>
                             <input
                                 type="number"
@@ -74,6 +78,7 @@
                                 id="roomNumber"
                                 placeholder="0"
                                 class="font-cambria text-darkGreen rounded-2xl mt-1 block border-2 bg-secondary border-darkGreen p-2 "
+                                :class="numberError ? 'border-red' : 'border-darkGreen'"
                                 v-model="roomNumber"
                             />
                         </div>
@@ -82,7 +87,7 @@
                                 for="maxOccupancy"
                                 class="text-md block font-bold tracking-wider text-darkGreen font-cambria"
                             >
-                                Maximum occupancy
+                                Maximum occupancy*
                             </label>
                             <input
                                 type="number"
@@ -90,6 +95,7 @@
                                 id="maxOccupancy"
                                 placeholder="1"
                                 class="font-cambria text-darkGreen rounded-2xl mt-1 block border-2 bg-secondary border-darkGreen p-2 "
+                                :class="occupancyError ? 'border-red' : 'border-darkGreen'"
                                 v-model="maxOccupancy"
                             />
                         </div>
@@ -116,7 +122,7 @@
                         for="roomDescription"
                         class="text-md block font-bold tracking-wider text-darkGreen font-cambria"
                     >
-                        Room description
+                        Room description*
                     </label>
                     <input
                         type="textarea"
@@ -124,6 +130,7 @@
                         id="description"
                         placeholder="information about the room"
                         class="font-cambria text-darkGreen rounded-2xl mt-1 border-2 bg-secondary border-darkGreen p-2 w-96 "
+                        :class="descriptionError ? 'border-red' : 'border-darkGreen'"
                         v-model="description"
                     />
                 </div>
@@ -142,6 +149,7 @@ import { useMutation } from '@vue/apollo-composable';
 import router from '@/bootstrap/router';
 import { CREATE_ROOM } from '../../graphql/room.mutation'
 import { ref } from 'vue';
+import { title } from 'process';
 
 const { mutate: createRoom } = useMutation(CREATE_ROOM)
 
@@ -156,48 +164,80 @@ const balcony = ref(false)
 const freeWifi = ref(false)
 const freeParking = ref(false)
 const smokeFree = ref(false)
+const titleError = ref(false)
+const priceError = ref(false)
+const sizeError = ref(false)
+const numberError = ref(false)
+const occupancyError = ref(false)
+const descriptionError = ref(false)
 
 const handleRoomCreation = (tv:boolean, balc:boolean, wifi:boolean, parking:boolean, smoke:boolean) =>{
+    titleError.value = false
+    priceError.value = false
+    sizeError.value = false
+    numberError.value = false
+    occupancyError.value = false
+    descriptionError.value = false
     console.log('room title: ',roomTitle.value, 'price per night: ',pricePerNight.value, 'room size: ',size.value, 'room number: ',roomNumber.value, 'maximum occupation: ',maxOccupancy.value, 'tv: ',tv, 'balcony: ',balc, 'wifi: ',wifi, 'parking: ',parking, 'smoking: ',smoke, 'room description: ',description.value)
-    let facilities = []
-    if(tv){
-        facilities.push('Flatscreen-tv')
-    }
-    if(balc){
-        facilities.push('Balcony')
-    }
-    if(wifi){
-        facilities.push('Free wifi')
-    }
-    if(parking){
-        facilities.push('Free parking')
-    }
-    if(smoke){
-        facilities.push('Smoke free')
-    }
-    console.log(facilities)
-    createRoom({
-        createRoomInput:{
-            roomName: roomTitle.value,
-            price: parseInt(pricePerNight.value),
-            size: parseInt(size.value),
-            roomNumber: parseInt(roomNumber.value),
-            maxOccupation: parseInt(maxOccupancy.value),
-            facilities: facilities,
-            description: description.value,
-            roomPicture: 'picture here',
-            isLocked: true,
-            lockHistory: []
+    if(roomTitle.value !== '' && pricePerNight.value !== '' && size.value !== '' && roomNumber.value !== '' && maxOccupancy.value !== '' && description.value !== ''){
+        let facilities = []
+        if(tv){
+            facilities.push('Flatscreen-tv')
         }
-    })
-    .then(() => {
-        router.push('/admin/overview')
-    })
-    .catch((e) => {
-        console.error(e)
-        console.error(e.message)
-        console.error(e.graphqlErrors)
-    })
+        if(balc){
+            facilities.push('Balcony')
+        }
+        if(wifi){
+            facilities.push('Free wifi')
+        }
+        if(parking){
+            facilities.push('Free parking')
+        }
+        if(smoke){
+            facilities.push('Smoke free')
+        }
+        console.log(facilities)
+        createRoom({
+            createRoomInput:{
+                roomName: roomTitle.value,
+                price: parseInt(pricePerNight.value),
+                size: parseInt(size.value),
+                roomNumber: parseInt(roomNumber.value),
+                maxOccupation: parseInt(maxOccupancy.value),
+                facilities: facilities,
+                description: description.value,
+                roomPicture: 'picture here',
+                isLocked: true,
+                lockHistory: []
+            }
+        })
+        .then(() => {
+            router.push('/admin/overview')
+        })
+        .catch((e) => {
+            console.error(e)
+            console.error(e.message)
+            console.error(e.graphqlErrors)
+        })
+    } 
+    if(roomTitle.value === ''){
+        titleError.value = true
+    } 
+    if(pricePerNight.value === ''){
+        priceError.value = true
+    } 
+    if(size.value === ''){
+        sizeError.value = true
+    } 
+    if(roomNumber.value === ''){
+        numberError.value = true
+    } 
+    if(maxOccupancy.value === ''){
+        occupancyError.value = true
+    } 
+    if(description.value === ''){
+        descriptionError.value = true
+    }
 }
 
 </script>
