@@ -3,7 +3,7 @@
         <RouterLink to="/">
             <h2 class="text-darkGreen max-sm:text-lg sm:text-sm md:text-lg lg:text-xl font-cambria font-bold my-6">THE CONTINENTAL</h2>
         </RouterLink>
-        <div class="flex gap-4 lg:gap-12">
+        <div class="flex gap-4 lg:gap-10">
             <RouterLink v-if="firebaseUser && getUserByUidResult?.userByUid.role == 'ADMIN'" to="/admin/locks">
                 <h2 class="max-sm:hidden my-6 sm:text-sm md:text-lg lg:text-xl text-darkGreen font-cambria font-normal">{{$t('header.smartLocks')}}</h2>
             </RouterLink>
@@ -13,6 +13,9 @@
             <RouterLink v-if="firebaseUser" to="/user/reservations">
                 <h2 class="max-sm:hidden my-6 sm:text-sm md:text-lg lg:text-xl text-darkGreen font-cambria font-normal">{{$t('header.myReservations')}}</h2>
             </RouterLink>
+            <button @click="switchLang()" class="border-2 rounded-xl border-darkGreen -ml-2 my-4">
+                <h2 class="px-2 sm:text-sm md:text-lg lg:text-xl text-darkGreen font-cambria font-normal">{{ $t('header.switch') }}</h2>
+            </button>
             <div class="border-l-2 border-darkGreen py-6 pl-4 lg:pl-12 max-sm:pl-8">
                 <button v-if="firebaseUser" @click="logout()" class="max-sm:text-lg sm:text-sm md:text-lg lg:text-xl text-darkGreen font-cambria font-normal">{{$t('header.logout')}}</button>
                 <RouterLink v-else to="/auth/login">
@@ -42,11 +45,23 @@
 import useFirebase from '@/composables/useFirebase';
 import { useQuery } from '@vue/apollo-composable';
 import { GET_USER_BY_UID } from '@/graphql/user.query';
+import useLanguage from '@/composables/useLanguage';
+import { useI18n } from 'vue-i18n';
 
 const {firebaseUser, logout} = useFirebase()
+const { setLocale } = useLanguage()
+const { locale } = useI18n()
 
 const { result: getUserByUidResult } = useQuery(GET_USER_BY_UID, {
     uid: firebaseUser.value?.uid
 })
+
+const switchLang = () => {
+    if(locale.value == 'en') {
+        setLocale('nl')
+    } else {
+        setLocale('en')
+    }
+}
 
 </script>

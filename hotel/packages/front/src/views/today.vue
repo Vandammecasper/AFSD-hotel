@@ -5,31 +5,31 @@
         <div class="grid grid-cols-3 h-56 bg-secondary rounded-3xl gap-0 justify-between justify-self-center">
           <img src="/images/hotelRoomDeluxe.jpg" alt="" class="rounded-s-2xl h-full" />
           <div class="grid justify-items-start my-2 ml-6 w-96">
-            <h2 class="text-3xl font-bold font-cambria text-darkGreen">{{ findRoomName(reservation.roomId) }}</h2>
+            <h2 class="text-2xl font-bold font-cambria text-darkGreen">{{findRoomName(reservation.roomId)}} (00{{ findRoomNumber(reservation.roomId) }})</h2>
             <div class="flex gap-8">
                 <div>
-                    <h3 class="text-darkGreen font-cambria font-normal text-2xl">Reservation name:</h3>
+                    <h3 class="text-darkGreen font-cambria font-normal text-2xl">{{$t('today.reservationName')}}:</h3>
                     <p class="text-darkGreen font-cambria font-bold text-xl">{{ reservation.reservationName }}</p>
-                    <h3 class="text-darkGreen font-cambria font-normal text-2xl mt-4">Customers:</h3>
+                    <h3 class="text-darkGreen font-cambria font-normal text-2xl mt-4">{{$t('today.customers')}}:</h3>
                     <p class="text-darkGreen font-cambria font-bold text-xl">{{ reservation.customerIds.length }}</p>
                 </div>
                 <div>
-                    <h3 class="text-darkGreen font-cambria font-normal text-2xl">Check-in date:</h3>
+                    <h3 class="text-darkGreen font-cambria font-normal text-2xl">{{$t('today.checkinDate')}}:</h3>
                     <p class="text-darkGreen font-cambria font-bold text-xl">{{ formatDate(reservation.checkInDate) }}</p>
-                    <h3 class="text-darkGreen font-cambria font-normal text-2xl mt-4">Check-out date:</h3>
+                    <h3 class="text-darkGreen font-cambria font-normal text-2xl mt-4">{{$t('today.checkoutDate')}}:</h3>
                     <p class="text-darkGreen font-cambria font-bold text-xl">{{ formatDate(reservation.checkOutDate) }}</p>
                 </div>
             </div>
         </div>
         <div class=" flex flex-col items-center text-center ml-16 mt-14">
-            <p class="text-xl font-cambria text-darkGreen">Total price</p>
+            <p class="text-xl font-cambria text-darkGreen">{{$t('today.totalPrice')}}</p>
             <h3 class="text-6xl font-cambria font-bold text-darkGreen">€ {{ reservation.price }}</h3>
-            <button @click="completeCheckIn(reservation.id)" class="bg-accent rounded-3xl w-44 px-8 py-1.5 mt-4 ml-3 text-secondary font-cambria font-bold text-xl">check-in</button>
+            <button @click="completeCheckIn(reservation.id)" class="bg-accent rounded-3xl w-44 px-8 py-1.5 mt-4 ml-3 text-secondary font-cambria font-bold text-xl">{{$t('today.checkin')}}</button>
         </div>
         </div>
       </div>
     </div>
-    <p v-else class="text-2xl text-darkGreen font-cambria mt-48">No check-ins today</p>
+    <p v-else class="text-2xl text-darkGreen font-cambria mt-48">{{$t('today.noCheckinsToday')}}</p>
   </div>
 </template>
 
@@ -61,6 +61,15 @@ const findRoomName = (roomId:string) => {
         return getRoomByIdResult.value.room.roomName
     } else {
         return 'Room not found'
+    }
+}
+
+const findRoomNumber = (roomId:string) => {
+    const { result:getRoomByIdResult } = useQuery(GET_ROOM_BY_ID,{id: roomId})
+    if(getRoomByIdResult.value){
+        return getRoomByIdResult.value.room.roomNumber
+    } else {
+        return '0'
     }
 }
 

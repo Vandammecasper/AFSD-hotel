@@ -6,6 +6,7 @@ import useGraphql from './composables/useGraphql';
 import useRealtime from './composables/useRealtime';
 import { GET_USER_BY_UID } from './graphql/user.query';
 import { GET_RESERVATIONS_BY_ROOM_ID } from './graphql/reservation.query';
+import useLanguage from './composables/useLanguage';
 
 const { apolloClient } = useGraphql()
 provide(DefaultApolloClient, apolloClient)
@@ -16,6 +17,9 @@ const isLocked = ref(false)
 const roomNumber = ref('')
 const customerUid = ref('')
 const customerName = ref('')
+const { setLocale } = useLanguage()
+
+setLocale('en')
 
 on('connect', () => {
   console.log('connected to websocket')

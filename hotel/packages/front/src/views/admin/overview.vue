@@ -18,7 +18,9 @@
                         <p v-if="room.roomNumber > 10 && room.roomNumber < 100" class="max-sm:text-xs lg:text-xl text-darkGreen font-cambria">({{$t('roomOverview.roomNumber')}}: 0{{room.roomNumber}})</p>
                         <p v-if="room.roomNumber > 10" class="max-sm:text-xs lg:text-xl text-darkGreen font-cambria">({{$t('roomOverview.roomNumber')}}: {{room.roomNumber}})</p>
                         <p class="sm:text-xl lg:text-2xl text-darkGreen font-cambria lg:mt-6">{{$t('roomOverview.occupation')}}:</p>
-                        <p class="sm:text-xl lg:text-xl text-darkGreen font-cambria lg:-mt-4">{{isRoomOccupied(room)}}</p>
+                        <p v-if="isRoomOccupied(room) === 'Occupied'" class="sm:text-xl lg:text-xl text-darkGreen font-cambria lg:-mt-4 xl:-mt-2">{{$t('roomOverview.occupied')}}</p>
+                        <p v-if="isRoomOccupied(room) === 'Not occupied'" class="sm:text-xl lg:text-xl text-darkGreen font-cambria lg:-mt-4 xl:-mt-2">{{$t('roomOverview.notOccupied')}}</p>
+                        <p v-if="isRoomOccupied(room) === 'Check-in today'" class="sm:text-xl lg:text-xl text-darkGreen font-cambria lg:-mt-4 xl:-mt-2">{{$t('roomOverview.checkinToday')}}</p>
                     </div>
                 </RouterLink>
                 <div class="flex flex-col mr-4">
@@ -33,8 +35,8 @@
                         </button>
                     </div>
                     <div class="sm:mt-7 lg:mt-16">
-                        <p v-if="findNextReservation(room) !== 'No reservations'" class="max-sm:hidden justify-self-end font-cambria max-sm:text-xs max-lg:text-sm xl:text-lg">{{$t('roomOverview.nextReservation')}}:</p>
-                        <p v-if="findNextReservation(room) !== 'No reservations'" class="sm:hidden justify-self-end font-cambria max-sm:text-xs max-lg:text-sm xl:text-lg">{{$t('roomOverview.nextRes')}}:</p>
+                        <p v-if="findNextReservation(room) !== 'No reservations'" class="max-sm:hidden justify-self-end font-cambria max-sm:text-xs max-lg:text-sm xl:text-md">{{$t('roomOverview.nextReservation')}}:</p>
+                        <p v-if="findNextReservation(room) !== 'No reservations'" class="sm:hidden justify-self-end font-cambria max-sm:text-xs max-lg:text-sm xl:text-md">{{$t('roomOverview.nextRes')}}:</p>
                         <p v-if="findNextReservation(room) !== 'No reservations'" class="justify-self-end font-cambria max-sm:text-sm lg:text-lg">{{findNextReservation(room)}}</p>
                     </div>
                 </div>
