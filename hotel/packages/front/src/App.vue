@@ -13,6 +13,7 @@ provide(DefaultApolloClient, apolloClient)
 const { on } = useRealtime()
 
 const newLockChange = ref(false)
+const isLocked = ref(false)
 const roomNumber = ref('')
 const customerUid = ref('')
 const customerName = ref('')
@@ -28,6 +29,7 @@ on ('newLockChange', (data) => {
   roomNumber.value = data.roomNumber
   const { result:getUserByUidResult } = useQuery(GET_USER_BY_UID, { uid: customerUid.value })
   customerName.value = getUserByUidResult.value.userByUid.userName
+  isLocked.value = data.isLocked
   // if(getReservationsByRoomIdResult?.value){
   //   for(const reservation of getReservationsByRoomIdResult?.value.reservationsByRoomId) {
   //     for(const customerId of reservation.customerIds){
@@ -49,7 +51,10 @@ on ('newLockChange', (data) => {
 
 <template>
   <div class="w-screen h-screen">
-    <div v-if="newLockChange" class="fixed z-10 right-0 top-32 bg-accent p-3 px-5 font-cambria font-bold text-primary text-xl rounded-s-full">
+    <div v-if="newLockChange && isLocked" class="fixed z-10 right-0 top-32 bg-accent p-3 px-5 font-cambria font-bold text-primary text-xl rounded-s-full">
+      Room {{roomNumber}} has been locked by {{customerName}}
+    </div>
+    <div v-else-if="newLockChange && isLocked === false" class="fixed z-10 right-0 top-32 bg-accent p-3 px-5 font-cambria font-bold text-primary text-xl rounded-s-full">
       Room {{roomNumber}} has been unlocked by {{customerName}}
     </div>
     <RouterView />
