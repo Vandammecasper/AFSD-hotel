@@ -5,18 +5,18 @@
         </RouterLink>
         <div class="flex gap-4 lg:gap-12">
             <RouterLink v-if="firebaseUser && getUserByUidResult?.userByUid.role == 'ADMIN'" to="/admin/locks">
-                <h2 class="max-sm:hidden my-6 sm:text-sm md:text-lg lg:text-xl text-darkGreen font-cambria font-normal">SMART LOCKS</h2>
+                <h2 class="max-sm:hidden my-6 sm:text-sm md:text-lg lg:text-xl text-darkGreen font-cambria font-normal">{{$t('header.smartLocks')}}</h2>
             </RouterLink>
             <RouterLink v-if="firebaseUser && getUserByUidResult?.userByUid.role == 'ADMIN'" to="/admin/overview">
-                <h2 class="max-sm:hidden my-6 sm:text-sm md:text-lg lg:text-xl text-darkGreen font-cambria font-normal">ROOM OVERVIEW</h2>
+                <h2 class="max-sm:hidden my-6 sm:text-sm md:text-lg lg:text-xl text-darkGreen font-cambria font-normal">{{$t('header.roomOverview')}}</h2>
             </RouterLink>
             <RouterLink v-if="firebaseUser" to="/user/reservations">
-                <h2 class="max-sm:hidden my-6 sm:text-sm md:text-lg lg:text-xl text-darkGreen font-cambria font-normal">MY RESERVATIONS</h2>
+                <h2 class="max-sm:hidden my-6 sm:text-sm md:text-lg lg:text-xl text-darkGreen font-cambria font-normal">{{$t('header.myReservations')}}</h2>
             </RouterLink>
             <div class="border-l-2 border-darkGreen py-6 pl-4 lg:pl-12 max-sm:pl-8">
-                <button v-if="firebaseUser" @click="logout()" class="max-sm:text-lg sm:text-sm md:text-lg lg:text-xl text-darkGreen font-cambria font-normal">LOGOUT</button>
+                <button v-if="firebaseUser" @click="logout()" class="max-sm:text-lg sm:text-sm md:text-lg lg:text-xl text-darkGreen font-cambria font-normal">{{$t('header.logout')}}</button>
                 <RouterLink v-else to="/auth/login">
-                    <h2 class="max-sm:text-lg sm:text-sm md:text-lg lg:text-xl text-darkGreen font-cambria font-normal">LOGIN</h2>
+                    <h2 class="max-sm:text-lg sm:text-sm md:text-lg lg:text-xl text-darkGreen font-cambria font-normal">{{$t('header.login')}}</h2>
                 </RouterLink>
             </div>
         </div>

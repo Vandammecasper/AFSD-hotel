@@ -1,7 +1,7 @@
 <template>
     <div class="w-screen h-screen grid justify-items-center overflow-x-hidden">
         <div class="w-screen flex justify-center mt-40 gap-6 sm:gap-16 xl:gap-40">
-            <h1 class="text-xl sm:text-3xl md:text-5xl text-darkGreen text-center font-cambria font-normal ml-24 sm:ml-36 md:ml-40 xl:ml-64">ROOM OVERVIEW</h1>
+            <h1 class="text-xl sm:text-3xl md:text-5xl text-darkGreen text-center font-cambria font-normal ml-24 sm:ml-36 md:ml-40 xl:ml-64">{{$t('roomOverview.roomOverview')}}</h1>
             <RouterLink to="/admin/room/new" class="bg-green rounded-xl p-3 -mt-2 max-sm:h-12">
                 <img src="/icons/add.svg" alt="" class="h-6 sm:h-7 md:h-10">
             </RouterLink>
@@ -14,10 +14,10 @@
                         <h2 class="max-md:hidden text-xl lg:text-2xl xl:text-3xl font-bold font-cambria text-darkGreen">{{room.roomName}}</h2>
                         <h2 class="max-sm:hidden md:hidden sm:text-xl lg:text-2xl xl:text-3xl font-bold font-cambria text-darkGreen">{{shortenText(room.roomName, 18)}}</h2>
                         <h2 class="sm:hidden sm:text-xl lg:text-2xl xl:text-3xl font-bold font-cambria text-darkGreen">{{shortenText(room.roomName, 13)}}</h2>
-                        <p v-if="room.roomNumber < 10" class="max-sm:text-xs lg:text-xl text-darkGreen font-cambria ">(Room number: 00{{room.roomNumber}})</p>
-                        <p v-if="room.roomNumber > 10 && room.roomNumber < 100" class="max-sm:text-xs lg:text-xl text-darkGreen font-cambria">(Room number: 0{{room.roomNumber}})</p>
-                        <p v-if="room.roomNumber > 10" class="max-sm:text-xs lg:text-xl text-darkGreen font-cambria">(Room number: {{room.roomNumber}})</p>
-                        <p class="sm:text-xl lg:text-2xl text-darkGreen font-cambria lg:mt-6">Occupation:</p>
+                        <p v-if="room.roomNumber < 10" class="max-sm:text-xs lg:text-xl text-darkGreen font-cambria ">({{$t('roomOverview.roomNumber')}}: 00{{room.roomNumber}})</p>
+                        <p v-if="room.roomNumber > 10 && room.roomNumber < 100" class="max-sm:text-xs lg:text-xl text-darkGreen font-cambria">({{$t('roomOverview.roomNumber')}}: 0{{room.roomNumber}})</p>
+                        <p v-if="room.roomNumber > 10" class="max-sm:text-xs lg:text-xl text-darkGreen font-cambria">({{$t('roomOverview.roomNumber')}}: {{room.roomNumber}})</p>
+                        <p class="sm:text-xl lg:text-2xl text-darkGreen font-cambria lg:mt-6">{{$t('roomOverview.occupation')}}:</p>
                         <p class="sm:text-xl lg:text-xl text-darkGreen font-cambria lg:-mt-4">{{isRoomOccupied(room)}}</p>
                     </div>
                 </RouterLink>
@@ -33,8 +33,8 @@
                         </button>
                     </div>
                     <div class="sm:mt-7 lg:mt-16">
-                        <p v-if="findNextReservation(room) !== 'No reservations'" class="max-sm:hidden justify-self-end font-cambria max-sm:text-xs max-lg:text-sm xl:text-lg">Next reservation:</p>
-                        <p v-if="findNextReservation(room) !== 'No reservations'" class="sm:hidden justify-self-end font-cambria max-sm:text-xs max-lg:text-sm xl:text-lg">Next res.:</p>
+                        <p v-if="findNextReservation(room) !== 'No reservations'" class="max-sm:hidden justify-self-end font-cambria max-sm:text-xs max-lg:text-sm xl:text-lg">{{$t('roomOverview.nextReservation')}}:</p>
+                        <p v-if="findNextReservation(room) !== 'No reservations'" class="sm:hidden justify-self-end font-cambria max-sm:text-xs max-lg:text-sm xl:text-lg">{{$t('roomOverview.nextRes')}}:</p>
                         <p v-if="findNextReservation(room) !== 'No reservations'" class="justify-self-end font-cambria max-sm:text-sm lg:text-lg">{{findNextReservation(room)}}</p>
                     </div>
                 </div>

@@ -5,18 +5,18 @@
         </RouterLink>
         <div class="flex gap-4 lg:gap-12">
             <RouterLink v-if="firebaseUser && getUserByUidResult?.userByUid.role == 'ADMIN'" to="/admin/locks">
-                <h2 class="max-sm:hidden my-6 sm:text-sm md:text-lg lg:text-xl text-primary font-cambria font-normal">SMART LOCKS</h2>
+                <h2 class="max-sm:hidden my-6 sm:text-sm md:text-lg lg:text-xl text-primary font-cambria font-normal">{{$t('header.smartLocks')}}</h2>
             </RouterLink>
             <RouterLink v-if="firebaseUser && getUserByUidResult?.userByUid.role == 'ADMIN'" to="/admin/overview">
-                <h2 class="max-sm:hidden my-6 sm:text-sm md:text-lg lg:text-xl text-primary font-cambria font-normal">ROOM OVERVIEW</h2>
+                <h2 class="max-sm:hidden my-6 sm:text-sm md:text-lg lg:text-xl text-primary font-cambria font-normal">{{$t('header.roomOverview')}}</h2>
             </RouterLink>
             <RouterLink v-if="firebaseUser" to="/user/reservations">
-                <h2 class="max-sm:hidden my-6 sm:text-sm md:text-lg lg:text-xl text-primary font-cambria font-normal">MY RESERVATIONS</h2>
+                <h2 class="max-sm:hidden my-6 sm:text-sm md:text-lg lg:text-xl text-primary font-cambria font-normal">{{$t('header.myReservations')}}</h2>
             </RouterLink>
             <div class="border-l-2 border-primary py-6 pl-4 lg:pl-12 max-sm:pl-8">
-                <button v-if="firebaseUser" @click="logout()" class="max-sm:text-lg sm:text-sm md:text-lg lg:text-xl text-primary font-cambria font-normal">LOGOUT</button>
+                <button v-if="firebaseUser" @click="logout()" class="max-sm:text-lg sm:text-sm md:text-lg lg:text-xl text-primary font-cambria font-normal">{{$t('header.logout')}}</button>
                 <RouterLink v-else to="/auth/login">
-                    <h2 class="max-sm:text-lg sm:text-sm md:text-lg lg:text-xl text-primary font-cambria font-normal">LOGIN</h2>
+                    <h2 class="max-sm:text-lg sm:text-sm md:text-lg lg:text-xl text-primary font-cambria font-normal">{{$t('header.login')}}</h2>
                 </RouterLink>
             </div>
         </div>
@@ -26,12 +26,12 @@
         <div class="max-sm:flex-col flex max-sm:gap-6 gap-4 md:gap-16 lg:gap-28">
             <RouterLink v-if="firebaseUser && getUserByUidResult?.userByUid.role == 'ADMIN'" to="/admin/today" class="z-20">
                 <button class="border-2 border-primary rounded-full flex justify-center mt-10 p-3 px-4">
-                    <h2 class="text-primary sm:text-xl md:text-2xl lg:text-3xl font-cambria font-normal">Today's reservations</h2>
+                    <h2 class="text-primary sm:text-xl md:text-2xl lg:text-3xl font-cambria font-normal">{{$t('home.todaysReservations')}}</h2>
                 </button>
             </RouterLink>
             <RouterLink to="/admin/selection" class="z-20">
                 <button class="border-2 border-primary rounded-full flex justify-center sm:mt-10 p-3 px-4">
-                    <h2 class="text-primary sm:text-xl md:text-2xl lg:text-3xl font-cambria font-normal">Make a reservation</h2>
+                    <h2 class="text-primary sm:text-xl md:text-2xl lg:text-3xl font-cambria font-normal">{{$t('home.makeAReservation')}}</h2>
                 </button>
             </RouterLink>
         </div>
@@ -59,6 +59,7 @@ import { useQuery } from '@vue/apollo-composable';
 import { GET_USER_BY_UID } from '@/graphql/user.query';
 
 const {firebaseUser, logout} = useFirebase()
+
 
 const { result: getUserByUidResult } = useQuery(GET_USER_BY_UID, {
     uid: firebaseUser.value?.uid

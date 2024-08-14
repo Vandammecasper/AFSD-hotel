@@ -11,7 +11,6 @@ const { apolloClient } = useGraphql()
 provide(DefaultApolloClient, apolloClient)
 
 const { on } = useRealtime()
-
 const newLockChange = ref(false)
 const isLocked = ref(false)
 const roomNumber = ref('')
@@ -52,10 +51,10 @@ on ('newLockChange', (data) => {
 <template>
   <div class="w-screen h-screen">
     <div v-if="newLockChange && isLocked" class="fixed z-10 right-0 top-32 bg-accent p-3 px-5 font-cambria font-bold text-primary text-xl rounded-s-full">
-      Room {{roomNumber}} has been locked by {{customerName}}
+      {{$t('app.room')}} {{roomNumber}} {{$t('app.hasBeenLockedBy')}} {{customerName}}
     </div>
     <div v-else-if="newLockChange && isLocked === false" class="fixed z-10 right-0 top-32 bg-accent p-3 px-5 font-cambria font-bold text-primary text-xl rounded-s-full">
-      Room {{roomNumber}} has been unlocked by {{customerName}}
+      {{$t('app.room')}} {{roomNumber}} {{$t('app.hasBeenUnlockedBy')}} {{customerName}}
     </div>
     <RouterView />
   </div>

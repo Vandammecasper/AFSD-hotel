@@ -1,0 +1,75 @@
+{
+    "header":{
+        "smartLocks": "SMART LOCKS",
+        "roomOverview": "ROOM OVERVIEW",
+        "myReservations": "MY RESERVATIONS",
+        "login": "LOGIN",
+        "logout": "LOGOUT"
+    },
+    "app":{
+        "room": "Room",
+        "hasBeenLockedBy": "has been locked by",
+        "hasBeenUnlockedBy": "has been unlocked by"
+    },
+    "home":{
+        "todaysReservations": "Today's Reservations",
+        "makeAReservation": "Make a Reservation"
+    },
+    "smartLocks":{
+        "smartLocks": "SMART LOCKS",
+        "lastLockChange": "Last lock change",
+        "noLockChangesYet": "No lock changes yet"
+    },
+    "lock":{
+        "roomNumber": "ROOM NUMBER",
+        "flatscreenTv": "Flatscreen-tv",
+        "smokeFree": "Smoke free",
+        "freeWifi": "Free wifi",
+        "freeParking": "Free parking",
+        "balcony": "Balcony",
+        "smartLockStatus": "Smart lock status:",
+        "locked": "LOCKED",
+        "unlocked": "UNLOCKED",
+        "previousLockChanges": "Previous lock changes",
+        "noLockChangesYet": "No lock changes yet",
+        "goBack": "GO BACK"
+    },
+    "roomOverview":{
+        "roomOverview":"ROOM OVERVIEW",
+        "roomNumber": "Room number",
+        "occupation": "Occupation",
+        "occupied": "Occupied",
+        "notOccupied": "Not occupied",
+        "nextReservation": "Next reservation",
+        "nextRes" : "Next res."
+    },
+    "room":{
+        "roomNumber": "ROOM NUMBER",
+        "flatscreenTv": "Flatscreen-tv",
+        "smokeFree": "Smoke free",
+        "freeWifi": "Free wifi",
+        "freeParking": "Free parking",
+        "balcony": "Balcony",
+        "occupation": "Occupation",
+        "occupiedUntil": "Occupied until",
+        "notOccupied": "Not occupied",
+        "removeAccess": "Remove access",
+        "nextReservations": "Next reservations",
+        "noNextReservations": "No next reservations",
+        "goBack": "GO BACK"
+    },
+    "reservations":{
+        "yourReservations": "YOUR RESERVATIONS",
+        "roomAccessUntil": "Room access until",
+        "roomStatus": "Room status",
+        "locked": "LOCKED",
+        "unlocked": "UNLOCKED",
+        "unlockYourRoom": "Unlock your room",
+        "lockYourRoom": "Lock your room",
+        "reservation": "Reservation",
+        "success": "Your room has been succesfully",
+        "unlock": "unlocked",
+        "lock": "locked",
+        "noAccess": "You do not have access to this room!"
+    }
+}

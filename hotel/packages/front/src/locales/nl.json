@@ -1,0 +1,70 @@
+{
+    "header":{
+        "smartLocks": "SLIMME SLOTEN",
+        "roomOverview": "KAMER OVERZICHT",
+        "myReservations": "MIJN reservaties",
+        "login": "INLOGGEN",
+        "logout": "UITLOGGEN"
+    },
+    "home":{
+        "todaysReservations": "Reservaties van vandaag",
+        "makeAReservation": "Maak een reservatie"
+    },
+    "smartLocks":{
+        "smartLocks": "SLIMME SLOTEN",
+        "lastLockChange": "Laatste slot wijziging",
+        "noLockChangesYet": "Nog geen slot wijzigingen"
+    },
+    "lock":{
+        "roomNumber": "KAMER NUMMER",
+        "flatscreenTv": "Flatscreen-tv",
+        "smokeFree": "Rookvrij",
+        "freeWifi": "Gratis wifi",
+        "freeParking": "Gratis parkeren",
+        "balcony": "Balkon",
+        "smartLockStatus": "Status van slimme sloten",
+        "locked": "VERGRENDELD",
+        "unlocked": "ONTGRENDELD",
+        "previousLockChanges": "Laatste slot wijzigingen",
+        "noLockChangesYet": "Nog geen slot wijzigingen",
+        "goBack": "GA TERUG"
+    },
+    "roomOverview":{
+        "roomOverview":"KAMER OVERZICHT",
+        "roomNumber": "Kamer nummer",
+        "occupation": "Bezetting",
+        "occupied": "Bezet",
+        "notOccupied": "Niet bezet",
+        "nextReservation": "Volgende reservatie",
+        "nextRes" : "Volgende res."
+    },
+    "room":{
+        "roomNumber": "KAMER NUMMER",
+        "flatscreenTv": "Flatscreen-tv",
+        "smokeFree": "Rookvrij",
+        "freeWifi": "Gratis wifi",
+        "freeParking": "Gratis parkeren",
+        "balcony": "Balkon",
+        "occupation": "Bezetting",
+        "occupiedUntil": "Bezet tot",
+        "notOccupied": "Niet bezet",
+        "removeAccess": "Toegang ontzeggen",
+        "nextReservations": "Volgende reservaties",
+        "noNextReservations": "Geen volgende reservaties",
+        "goBack": "GA TERUG"
+    },
+    "reservations":{
+        "yourReservations": "JOUW RESERVATIES",
+        "roomAccessUntil": "Kamer toegang tot",
+        "roomStatus": "Kamer status",
+        "locked": "VERGRENDELD",
+        "unlocked": "ONTGRENDELD",
+        "unlockYourRoom": "Ontgrendel je kamer",
+        "lockYourRoom": "Vergrendel je kamer",
+        "reservation": "Reservatie",
+        "success": "Je kamer is succesvol",
+        "unlock": "ontgrendeld",
+        "lock": "vergrendeld",
+        "noAccess": "Je hebt geen toegang tot deze kamer!"
+    }
+}

@@ -1,6 +1,6 @@
 <template>
     <div v-if="getReservationsByCustomerIdResult" class="w-screen h-screen grid justify-items-center">
-        <h1 class="text-4xl md:text-5xl text-darkGreen text-center font-cambria font-normal mt-40">YOUR RESERVARTIONS</h1>
+        <h1 class="text-4xl md:text-5xl text-darkGreen text-center font-cambria font-normal mt-40">{{$t('reservations.yourReservations')}}</h1>
         <div v-for="reservation of getReservationsByCustomerIdResult.reservationsByCustomerId" :key="reservation.id" class="w-full grid justify-items-center lg:-mt-0 md:-mt-24 sm:-mt-32 -mt-48">
             <div class="grid grid-cols-3 h-28 sm:h-32 md:h-40 lg:h-48 w-5/6 lg:w-4/5 xl:w-3/5 bg-secondary rounded-3xl justify-between">
                 <img src="/images/hotelRoomDeluxe.jpg" alt="" class="rounded-s-2xl h-full">
@@ -9,18 +9,18 @@
                         <h2 class="max-sm:hidden max-sm:text-sm md:text-xl lg:text-2xl xl:text-3xl font-bold font-cambria text-darkGreen">{{getRoomName(reservation.roomId)}}</h2>
                         <h2 v-if="isTodayBetweenDates(reservation)" class="sm:hidden max-sm:text-sm md:text-xl lg:text-2xl xl:text-3xl font-bold font-cambria text-darkGreen">{{shortenText(getRoomName(reservation.roomId))}}</h2>
                         <h2 v-else class="sm:hidden max-sm:text-sm md:text-xl lg:text-2xl xl:text-3xl font-bold font-cambria text-darkGreen">{{getRoomName(reservation.roomId)}}</h2>
-                        <p v-if="isTodayBetweenDates(reservation)" class="max-sm:text-sm md:text-lg lg:text-xl xl:text-2xl text-darkGreen font-cambria -mt-4">Room access until {{formatDate(reservation.checkOutDate)}}</p>
+                        <p v-if="isTodayBetweenDates(reservation)" class="max-sm:text-sm md:text-lg lg:text-xl xl:text-2xl text-darkGreen font-cambria -mt-4">{{$t('reservations.roomAccessUntil')}} {{formatDate(reservation.checkOutDate)}}</p>
                         <div v-else>
-                            <p class="max-sm:text-xs md:text-lg lg:text-xl text-darkGreen font-cambria">Reservation:</p>
+                            <p class="max-sm:text-xs md:text-lg lg:text-xl text-darkGreen font-cambria">{{$t('reservations.reservation')}}:</p>
                             <p class="max-sm:text-xs md:text-lg lg:text-xl text-darkGreen font-cambria">{{formatDate(reservation.checkInDate)}} - {{formatDate(reservation.checkOutDate)}}</p>
                         </div>
-                        <p v-if="getLockStatus(reservation.roomId) && reservation.checkedIn" class="max-sm:text-xs md:text-lg lg:text-xl text-darkGreen font-cambria mt-1 sm:mt-4">Room status: LOCKED</p>
-                        <p v-else-if="reservation.checkedIn" class="max-sm:text-xs md:text-lg lg:text-xl text-darkGreen font-cambria mt-1 sm:mt-4">Room status: UNLOCKED</p>
+                        <p v-if="getLockStatus(reservation.roomId) && reservation.checkedIn" class="max-sm:text-xs md:text-lg lg:text-xl text-darkGreen font-cambria mt-1 sm:mt-4">{{$t('reservations.roomStatus')}}: {{$t('reservations.locked')}}</p>
+                        <p v-else-if="reservation.checkedIn" class="max-sm:text-xs md:text-lg lg:text-xl text-darkGreen font-cambria mt-1 sm:mt-4">{{$t('reservations.roomStatus')}}: {{$t('reservations.unlocked')}}</p>
                     </div>
                     <button @click="() => {detection = true; roomToCheck = reservation.roomId}" v-if="reservation.checkedIn" class="self-center lg:w-44 lg:h-44 md:w-32 md:h-32 w-28 h-28 max-sm:h-24 grid bg-primary max-sm:p-1 max-sm:px-3 p-4 lg:p-8 rounded-xl sm:rounded-3xl border-solid border-4 border-darkGreen mr-2 md:mr-4 lg:mr-2">
                         <img src="/icons/camera.svg" alt="" class="place-self-center h-8 md:h-16 lg:h-20 max-sm:h-6">
-                        <p v-if="getLockStatus(reservation.roomId)" class="text-center max-lg:text-xs mt-1 text-darkGreen font-cambria">Unlock your room</p>
-                        <p v-else class="text-center max-lg:text-xs mt-1 text-darkGreen font-cambria">Lock your room</p>
+                        <p v-if="getLockStatus(reservation.roomId)" class="text-center max-lg:text-xs mt-1 text-darkGreen font-cambria">{{$t('reservations.unlockYourRoom')}}</p>
+                        <p v-else class="text-center max-lg:text-xs mt-1 text-darkGreen font-cambria">{{$t('reservations.lockYourRoom')}}</p>
                     </button>
                 </div>
             </div>
@@ -33,11 +33,11 @@
             <div v-if="detected && success" class="w-4/5 md:w-3/5 lg:w-2/5 h-1/3 sm:h-1/2 md:h-2/3 rounded-3xl fixed self-center bg-secondary gap-8 grid content-center justify-items-center">
                 <img v-if="locked" src="/icons/locked.svg" alt="" class="h-28">
                 <img v-else src="/icons/unlocked.svg" alt="" class="h-28">
-                <p class="text-center text-4xl font-bold text-darkGreen font-cambria leading-normal">Your room has been succesfully {{locked ? 'locked' : 'unlocked'}}</p>
+                <p class="text-center text-4xl font-bold text-darkGreen font-cambria leading-normal">{{$t('reservations.success')}} {{locked ? $t('reservations.lock') : $t('reservations.unlock')}}</p>
             </div>
             <div v-else-if="noAccess" class="w-4/5 md:w-3/5 lg:w-2/5 h-1/3 sm:h-1/2 md:h-2/3 rounded-3xl fixed self-center bg-secondary gap-8 grid content-center justify-items-center">
                 <img src="/icons/noAccess.svg" alt="" class="h-28">
-                <p class="text-center text-4xl font-bold text-darkGreen font-cambria leading-normal">You do not have access to this room!</p>
+                <p class="text-center text-4xl font-bold text-darkGreen font-cambria leading-normal">{{$t('reservations.noAccess')}}</p>
             </div>
         </div>
     </div>
