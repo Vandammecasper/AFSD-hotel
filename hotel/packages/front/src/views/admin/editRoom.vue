@@ -26,6 +26,7 @@
                                 id="roomTitle"
                                 placeholder="New room title"
                                 class="font-cambria text-darkGreen rounded-2xl mt-1 block border-2 bg-secondary border-darkGreen p-2 "
+                                :class="titleError ? 'border-red' : 'border-darkGreen'"
                                 :value="getRoomByIdResult?.room.roomName"
                             />
                         </div>
@@ -42,6 +43,7 @@
                                 id="pricePerNight"
                                 placeholder="00.00"
                                 class="font-cambria text-darkGreen rounded-2xl mt-1 block border-2 bg-secondary border-darkGreen p-2 "
+                                :class="priceError ? 'border-red' : 'border-darkGreen'"
                                 :value="getRoomByIdResult?.room.price"
                             />
                         </div>
@@ -58,6 +60,7 @@
                                 id="size"
                                 placeholder="0"
                                 class="font-cambria text-darkGreen rounded-2xl mt-1 block border-2 bg-secondary border-darkGreen p-2 "
+                                :class="sizeError ? 'border-red' : 'border-darkGreen'"
                                 :value="getRoomByIdResult?.room.size"
                             />
                         </div>
@@ -76,6 +79,7 @@
                                 id="roomNumber"
                                 placeholder="0"
                                 class="font-cambria text-darkGreen rounded-2xl mt-1 block border-2 bg-secondary border-darkGreen p-2 "
+                                :class="numberError ? 'border-red' : 'border-darkGreen'"
                                 :value="getRoomByIdResult?.room.roomNumber"
                             />
                         </div>
@@ -92,6 +96,7 @@
                                 id="maxOccupancy"
                                 placeholder="1"
                                 class="font-cambria text-darkGreen rounded-2xl mt-1 block border-2 bg-secondary border-darkGreen p-2 "
+                                :class="occupancyError ? 'border-red' : 'border-darkGreen'"
                                 :value="getRoomByIdResult?.room.maxOccupation"
                             />
                         </div>
@@ -161,6 +166,7 @@
                         id="description"
                         placeholder="information about the room"
                         class="font-cambria text-darkGreen rounded-2xl mt-1 border-2 bg-secondary border-darkGreen p-2 w-96 "
+                        :class="descriptionError ? 'border-red' : 'border-darkGreen'"
                         :value="getRoomByIdResult?.room.description"
                     />
                 </div>
@@ -189,27 +195,18 @@ const { result: getRoomByIdResult } = useQuery(GET_ROOM_BY_ID, {id: currentRoute
 
 const { mutate: updateRoom } = useMutation(UPDATE_ROOM)
 
-// const roomTitle = ref('')
-// const pricePerNight = ref('')
-// const size = ref('')
-// const roomNumber = ref('')
-// const maxOccupancy = ref('')
-// const description = ref('')
 const flatscreenTv = ref(false)
 const balcony = ref(false)
 const freeWifi = ref(false)
 const freeParking = ref(false)
 const smokeFree = ref(false)
+const titleError = ref(false)
+const priceError = ref(false)
+const sizeError = ref(false)
+const numberError = ref(false)
+const occupancyError = ref(false)
+const descriptionError = ref(false)
 
-// if(getRoomByIdResult.value){
-//     console.log(getRoomByIdResult.value)
-//     roomTitle.value = getRoomByIdResult.value?.room.roomName
-//     pricePerNight.value = getRoomByIdResult.value?.room.price
-//     size.value = getRoomByIdResult.value?.room.size
-//     roomNumber.value = getRoomByIdResult.value?.room.roomNumber
-//     maxOccupancy.value = getRoomByIdResult.value?.room.maxOccupation
-//     description.value = getRoomByIdResult.value?.room.description
-// }
 
 const checkFacilities = (facility: string) => {
     if(getRoomByIdResult.value){
@@ -292,26 +289,46 @@ const handleRoomUpdate = (tv:boolean, balc:boolean, wifi:boolean, parking:boolea
     }
     console.log(facilities)
     console.log('room title: ',roomTitle.value, 'price per night: ',pricePerNight.value, 'room size: ',size.value, 'room number: ',roomNumber.value, 'maximum occupation: ',maxOccupancy.value, 'tv: ',tv, 'balcony: ',balc, 'wifi: ',wifi, 'parking: ',parking, 'smoking: ',smoke, 'room description: ',description.value)
-    updateRoom({
-        updateRoomInput:{
-            id: getRoomByIdResult.value.room.id,
-            roomName: roomTitle.value,
-            price: parseInt(pricePerNight.value),
-            size: parseInt(size.value),
-            roomNumber: parseInt(roomNumber.value),
-            maxOccupation: parseInt(maxOccupancy.value),
-            facilities: facilities,
-            description: description.value,
-            roomPicture: 'picture here',
-        }
-    })
-    .then(() => {
-        router.push('/admin/overview')
-    })
-    .catch((e) => {
-        console.error(e)
-        console.error(e.message)
-    })
+    if(roomTitle.value !== '' && pricePerNight.value !== '' && size.value !== '' && roomNumber.value !== '' && maxOccupancy.value !== '' && description.value !== ''){
+        updateRoom({
+            updateRoomInput:{
+                id: getRoomByIdResult.value.room.id,
+                roomName: roomTitle.value,
+                price: parseInt(pricePerNight.value),
+                size: parseInt(size.value),
+                roomNumber: parseInt(roomNumber.value),
+                maxOccupation: parseInt(maxOccupancy.value),
+                facilities: facilities,
+                description: description.value,
+                roomPicture: 'picture here',
+            }
+        })
+        .then(() => {
+            router.push('/admin/overview')
+        })
+        .catch((e) => {
+            console.error(e)
+            console.error(e.message)
+        })
+    }
+    if(roomTitle.value === ''){
+        titleError.value = true
+    } 
+    if(pricePerNight.value === ''){
+        priceError.value = true
+    } 
+    if(size.value === ''){
+        sizeError.value = true
+    } 
+    if(roomNumber.value === ''){
+        numberError.value = true
+    } 
+    if(maxOccupancy.value === ''){
+        occupancyError.value = true
+    } 
+    if(description.value === ''){
+        descriptionError.value = true
+    }
 }
 
 </script>
