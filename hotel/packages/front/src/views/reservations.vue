@@ -25,17 +25,17 @@
                 </div>
             </div>
         </div>
-        <div v-if="detection" class="fixed grid w-screen h-screen z-20">
+        <div v-if="detection" class="fixed grid justify-items-center w-screen h-screen z-30">
             <button @click="detection = false" class="w-screen h-screen bg-black opacity-70"></button>
-            <div v-if="detected == false" class="w-2/5 h-2/3 rounded-3xl fixed self-center left-1/4 ml-20">
+            <div v-if="detected == false" class="w-4/5 md:w-3/5 lg:w-2/5 h-1/3 sm:h-1/2 md:h-2/3 rounded-3xl fixed self-center">
                 <qrcode-stream @detect="onDetect"></qrcode-stream>
             </div>
-            <div v-if="detected && success" class="w-2/5 h-2/3 fixed  rounded-3xl self-center left-1/4 ml-20 bg-secondary gap-8 grid content-center justify-items-center">
+            <div v-if="detected && success" class="w-4/5 md:w-3/5 lg:w-2/5 h-1/3 sm:h-1/2 md:h-2/3 rounded-3xl fixed self-center bg-secondary gap-8 grid content-center justify-items-center">
                 <img v-if="locked" src="/icons/locked.svg" alt="" class="h-28">
                 <img v-else src="/icons/unlocked.svg" alt="" class="h-28">
                 <p class="text-center text-4xl font-bold text-darkGreen font-cambria leading-normal">Your room has been succesfully {{locked ? 'locked' : 'unlocked'}}</p>
             </div>
-            <div v-else-if="noAccess" class="w-2/5 h-2/3 fixed p-24  rounded-3xl self-center left-1/4 ml-20 bg-secondary gap-8 grid content-center justify-items-center">
+            <div v-else-if="noAccess" class="w-4/5 md:w-3/5 lg:w-2/5 h-1/3 sm:h-1/2 md:h-2/3 rounded-3xl fixed self-center bg-secondary gap-8 grid content-center justify-items-center">
                 <img src="/icons/noAccess.svg" alt="" class="h-28">
                 <p class="text-center text-4xl font-bold text-darkGreen font-cambria leading-normal">You do not have access to this room!</p>
             </div>
