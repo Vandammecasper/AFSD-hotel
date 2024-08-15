@@ -12,7 +12,7 @@
         "app":{
             "room": "Kamer",
             "hasBeenLockedBy": "werd vergrendeld door",
-            "hasBeenUnlockedBy": "werd ontgrendeld"
+            "hasBeenUnlockedBy": "werd ontgrendeld door"
         },
         "home":{
             "todaysReservations": "Reservaties van vandaag",
