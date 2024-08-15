@@ -3,7 +3,7 @@
 ## Backend API
 
 - [x] De API is gebouwd met NestJS en wordt lokaal gehost via Docker.
-- [] Er is een bonuspunt als de API extern wordt gehost.
+- [ ] Er is een bonuspunt als de API extern wordt gehost.
 
 ## Database
 
@@ -23,13 +23,13 @@
 ## Kwetsbaarheid
 
 - [x] CORS is ingeschakeld.
-- [] Er zijn extra beveiligingsmaatregelen tegen Cross Site Forgery (CSRF) en Cross Site Scripting (XSS).
+- [ ] Er zijn extra beveiligingsmaatregelen tegen Cross Site Forgery (CSRF) en Cross Site Scripting (XSS).
 
 ## API Docs
 
 - [x] GraphQL wordt voornamelijk gebruikt, met beperkt gebruik van REST API.
 - [x] De API documenteert zichzelf met behulp van een self-documenting library zoals Swagger of GraphiQL / Apollo Playground.
-- [] Ook statuscodes bij foutcondities worden gedocumenteerd.
+- [ ] Ook statuscodes bij foutcondities worden gedocumenteerd.
 
 ## Framework
 
@@ -39,7 +39,7 @@
 ## Foutcontrole
 
 - [x] Het crashen van de applicatie wordt voorkomen door het gebruik van een try/catch-structuur met gedetailleerde logging.
-- [] Foutboodschappen worden altijd in JSON-formaat naar de frontend gestuurd.
+- [ ] Foutboodschappen worden altijd in JSON-formaat naar de frontend gestuurd.
 
 ## Source Controle
 
@@ -48,18 +48,18 @@
 ## Staging / Deployment
 
 - [x] De applicatie draait volledig in Docker.
-- [] De Docker image is beschikbaar op DockerHub / Harbor (optioneel).
-- [] Een geschikte Kubernetes deployment methodiek is gekozen (Canary, blue-green, rolling, enz.) (optioneel).
+- [ ] De Docker image is beschikbaar op DockerHub / Harbor (optioneel).
+- [ ] Een geschikte Kubernetes deployment methodiek is gekozen (Canary, blue-green, rolling, enz.) (optioneel).
 
 ## Testing
 
-- [] Er zijn unittests en integratietests voor de API.
-- [] Testing maakt deel uit van GitHub Actions / deployment.
+- [ ] Er zijn unittests en integratietests voor de API.
+- [ ] Testing maakt deel uit van GitHub Actions / deployment.
 
 ## Extra Features
 
-- [] Er zijn extra uitbreidingsmogelijkheden geïmplementeerd die niet in de cursus zijn behandeld.
-- [] Mogelijke extra features zijn response caching en rate limiting, memory caching, API-gateway, interactie met hardware (bijv. MQTT / gRPC), integratie met een cloud AI-service of een aangepast AI-model, en externe deployment.
+- [ ] Er zijn extra uitbreidingsmogelijkheden geïmplementeerd die niet in de cursus zijn behandeld.
+- [ ] Mogelijke extra features zijn response caching en rate limiting, memory caching, API-gateway, interactie met hardware (bijv. MQTT / gRPC), integratie met een cloud AI-service of een aangepast AI-model, en externe deployment.
 
 # Checklist Frontend
 
@@ -76,13 +76,13 @@
 
 ## Testing
 
-- [] Er is minstens één goede unit test en één integratietest.
-- [] Testing maakt deel uit van de deployment pipeline, inclusief snelheidstests en functionele tests.
+- [ ] Er is minstens één goede unit test en één integratietest.
+- [ ] Testing maakt deel uit van de deployment pipeline, inclusief snelheidstests en functionele tests.
 
 ## Styling
 
 - [x] Tailwind CSS of UnoCSS wordt gebruikt voor styling.
-- [] Er zijn ghosts, skeletons of loading states voor een betere gebruikerservaring.
+- [ ] Er zijn ghosts, skeletons of loading states voor een betere gebruikerservaring.
 - [x] Input-validatie en foutmeldingen zijn geïmplementeerd.
 
 ## PWA (Progressive Web App)
@@ -96,16 +96,16 @@
 
 ## Error Logging
 
-- [] Fouten worden gelogd, bijvoorbeeld met behulp van services zoals Sentry.io of LogRocket.
+- [ ] Fouten worden gelogd, bijvoorbeeld met behulp van services zoals Sentry.io of LogRocket.
 
 ## Development Setup
 
-- [] CodeClimate wordt gebruikt voor code testing en reviews.
-- [ x] Npm-packages worden op een correcte manier gebruikt, zonder onnodige packages en met juiste flags.
+- [ ] CodeClimate wordt gebruikt voor code testing en reviews.
+- [x] Npm-packages worden op een correcte manier gebruikt, zonder onnodige packages en met juiste flags.
 
 ## Staging / Deployment
 
-- [] De frontend draait volledig in Docker.
+- [ ] De frontend draait volledig in Docker.
 - [x] Gitflow wordt aangeraden voor versiebeheer.
 
 ## Build Optimalisatie
@@ -115,5 +115,5 @@
 
 ## Eigen Inbreng
 
-- [] Er is iets kleins uitgewerkt dat niet in de cursus is behandeld, en dit toont zelfstudie en extra inzet.
-- [] Mogelijke extra's zijn transities tussen schermen, gebruik van Nuxt voor SEO, WebAssembly-implementatie, web worker voor taken buiten de main thread, shared workers voor synchrone werking over meerdere tabs en het gebruik van Bun.
+- [ ] Er is iets kleins uitgewerkt dat niet in de cursus is behandeld, en dit toont zelfstudie en extra inzet.
+- [ ] Mogelijke extra's zijn transities tussen schermen, gebruik van Nuxt voor SEO, WebAssembly-implementatie, web worker voor taken buiten de main thread, shared workers voor synchrone werking over meerdere tabs en het gebruik van Bun.

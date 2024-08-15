@@ -1,42 +1,42 @@
 <template>
-    <div class="w-screen border-b-2 bg-primary border-darkGreen items-center max-sm:px-8 px-4 lg:px-12 h-24 fixed z-20 flex justify-between">
+    <div class="w-screen border-b-2 bg-primary border-darkGreen items-center max-sm:px-4 px-4 lg:px-8 xl:px-12 h-24 fixed z-20 flex justify-between">
         <RouterLink to="/">
-            <h2 class="text-darkGreen max-sm:text-lg sm:text-sm md:text-lg lg:text-xl font-cambria font-bold my-6">THE CONTINENTAL</h2>
+            <h2 class="text-darkGreen text-sm lg:text-lg xl:text-xl font-cambria font-bold my-6">THE CONTINENTAL</h2>
         </RouterLink>
-        <div class="flex gap-4 lg:gap-10">
+        <div class="flex gap-2 sm:gap-5 lg:gap-6 xl:gap-10">
             <RouterLink v-if="firebaseUser && getUserByUidResult?.userByUid.role == 'ADMIN'" to="/admin/locks">
-                <h2 class="max-sm:hidden my-6 sm:text-sm md:text-lg lg:text-xl text-darkGreen font-cambria font-normal">{{$t('header.smartLocks')}}</h2>
+                <h2 class="max-md:hidden my-6 text-sm lg:text-lg xl:text-xl text-darkGreen font-cambria font-normal">{{$t('header.smartLocks')}}</h2>
             </RouterLink>
             <RouterLink v-if="firebaseUser && getUserByUidResult?.userByUid.role == 'ADMIN'" to="/admin/overview">
-                <h2 class="max-sm:hidden my-6 sm:text-sm md:text-lg lg:text-xl text-darkGreen font-cambria font-normal">{{$t('header.roomOverview')}}</h2>
+                <h2 class="max-md:hidden my-6 text-sm lg:text-lg xl:text-xl text-darkGreen font-cambria font-normal">{{$t('header.roomOverview')}}</h2>
             </RouterLink>
             <RouterLink v-if="firebaseUser" to="/user/reservations">
-                <h2 class="max-sm:hidden my-6 sm:text-sm md:text-lg lg:text-xl text-darkGreen font-cambria font-normal">{{$t('header.myReservations')}}</h2>
+                <h2 class="max-md:hidden my-6 text-sm lg:text-lg xl:text-xl text-darkGreen font-cambria font-normal">{{$t('header.myReservations')}}</h2>
             </RouterLink>
             <button @click="switchLang()" class="border-2 rounded-xl border-darkGreen -ml-2 my-4">
-                <h2 class="px-2 sm:text-sm md:text-lg lg:text-xl text-darkGreen font-cambria font-normal">{{ $t('header.switch') }}</h2>
+                <h2 class="px-2 text-sm lg:text-lg xl:text-xl text-darkGreen font-cambria font-normal">{{ $t('header.switch') }}</h2>
             </button>
-            <div class="border-l-2 border-darkGreen py-6 pl-4 lg:pl-12 max-sm:pl-8">
-                <button v-if="firebaseUser" @click="logout()" class="max-sm:text-lg sm:text-sm md:text-lg lg:text-xl text-darkGreen font-cambria font-normal">{{$t('header.logout')}}</button>
+            <div class="border-l-2 border-darkGreen py-6 pl-5 lg:pl-6 xl:pl-12 max-sm:pl-2 max-lg:-mt-1">
+                <button v-if="firebaseUser" @click="logout()" class="max-sm:text-lg text-sm lg:text-lg xl:text-xl text-darkGreen font-cambria font-normal">{{$t('header.logout')}}</button>
                 <RouterLink v-else to="/auth/login">
-                    <h2 class="max-sm:text-lg sm:text-sm md:text-lg lg:text-xl text-darkGreen font-cambria font-normal">{{$t('header.login')}}</h2>
+                    <h2 class="max-sm:text-lg text-sm lg:text-lg xl:text-xl text-darkGreen font-cambria font-normal">{{$t('header.login')}}</h2>
                 </RouterLink>
             </div>
         </div>
     </div>
     <RouterView/>
-    <div v-if="firebaseUser" class="sm:hidden w-screen border-t-2 bg-primary border-darkGreen max-sm:px-10 px-2 py-6 gap-8 h-24 fixed justify-between z-20 flex bottom-0">
+    <div v-if="firebaseUser" class="md:hidden w-screen border-t-2 bg-primary border-darkGreen max-sm:px-10 px-24 py-6 gap-8 h-24 fixed justify-between z-20 flex bottom-0">
         <RouterLink v-if="getUserByUidResult?.userByUid.role == 'ADMIN'" to="/admin/locks" class="grid justify-items-center gap-2">
             <img src="/icons/locksGreen.svg" alt="" class="h-6">
-            <p class="text-darkGreen text-center text-xs font-cambria font-bold" >SMART LOCKS</p>
+            <p class="text-darkGreen text-center text-xs font-cambria font-bold" >{{$t('header.smartLocks')}}</p>
         </RouterLink>
         <RouterLink v-if="getUserByUidResult?.userByUid.role == 'ADMIN'" to="/admin/overview" class="grid justify-items-center gap-2">
             <img src="/icons/overviewGreen.svg" alt="" class="h-6">
-            <p class="text-darkGreen text-center text-xs font-cambria font-bold">ROOM OVERVIEW</p>
+            <p class="text-darkGreen text-center text-xs font-cambria font-bold">{{$t('header.roomOverview')}}</p>
         </RouterLink>
         <RouterLink to="/user/reservations" class="grid justify-items-center gap-2">
             <img src="/icons/reservationGreen.svg" alt="" class="h-6">
-            <p class="text-darkGreen text-center text-xs font-cambria font-bold">MY RESERVATIONS</p>
+            <p class="text-darkGreen text-center text-xs font-cambria font-bold">{{$t('header.myReservations')}}</p>
         </RouterLink>
     </div>
 </template>

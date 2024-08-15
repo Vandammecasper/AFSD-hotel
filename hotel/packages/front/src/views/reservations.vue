@@ -7,9 +7,9 @@
                 <div class="flex justify-between col-span-2">
                     <div class="grid justify-items-start my-2 ml-6 w-96">
                         <h2 class="max-sm:hidden max-sm:text-sm md:text-xl lg:text-2xl xl:text-3xl font-bold font-cambria text-darkGreen">{{getRoomName(reservation.roomId)}}</h2>
-                        <h2 v-if="isTodayBetweenDates(reservation)" class="sm:hidden max-sm:text-sm md:text-xl lg:text-2xl xl:text-3xl font-bold font-cambria text-darkGreen">{{shortenText(getRoomName(reservation.roomId))}}</h2>
+                        <h2 v-if="isTodayBetweenDates(reservation) && reservation.checkedIn" class="sm:hidden max-sm:text-sm md:text-xl lg:text-2xl xl:text-3xl font-bold font-cambria text-darkGreen">{{shortenText(getRoomName(reservation.roomId))}}</h2>
                         <h2 v-else class="sm:hidden max-sm:text-sm md:text-xl lg:text-2xl xl:text-3xl font-bold font-cambria text-darkGreen">{{getRoomName(reservation.roomId)}}</h2>
-                        <p v-if="isTodayBetweenDates(reservation)" class="max-sm:text-sm md:text-lg lg:text-xl xl:text-2xl text-darkGreen font-cambria -mt-4">{{$t('reservations.roomAccessUntil')}} {{formatDate(reservation.checkOutDate)}}</p>
+                        <p v-if="isTodayBetweenDates(reservation) && reservation.checkedIn" class="max-sm:text-sm md:text-lg lg:text-xl xl:text-2xl text-darkGreen font-cambria -mt-4">{{$t('reservations.roomAccessUntil')}} {{formatDate(reservation.checkOutDate)}}</p>
                         <div v-else>
                             <p class="max-sm:text-xs md:text-lg lg:text-xl text-darkGreen font-cambria">{{$t('reservations.reservation')}}:</p>
                             <p class="max-sm:text-xs md:text-lg lg:text-xl text-darkGreen font-cambria">{{formatDate(reservation.checkInDate)}} - {{formatDate(reservation.checkOutDate)}}</p>
