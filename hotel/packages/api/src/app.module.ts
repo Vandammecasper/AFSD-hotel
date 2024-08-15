@@ -11,6 +11,9 @@ import { UsersModule } from './users/users.module';
 import { MongoMemoryServer } from 'mongodb-memory-server';
 import { AuthenticationModule } from './authentication/authentication.module';
 import { NotificationsModule } from './notifications/notifications.module';
+import { UsersController } from './users/users.controller';
+import { RoomsController } from './rooms/rooms.controller';
+import { ReservationsController } from './reservations/reservations.controller';
 
 @Module({
   imports: [
@@ -65,7 +68,7 @@ import { NotificationsModule } from './notifications/notifications.module';
   AuthenticationModule,
   NotificationsModule,
   ],
-  controllers: [AppController],
+  controllers: [AppController, UsersController, RoomsController, ReservationsController],
   providers: [AppService],
 })
 export class AppModule {}

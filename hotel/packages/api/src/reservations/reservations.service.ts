@@ -7,7 +7,6 @@ import { Repository } from 'typeorm';
 import { ObjectId } from 'mongodb';
 import { Room } from 'src/rooms/entities/room.entity';
 import { RoomsService } from 'src/rooms/rooms.service';
-import { In } from 'typeorm';
 
 @Injectable()
 export class ReservationsService {

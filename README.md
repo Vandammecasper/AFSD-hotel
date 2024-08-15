@@ -15,7 +15,7 @@ VITE_appId=
 
 ## Seeding
 
-(seeding is based on existing uid's from firebase, if you start with a new firebase authentication you can't use the user seeding)
+(seeding is based on existing uid's from firebase, if you start with a new firebase authentication you will have to replace the created users)
 
 ### Step 1: go to backend
 
