@@ -10,7 +10,7 @@ export class DatabaseSeedCommand {
     ) {}
 
     @Command({
-        command: 'seed:database',
+        command: 'npx nestjs-command seed:database',
         describe: 'Reset and seed the database with data',
     })
 
@@ -20,11 +20,15 @@ export class DatabaseSeedCommand {
         console.info('deleted all rooms 🗑️');
         await this.seedService.deleteAllReservations();
         console.info('deleted all reservations 🗑️');
+        await this.seedService.deleteAllUsers();
+        console.info('deleted all users 🗑️');
         console.info('deleting data complete 🎉');
 
         console.info('start seeding data 🌱');
         const rooms = await this.seedService.addRooms();
         console.info(`${rooms.length} rooms seeded 🛏️`)
+        const users = await this.seedService.addUsers();
+        console.info(`${users.length} users seeded 👤`)
         console.info('seeding complete 🎉');
     }
 }

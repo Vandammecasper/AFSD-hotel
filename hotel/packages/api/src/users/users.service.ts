@@ -36,7 +36,11 @@ export class UsersService {
     user.userName = createUserInput.userName;
     user.email = createUserInput.email;
     user.uid = createUserInput.uid;
-    user.role = Role.USER;
+    if(createUserInput.role === 'ADMIN') {
+      user.role = Role.ADMIN;
+    } else if (createUserInput.role === 'USER') {
+      user.role = Role.USER;
+    }
 
     const createdUser = await this.usersRepository.save(user);
 
@@ -57,7 +61,7 @@ export class UsersService {
     return this.usersRepository.save(users);
   }
 
-  async truncate(): Promise<void> {
+  async deleteAll(): Promise<void> {
     return this.usersRepository.clear();
   }
 }

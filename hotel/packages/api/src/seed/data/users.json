@@ -1,0 +1,20 @@
+[
+    {
+        "userName": "Van Damme",
+        "email": "caspervandamme03@gmail.com",
+        "uid": "XbqtWnOBeEbQy55SC37I13lEhem2",
+        "role": "ADMIN"
+    },
+    {
+        "userName": "Docent",
+        "email": "docent@howest.be",
+        "uid": "iBMbgEndldYqayKf2wToYGVQWW02",
+        "role": "ADMIN"
+    },
+    {
+        "userName": "Hendrickx",
+        "email": "olivia@gmail.com",
+        "uid": "kLl6zdyfkcd00cWVVUnCLwbfWDg1",
+        "role": "USER"
+    }
+]

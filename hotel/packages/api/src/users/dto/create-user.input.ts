@@ -10,4 +10,7 @@ export class CreateUserInput {
 
   @Field(() => String, { description: 'uid' })
   uid: string;
+
+  @Field(() => String, { description: 'role' })
+  role: string;
 }
