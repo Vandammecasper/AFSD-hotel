@@ -9,6 +9,11 @@
             "logout": "UITLOGGEN",
             "switch": "Wissel naar Engels"
         },
+        "app":{
+            "room": "Kamer",
+            "hasBeenLockedBy": "werd vergrendeld door",
+            "hasBeenUnlockedBy": "werd ontgrendeld"
+        },
         "home":{
             "todaysReservations": "Reservaties van vandaag",
             "makeAReservation": "Maak een reservatie"

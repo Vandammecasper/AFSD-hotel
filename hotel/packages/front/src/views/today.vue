@@ -1,6 +1,7 @@
 <template>
-  <div class="w-screen h-screen grid justify-items-center">
-    <div v-if="notCheckedInReservationsOfToday.length > 0" v-for="reservation in notCheckedInReservationsOfToday" :key="reservation.id" class="w-full grid justify-items-center gap-6  mt-40">
+  <div class="w-screen h-screen grid justify-items-center overflow-x-hidden">
+    <div class=" mt-40"></div>
+    <div v-if="notCheckedInReservationsOfToday.length > 0" v-for="reservation in notCheckedInReservationsOfToday" :key="reservation.id" class="w-full grid justify-items-center">
       <div class=" w-4/6 grid justify-self-center">
         <div class="grid grid-cols-3 h-56 bg-secondary rounded-3xl gap-0 justify-between justify-self-center">
           <img src="/images/hotelRoomDeluxe.jpg" alt="" class="rounded-s-2xl h-full" />

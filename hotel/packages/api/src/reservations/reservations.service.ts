@@ -82,7 +82,7 @@ export class ReservationsService {
     let nextReservations = [];
 
     for (const reservation of allReservations) {
-      if (reservation.roomId === roomId && reservation.checkInDate.getDate() >= new Date().getDate()) {
+      if (reservation.roomId === roomId && reservation.checkInDate.getDate() >= new Date().getDate() && !reservation.checkedIn) {
         nextReservations.push(reservation);
       }
     }
